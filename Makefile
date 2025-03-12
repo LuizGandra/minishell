@@ -32,7 +32,9 @@ HEADER_PATH = ./include/
 BUILD_PATH = ./build/
 
 FILES = \
-	main.c
+	main.c \
+	utils.c \
+	get_env.c 
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
 
