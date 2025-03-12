@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:45:52 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/12 10:58:26 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:45:45 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,14 @@ void	init_env(void)
 		free(value);
 		env++;
 	}
+}
+
+char	*ft_getenv(char *key)
+{
+	t_shell	*shell;
+
+	shell = get_minishell();
+	if (!key)
+		return (NULL);
+	return (ft_map_search(shell->table, key));
 }
