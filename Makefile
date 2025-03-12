@@ -13,6 +13,7 @@ COLOR_LIMITER = \033[0m
 # ===========================================================================
 
 CFLAGS := -Wall -Wextra -Werror
+RFLAGS := -lreadline -lhistory
 VALGRIND_LOG := valgrind.log
 
 # ===========================================================================
@@ -65,7 +66,7 @@ ifeq ($(wildcard $(NAME)),)
 endif
 
 $(NAME): $(OBJS) $(HEADER_PATH)minishell.h
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(HEADER_PATH) -L$(LIB_PATH) -lft
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(HEADER_PATH) -L$(LIB_PATH) -lft $(RFLAGS)
 	@printf "$(CYAN)------ --------------------------------------------- ------$(COLOR_LIMITER)\n"
 	@printf "$(CYAN)------| MINISHELL executable was created successfully!! |------$(COLOR_LIMITER)\n"
 	@printf "$(CYAN)------ --------------------------------------------- ------$(COLOR_LIMITER)\n"
