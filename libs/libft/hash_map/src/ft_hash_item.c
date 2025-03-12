@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 13:31:23 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/07 14:42:44 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:08:43 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,14 @@ void	ft_print_items(t_hash_table *table)
 		item = table->items[i];
 		if (item)
 		{
-			ft_printf("Items at index %i\n", i);
+			ft_printf(C_GRN C_BLD "Items at index " C_CYA "%i\n" C_RST, i);
 			while (item)
 			{
-				ft_printf("\tKey: %s, Value: %s\n", item->key, item->value);
+				ft_printf(
+					C_PUR C_BLD "\tKey: " C_WHT "%s"
+					C_PUR C_BLD " Value: " C_WHT "%s\n"
+					C_RST,
+					item->key, item->value);
 				item = item->next;
 			}
 		}

@@ -35,6 +35,7 @@ LIB_SOURCES = \
 	ft_substr.c \
 	ft_strlen.c \
 	ft_memcpy.c \
+	ft_strcmp.c \
 	ft_memmove.c \
 	ft_isprime.c \
 	ft_isalnum.c \

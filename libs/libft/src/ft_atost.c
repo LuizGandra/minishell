@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:59:57 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/11 11:01:39 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:05:38 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 size_t	ft_atost(const char *str)
 {
-	size_t num;
-	size_t sign;
+	size_t	num;
+	size_t	sign;
 
 	sign = 1;
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
