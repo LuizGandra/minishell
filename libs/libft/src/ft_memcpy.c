@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2024/10/11 15:14:42 by lhenriqu          #+#    #+#             */
+/*   Updated: 2024/10/12 14:25:15 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libs/libft/libft.h"
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
+	size_t	i;
 
-t_shell	*get_minishell(void);
-void	init_env(void);
-
-#endif
+	i = 0;
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	while (i < n)
+	{
+		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
+		i++;
+	}
+	return (dest);
+}

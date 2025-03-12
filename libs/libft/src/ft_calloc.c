@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2024/10/12 13:47:30 by lhenriqu          #+#    #+#             */
+/*   Updated: 2024/11/29 12:20:48 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libs/libft/libft.h"
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+void	*ft_calloc(size_t n, size_t size)
 {
-	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
+	void	*allocd_mem;
 
-t_shell	*get_minishell(void);
-void	init_env(void);
-
-#endif
+	allocd_mem = (void *)malloc(n * size);
+	if (allocd_mem == NULL)
+		return (NULL);
+	ft_bzero(allocd_mem, n * size);
+	return (allocd_mem);
+}

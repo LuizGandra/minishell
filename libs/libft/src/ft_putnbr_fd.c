@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2024/10/14 20:33:32 by lhenriqu          #+#    #+#             */
+/*   Updated: 2024/10/14 20:55:00 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libs/libft/libft.h"
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+void	ft_putnbr_fd(int n, int fd)
 {
-	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
+	int		divisor;
+	long	nlong;
+	char	c;
 
-t_shell	*get_minishell(void);
-void	init_env(void);
-
-#endif
+	nlong = (long)n;
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		nlong = -nlong;
+	}
+	divisor = 1;
+	while (nlong / divisor >= 10)
+		divisor *= 10;
+	while (divisor)
+	{
+		c = (nlong / divisor) + '0';
+		write(fd, &c, 1);
+		nlong %= divisor;
+		divisor /= 10;
+	}
+}

@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isprime.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/07 09:30:10 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/03/07 10:00:16 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libs/libft/libft.h"
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+t_bool	ft_isprime(unsigned long n)
 {
-	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
+	unsigned long	i;
 
-t_shell	*get_minishell(void);
-void	init_env(void);
-
-#endif
+	if (n < 2)
+		return (FALSE);
+	if (n == 2 || n == 3)
+		return (TRUE);
+	if (n % 2 == 0 || n % 3 == 0)
+		return (FALSE);
+	i = 5;
+	while (i * i <= n)
+	{
+		if (n % i == 0 || n % (i + 2) == 0)
+			return (FALSE);
+		i += 6;
+	}
+	return (TRUE);
+}

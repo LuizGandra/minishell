@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/03/12 12:31:51 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "../libs/libft/libft.h"
+static void	ft_loop(void);
 
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+int	main(void)
 {
-	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
+	init_env();
+	ft_loop();
+	ft_map_destroy(get_minishell()->table);
+}
 
-t_shell	*get_minishell(void);
-void	init_env(void);
+static void	ft_loop(void)
+{
+	t_shell *shell;
 
-#endif
+	shell = get_minishell();
+	while (TRUE)
+	{
+		shell->user_input = readline(C_CYA "minishell$> " C_RST);
+		if (!shell->user_input)
+		{
+			ft_printf("exit\n");
+			break ;
+		}
+		add_history(shell->user_input);		
+	}
+}

@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   string_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2024/11/21 17:36:04 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/01/17 16:10:23 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "ft_printf.h"
 
-# include "../libs/libft/libft.h"
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+size_t	ft_putchar(char c)
 {
-	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
+	write(1, &c, 1);
+	return (1);
+}
 
-t_shell	*get_minishell(void);
-void	init_env(void);
+size_t	ft_putstr(char *str)
+{
+	int	len;
 
-#endif
+	if (str == NULL)
+		return (ft_putstr("(null)"));
+	len = 0;
+	while (str[len])
+		len++;
+	write(1, str, len);
+	return (len);
+}

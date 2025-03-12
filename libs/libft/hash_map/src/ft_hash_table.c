@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_hash_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/07 13:31:26 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/03/10 07:51:46 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "hash_map.h"
 
-# include "../libs/libft/libft.h"
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+t_hash_table	*ft_map_create(size_t size)
 {
 	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
 
-t_shell	*get_minishell(void);
-void	init_env(void);
-
-#endif
+	table = ft_calloc(1, sizeof(t_hash_table));
+	if (!table)
+		return (NULL);
+	table->size = ft_next_prime(size);
+	table->items = ft_calloc(table->size, sizeof(t_h_item *));
+	return (table);
+}

@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_next_prime.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/07 10:10:33 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/03/07 11:00:54 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libs/libft/libft.h"
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+unsigned long	ft_next_prime(unsigned long x)
 {
-	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
-
-t_shell	*get_minishell(void);
-void	init_env(void);
-
-#endif
+	if (x < 2)
+		return (2);
+	if (x % 2 == 0)
+		x++;
+	while (!ft_isprime(x))
+		x += 2;
+	return (x);
+}

@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/12 12:22:48 by lhenriqu         ###   ########.fr       */
+/*   Created: 2024/10/11 14:33:51 by lhenriqu          #+#    #+#             */
+/*   Updated: 2024/10/14 15:57:45 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "../libs/libft/libft.h"
-
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+char	*ft_strchr(const char *s, int c)
 {
-	t_hash_table	*table;
-	char			*user_input;
-}	t_shell;
+	int	i;
 
-t_shell	*get_minishell(void);
-void	init_env(void);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (unsigned char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	if (s[i] == (unsigned char)c)
+		return ((char *)s + i);
+	return (NULL);
+}
 
-#endif
+// int	main(void)
+// {
+// 	printf("\nTEST->| %c |\n", *ft_strchr("testando", 'a'));
+// }
