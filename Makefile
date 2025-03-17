@@ -12,7 +12,7 @@ COLOR_LIMITER = \033[0m
 #  =============================== COMPILER ================================
 # ===========================================================================
 
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g3
 RFLAGS := -lreadline -lhistory
 VALGRIND_LOG := valgrind.log
 
@@ -32,10 +32,16 @@ SRC_PATH = ./src/
 HEADER_PATH = ./include/
 BUILD_PATH = ./build/
 
+LEXING_PATH = ./lexing/
+UTILS_PATH = ./utils/
+
 FILES = \
 	main.c \
-	utils.c \
-	get_env.c 
+	$(LEXING_PATH)utils.c \
+	$(LEXING_PATH)lexer.c \
+	$(UTILS_PATH)error.c \
+	$(UTILS_PATH)global.c \
+	$(UTILS_PATH)get_env.c 
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
 
@@ -55,7 +61,8 @@ ifeq ($(wildcard $(LIB_PATH)/$(LIB_NAME)),)
 endif
 
 $(BUILD_PATH):
-	@mkdir -p $(BUILD_PATH)
+	@mkdir -p $(BUILD_PATH)$(LEXING_PATH)
+	@mkdir -p $(BUILD_PATH)$(UTILS_PATH)
 
 print:
 ifeq ($(wildcard $(NAME)),)
