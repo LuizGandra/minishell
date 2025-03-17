@@ -6,38 +6,38 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/17 16:17:44 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:15:35 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-// static void	read_new_line(t_token *node, char qoute)
-// {
-// 	char	*line;
-// 	char	*tmp;
-// 	int		qnt;
-
-// 	line = readline("quote>");
-// 	if (!line)
-// 		handle_error(E_MALLOC_FAILED);
-// 	tmp = ft_strjoin_with_free(node->content, "\n");
-// 	node->content = ft_strjoin_with_free(tmp, line);
-// 	qnt = 0;
-// 	while (*line)
-// 	{
-// 		if (*line == qoute)
-// 			qnt++;
-// 		line++;
-// 	}
-// 	if (qnt % 2 == 0)
-// 		read_new_line(node, qoute);
-// }
-
-static char	*handle_qoute(t_token *node, char *input, char qoute)
+static void read_new_line(t_token *node, char qoute)
 {
-	char	*tmp;
-	size_t	len;
+	char *line;
+	char *tmp;
+	size_t len;
+
+	line = readline(C_BLD "quote>" C_RST);
+	if (!line)
+		return;
+	len = 0;
+	while (line[len] && line[len] != qoute)
+	{
+		if (line[len] != qoute)
+			len++;
+	}
+	tmp = ft_substr(line, 0, len);
+	node->content = ft_strjoin_with_free(node->content, tmp);
+	if (!line[len])
+		read_new_line(node, qoute);
+	free(line);
+}
+
+static char *handle_qoute(t_token *node, char *input, char qoute)
+{
+	char *tmp;
+	int	 len;
 
 	len = 0;
 	if (input[len] != qoute)
@@ -49,13 +49,19 @@ static char	*handle_qoute(t_token *node, char *input, char qoute)
 	tmp = ft_substr(input, 0, len);
 	node->content = ft_strjoin_with_free(node->content, tmp);
 	node->content_size += (len + 1);
+	if (!input[len])
+	{
+		read_new_line(node, qoute);
+		len--;
+		node->content_size--;
+	}
 	return (input + len + 1);
 }
 
-static t_state	handle_word(t_token *node, char *input, t_state state)
+static t_state handle_word(t_token *node, char *input, t_state state)
 {
-	char	*tmp;
-	size_t	len;
+	char *tmp;
+	size_t len;
 
 	node->content = ft_strdup("");
 	if (state == S_SINGLE_QOUTE)
@@ -71,17 +77,17 @@ static t_state	handle_word(t_token *node, char *input, t_state state)
 		node->content = ft_strjoin_with_free(node->content, tmp);
 		input += len;
 		node->content_size += len;
-		if (input[len] == '\'')
+		if (*input == '\'')
 			input = handle_qoute(node, input, '\'');
-		else if (input[len] == '"')
+		else if (*input == '"')
 			input = handle_qoute(node, input, '"');
 	}
 	return (F_WORD);
 }
 
-static char	*fill_token(t_token *node, char *input)
+static char *fill_token(t_token *node, char *input)
 {
-	t_state	state;
+	t_state state;
 
 	input = left_trim(input);
 	state = get_initial_state(*input);
@@ -99,17 +105,20 @@ static char	*fill_token(t_token *node, char *input)
 		return (input + 1);
 	}
 	if (state == S_ERROR)
+	{
 		handle_error(E_INVALID_TOKEN);
+		return (input + ft_strlen(input));
+	}
 	state = handle_word(node, input, state);
 	node->type = (t_token_type)state;
 	return (input + node->content_size);
 }
 
-t_token_list	*get_token_list(char *input)
+t_token_list *get_token_list(char *input)
 {
-	t_token_list	*node;
-	t_token_list	*init;
-	t_token_list	*prev;
+	t_token_list *node;
+	t_token_list *init;
+	t_token_list *prev;
 
 	if (!input)
 		return (NULL);
@@ -124,7 +133,6 @@ t_token_list	*get_token_list(char *input)
 			init = node;
 		else
 			prev->next = node;
-		// printf("INPUT-> %s\n", input);
 		input = fill_token(&node->token, input);
 		prev = node;
 	}
