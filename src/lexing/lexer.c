@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/17 14:12:37 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:27:56 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static char	*fill_token(t_token *node, char *input)
 	if (state == S_ERROR)
 		handle_error(E_INVALID_TOKEN);
 	handle_word(node, input, state);
+	node->type = (t_token_type)state;
 	return (input + node->content_size);
 }
 
