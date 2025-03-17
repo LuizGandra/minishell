@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/17 08:01:33 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/17 07:56:56 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/03/17 11:25:07 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_loop(void);
-
-int	main(void)
+void	handle_error(t_error error)
 {
-	init_env();
-	ft_loop();
-	handle_error(E_SUCCESS);
-}
-
-static void	ft_loop(void)
-{
-	t_shell *shell;
-
-	shell = get_minishell();
-	while (TRUE)
+	if (error == E_MALLOC_FAILED)
+		ft_printf("Malloc failed\n");
+	else if (error == E_INVALID_TOKEN)
 	{
-		shell->user_input = readline(C_CYA "minishell$> " C_RST);
-		if (!shell->user_input)
-		{
-			ft_printf("exit\n");
-			break ;
-		}
-		add_history(shell->user_input);		
-		shell->tokens = get_token_list(shell->user_input);
+		ft_printf("unespected '&' token\n");
+		return ;
 	}
+	ft_map_destroy(get_minishell()->table);
+	ft_gc_exit();
+	exit(error);
 }
