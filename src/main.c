@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/17 14:24:16 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:04:44 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ static char	*get_token_type(t_token_type type)
 		return ("OPEN_BRACKET");
 	else if (type == CLOSE_BRACKET)
 		return ("CLOSE_BRACKET");
+	else if (type == AND)
+		return ("AND");
+	else if (type == OR)
+		return ("OR");
 	else
 		return ("UNKNOWN");
 }

@@ -6,56 +6,77 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/17 14:27:56 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:17:44 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-static void	read_new_line(t_token *node, char qoute)
+// static void	read_new_line(t_token *node, char qoute)
+// {
+// 	char	*line;
+// 	char	*tmp;
+// 	int		qnt;
+
+// 	line = readline("quote>");
+// 	if (!line)
+// 		handle_error(E_MALLOC_FAILED);
+// 	tmp = ft_strjoin_with_free(node->content, "\n");
+// 	node->content = ft_strjoin_with_free(tmp, line);
+// 	qnt = 0;
+// 	while (*line)
+// 	{
+// 		if (*line == qoute)
+// 			qnt++;
+// 		line++;
+// 	}
+// 	if (qnt % 2 == 0)
+// 		read_new_line(node, qoute);
+// }
+
+static char	*handle_qoute(t_token *node, char *input, char qoute)
 {
-	char	*line;
 	char	*tmp;
-	int		qnt;
+	size_t	len;
 
-	line = readline("quote>");
-	if (!line)
-		handle_error(E_MALLOC_FAILED);
-	tmp = ft_strjoin_with_free(node->content, "\n");
-	node->content = ft_strjoin_with_free(tmp, line);
-	qnt = 0;
-	while (*line)
-	{
-		if (*line == qoute)
-			qnt++;
-		line++;
-	}
-	if (qnt % 2 == 0)
-		read_new_line(node, qoute);
+	len = 0;
+	if (input[len] != qoute)
+		return (input);
+	input++;
+	node->content_size++;
+	while (input[len] && input[len] != qoute)
+		len++;
+	tmp = ft_substr(input, 0, len);
+	node->content = ft_strjoin_with_free(node->content, tmp);
+	node->content_size += (len + 1);
+	return (input + len + 1);
 }
 
-static void	handle_qoute(t_token *node, char *input, char qoute)
+static t_state	handle_word(t_token *node, char *input, t_state state)
 {
-	node->content_size++;
-	while (input[node->content_size] && input[node->content_size] != qoute)
-		node->content_size++;
-	node->content = ft_substr(input, 1, node->content_size - 1);
-	if (!input[node->content_size])
-		read_new_line(node, qoute);
-	ft_gc_add(node->content);
-	node->content_size++;
-}
+	char	*tmp;
+	size_t	len;
 
-static void	handle_word(t_token *node, char *input, t_state state)
-{
-	if (state == S_QOUTE)
-		return (handle_qoute(node, input, '"'));
+	node->content = ft_strdup("");
 	if (state == S_SINGLE_QOUTE)
-		return (handle_qoute(node, input, '\''));
-	while (is_word(input[node->content_size]))
-		node->content_size++;
-	node->content = ft_substr(input, 0, node->content_size);
-	ft_gc_add(node->content);
+		input = handle_qoute(node, input, '\'');
+	else if (state == S_QOUTE)
+		input = handle_qoute(node, input, '"');
+	while (*input && is_word(*input))
+	{
+		len = 0;
+		while (is_word(input[len]))
+			len++;
+		tmp = ft_substr(input, 0, len);
+		node->content = ft_strjoin_with_free(node->content, tmp);
+		input += len;
+		node->content_size += len;
+		if (input[len] == '\'')
+			input = handle_qoute(node, input, '\'');
+		else if (input[len] == '"')
+			input = handle_qoute(node, input, '"');
+	}
+	return (F_WORD);
 }
 
 static char	*fill_token(t_token *node, char *input)
@@ -79,19 +100,21 @@ static char	*fill_token(t_token *node, char *input)
 	}
 	if (state == S_ERROR)
 		handle_error(E_INVALID_TOKEN);
-	handle_word(node, input, state);
+	state = handle_word(node, input, state);
 	node->type = (t_token_type)state;
 	return (input + node->content_size);
 }
 
 t_token_list	*get_token_list(char *input)
 {
-	t_token_list *node;
-	t_token_list *init;
+	t_token_list	*node;
+	t_token_list	*init;
+	t_token_list	*prev;
 
 	if (!input)
 		return (NULL);
 	init = NULL;
+	prev = NULL;
 	while (*input)
 	{
 		node = ft_gc_malloc(sizeof(t_token_list));
@@ -99,8 +122,11 @@ t_token_list	*get_token_list(char *input)
 			handle_error(E_MALLOC_FAILED);
 		if (!init)
 			init = node;
+		else
+			prev->next = node;
+		// printf("INPUT-> %s\n", input);
 		input = fill_token(&node->token, input);
-		node = node->next;
+		prev = node;
 	}
 	return (init);
 }
