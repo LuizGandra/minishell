@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 18:12:52 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/01/17 16:13:51 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/02/06 12:39:50 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,40 @@ char	*get_nl_address(const char *s)
 
 void	close_and_clear(int fd)
 {
+	if (fd >= 0 && fd < FD_MAX)
+	{
+		clear_gnl_buffer(fd);
+		close(fd);
+	}
+}
+
+void	clear_gnl_buffer(int fd)
+{
 	char	**buffer;
+	int		i;
 
 	buffer = get_gnl_buffer();
-	if (fd >= 0 && fd < 1024)
+	if (fd >= 0 && fd < FD_MAX)
 	{
 		if (buffer[fd])
 		{
 			free(buffer[fd]);
 			buffer[fd] = NULL;
 		}
-		close(fd);
 	}
-}
-
-char	**get_gnl_buffer(void)
-{
-	static char	*buffer[1024];
-
-	return ((char **)buffer);
+	if (fd == CLEAR_ALL)
+	{
+		i = 0;
+		while (i < FD_MAX)
+		{
+			if (buffer[i])
+			{
+				free(buffer[i]);
+				buffer[i] = NULL;
+			}
+			i++;
+		}
+	}
 }
 
 char	*ft_strjoin_with_free(char *s1, char *s2)
@@ -69,4 +84,11 @@ char	*ft_strjoin_with_free(char *s1, char *s2)
 	new_string[j] = '\0';
 	free((char *)s1);
 	return (new_string);
+}
+
+char	**get_gnl_buffer(void)
+{
+	static char	*buffer[FD_MAX];
+
+	return ((char **)buffer);
 }
