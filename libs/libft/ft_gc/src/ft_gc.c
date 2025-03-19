@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 09:40:14 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/19 08:16:37 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/19 08:44:31 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	*ft_gc_malloc(size_t size)
 	void	*ptr;
 
 	ctx = get_global_ctx();
+	while (ctx->next)
+		ctx = ctx->next;
 	ptr = ft_calloc(1, size);
 	if (!ptr)
 		return (NULL);

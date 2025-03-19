@@ -103,6 +103,7 @@ valgrind: all
 	--show-leak-kinds=all -s \
 	--track-origins=yes \
 	--log-file=$(VALGRIND_LOG) \
+	--suppressions=./readline.supp \
 	./$(NAME)
 	@cat $(VALGRIND_LOG)
 

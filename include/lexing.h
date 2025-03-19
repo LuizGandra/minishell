@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/17 13:23:54 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/19 08:59:54 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef enum e_state
 	S_WORD,
 	S_SINGLE_QOUTE,
 	S_QOUTE,
-
 	F_OR,
 	F_AND,
 	F_REDIR_HDOC,
