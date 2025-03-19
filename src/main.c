@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/19 09:10:04 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:09:26 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	ft_loop(void)
 	shell = get_minishell();
 	while (TRUE)
 	{
+		ft_gc_exit();
 		shell->user_input = readline(C_CYA "minishell$> " C_RST);
 		if (!shell->user_input)
 		{

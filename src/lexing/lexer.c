@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/19 09:01:13 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:24:18 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,7 @@ static char	*fill_token(t_token *node, char *input)
 		return (input + 1);
 	}
 	if (state == S_ERROR)
-	{
-		handle_error(E_INVALID_TOKEN);
 		return (input + ft_strlen(input));
-	}
 	state = handle_word(node, input, state);
 	node->type = (t_token_type)state;
 	return (input + node->content_size);
@@ -140,5 +137,6 @@ t_token_list	*get_token_list(char *input)
 		input = fill_token(&node->token, input);
 		prev = node;
 	}
+	init = validate_tokens(init);
 	return (init);
 }
