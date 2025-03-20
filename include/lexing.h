@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/17 13:23:54 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:02:08 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef enum e_state
 	S_WORD,
 	S_SINGLE_QOUTE,
 	S_QOUTE,
-
 	F_OR,
 	F_AND,
 	F_REDIR_HDOC,
@@ -74,5 +73,11 @@ t_bool					is_word(char c);
 char					*left_trim(char *input);
 t_state					get_seccond_state(char *input, t_state state);
 t_state					get_initial_state(char c);
+t_token_list			*validate_tokens(t_token_list *tokens);
+t_bool					is_separator(t_token token);
+t_bool					is_semicolon(t_token c);
+t_bool					is_redirector(t_token token);
+t_bool					can_finish(t_token c);
+void					*print_token_error(t_token_list *node);
 
 #endif

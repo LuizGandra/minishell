@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/17 13:18:53 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/19 08:59:38 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <readline/readline.h>
 
 typedef struct s_token_list	t_token_list;
-t_token_list			*get_token_list(char *input);
+t_token_list				*get_token_list(char *input);
 
 typedef enum e_error
 {
