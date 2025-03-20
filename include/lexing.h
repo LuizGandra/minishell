@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/20 12:02:08 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:49:25 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define LEXING_H
 
 # include "minishell.h"
+
+# define SYNTAX_ERROR "minishell: syntax error near unexpected token `%s'\n"
 
 typedef enum e_state
 {
