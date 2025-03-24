@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:21:48 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/24 13:18:26 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:54:21 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,27 @@ static t_bool	check_brackets(t_token_list *list)
 static t_bool	validate_separators(t_token_list *current)
 {
 	if (is_separator(current->token) && is_separator(current->next->token))
-		return ((t_bool)print_token_error(current->next));
+	{
+		print_token_error(current->next);
+		return (FALSE);
+	}
 	return (TRUE);
 }
 
 static t_bool	validate_brackets(t_token_list *current)
 {
-	if (current->token.type == OPEN_BRACKET
-		&& (current->next->token.type == CLOSE_BRACKET
-			|| is_separator(current->next->token)))
-		return ((t_bool)print_token_error(current->next));
+	if (current->token.type == OPEN_BRACKET && (current->next->token.type
+			== CLOSE_BRACKET || is_separator(current->next->token)))
+	{
+		print_token_error(current->next);
+		return (FALSE);
+	}
 	if (current->token.type == WORD && current->next
 		&& current->next->token.type == OPEN_BRACKET)
-		return ((t_bool)print_token_error(current->next));
+	{
+		print_token_error(current->next);
+		return (FALSE);
+	}
 	if (current->token.type == CLOSE_BRACKET && current->next
 		&& current->next->token.type == WORD)
 	{
@@ -64,7 +72,10 @@ static t_bool	validate_brackets(t_token_list *current)
 	}
 	if (current->token.type == CLOSE_BRACKET && current->next
 		&& current->next->token.type == OPEN_BRACKET)
-		return ((t_bool)print_token_error(current->next));
+	{
+		print_token_error(current->next);
+		return (FALSE);
+	}
 	return (TRUE);
 }
 
