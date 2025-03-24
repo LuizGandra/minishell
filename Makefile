@@ -39,6 +39,7 @@ FILES = \
 	main.c \
 	$(LEXING_PATH)utils.c \
 	$(LEXING_PATH)lexer.c \
+	$(LEXING_PATH)state.c \
 	$(LEXING_PATH)validation.c \
 	$(LEXING_PATH)validation_utils.c \
 	$(UTILS_PATH)error.c \

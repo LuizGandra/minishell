@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:21:48 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/21 07:33:11 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:54:51 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ static t_bool	check_brackets(t_token_list *list)
 
 static t_bool	validate_separators(t_token_list *current)
 {
-	if ((is_separator(current->token) || is_semicolon(current->token))
-		&& (is_separator(current->next->token)
-			|| is_semicolon(current->next->token)))
+	if (is_separator(current->token) && is_separator(current->next->token))
 		return ((t_bool)print_token_error(current->next));
 	return (TRUE);
 }
@@ -53,8 +51,7 @@ static t_bool	validate_brackets(t_token_list *current)
 {
 	if (current->token.type == OPEN_BRACKET
 		&& (current->next->token.type == CLOSE_BRACKET
-			|| is_separator(current->next->token)
-			|| is_semicolon(current->next->token)))
+			|| is_separator(current->next->token)))
 		return ((t_bool)print_token_error(current->next));
 	if (current->token.type == WORD && current->next
 		&& current->next->token.type == OPEN_BRACKET)
@@ -62,10 +59,10 @@ static t_bool	validate_brackets(t_token_list *current)
 	if (current->token.type == CLOSE_BRACKET && current->next
 		&& current->next->token.type == WORD)
 	{
-		ft_printf_fd(2, SYNTAX_ERROR, current->token.content);
+		ft_printf_fd(2, SYNTAX_ERROR, current->token.full_content);
 		return (FALSE);
 	}
-	if (current->token.type == CLOSE_BRACKET
+	if (current->token.type == CLOSE_BRACKET && current->next
 		&& current->next->token.type == OPEN_BRACKET)
 		return ((t_bool)print_token_error(current->next));
 	return (TRUE);
@@ -76,7 +73,7 @@ t_token_list	*validate_tokens(t_token_list *tokens)
 	t_token_list	*current;
 
 	current = tokens;
-	if (is_separator(current->token) || is_semicolon(current->token))
+	if (is_separator(current->token))
 		return (print_token_error(current));
 	while (current)
 	{

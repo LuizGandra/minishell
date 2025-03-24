@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/20 14:49:25 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:39:31 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell.h"
 
 # define SYNTAX_ERROR "minishell: syntax error near unexpected token `%s'\n"
+# define EOF_ERROR "minishell: syntax error: unexpected end of file\n"
 
 typedef enum e_state
 {
@@ -38,7 +39,6 @@ typedef enum e_state
 	F_REDIR_OUT,
 	F_OPEN_BRACKET,
 	F_CLOSE_BRACKET,
-	F_SEMICOLON,
 }						t_state;
 
 typedef enum e_token_type
@@ -54,14 +54,22 @@ typedef enum e_token_type
 	REDIR_OUT,
 	OPEN_BRACKET,
 	CLOSE_BRACKET,
-	SEMICOLON,
 }						t_token_type;
+
+typedef struct s_content_part
+{
+	char				*str;
+	char				quote;
+	t_bool				expandible;
+}						t_content_part;
 
 typedef struct s_token
 {
 	t_token_type		type;
-	char				*content;
-	size_t				content_size;
+	char				*full_content;
+	t_content_part		content[2000];
+	size_t				size;
+	t_bool				error;
 }						t_token;
 
 typedef struct s_token_list
@@ -77,9 +85,9 @@ t_state					get_seccond_state(char *input, t_state state);
 t_state					get_initial_state(char c);
 t_token_list			*validate_tokens(t_token_list *tokens);
 t_bool					is_separator(t_token token);
-t_bool					is_semicolon(t_token c);
 t_bool					is_redirector(t_token token);
 t_bool					can_finish(t_token c);
 void					*print_token_error(t_token_list *node);
+void					fill_full_content(t_token *node);
 
 #endif

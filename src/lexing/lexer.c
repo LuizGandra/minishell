@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/19 15:24:18 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:49:16 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,79 +14,80 @@
 
 static void	read_new_line(t_token *node, char qoute)
 {
+	char	*tmp;
 	char	*line;
-	char	*tmp;
-	size_t	len;
 
-	line = readline(C_BLD "quote>" C_RST);
-	if (!line)
-		return ;
-	len = 0;
-	while (line[len] && line[len] != qoute)
+	tmp = strdup("");
+	while (1)
 	{
-		if (line[len] != qoute)
-			len++;
+		line = readline("> ");
+		if (!line)
+		{
+			node->error = TRUE;
+			return ;
+		}
+		if (!ft_strchr(line, qoute))
+		{
+			tmp = ft_strjoin_with_free(tmp, line);
+			tmp = ft_strjoin_with_free(tmp, "\n");
+		}
+		else
+		{
+			line = ft_substr(line, 0, ft_strchr(line, qoute) - line);
+			tmp = ft_strjoin_with_free(tmp, line);
+			return ;
+		}
 	}
-	tmp = ft_substr(line, 0, len);
-	node->content = ft_strjoin_with_free(node->content, tmp);
-	free(tmp);
-	if (!line[len])
-		read_new_line(node, qoute);
-	free(line);
 }
 
-static char	*handle_qoute(t_token *node, char *input, char qoute)
+static char	*handle_quote(t_token *node, char *input)
 {
-	char	*tmp;
 	int		len;
+	char	quote;
 
-	len = 0;
-	if (input[len] != qoute)
+	if (*input != '\'' && *input != '"')
 		return (input);
-	input++;
-	node->content_size++;
-	while (input[len] && input[len] != qoute)
+	quote = *input;
+	len = 1;
+	while (input[len - 1] && input[len - 1] != quote)
 		len++;
-	tmp = ft_substr(input, 0, len);
-	node->content = ft_strjoin_with_free(node->content, tmp);
-	free(tmp);
-	node->content_size += (len + 1);
-	if (!input[len])
-	{
-		read_new_line(node, qoute);
-		len--;
-		node->content_size--;
-	}
-	return (input + len + 1);
+	node->content[node->size].str = ft_substr(input, 0, len);
+	node->content[node->size].quote = quote;
+	if (quote == '\'')
+		node->content[node->size].expandible = FALSE;
+	else
+		node->content[node->size].expandible = TRUE;
+	node->size++;
+	if (!input[len - 1])
+		read_new_line(node, quote);
+	ft_gc_add(node->content[node->size].str);
+	return (input + len);
 }
 
-static t_state	handle_word(t_token *node, char *input, t_state state)
+static char	*handle_word(t_token *node, char *input)
 {
-	char	*tmp;
 	size_t	len;
 
-	node->content = ft_strdup("");
-	if (state == S_SINGLE_QOUTE)
-		input = handle_qoute(node, input, '\'');
-	else if (state == S_QOUTE)
-		input = handle_qoute(node, input, '"');
+	input = handle_quote(node, input);
+	if (node->error)
+		return (input + ft_strlen(input));
 	while (*input && is_word(*input))
 	{
 		len = 0;
 		while (is_word(input[len]))
 			len++;
-		tmp = ft_substr(input, 0, len);
-		node->content = ft_strjoin_with_free(node->content, tmp);
-		free(tmp);
+		node->content[node->size].str = ft_substr(input, 0, len);
+		node->content[node->size].expandible = TRUE;
+		node->size++;
 		input += len;
-		node->content_size += len;
-		if (*input == '\'')
-			input = handle_qoute(node, input, '\'');
-		else if (*input == '"')
-			input = handle_qoute(node, input, '"');
+		ft_gc_add(node->content[node->size].str);
+		input = handle_quote(node, input);
+		if (node->error)
+			return (input + ft_strlen(input));
 	}
-	ft_gc_add(node->content);
-	return (F_WORD);
+	fill_full_content(node);
+	node->type = WORD;
+	return (input);
 }
 
 static char	*fill_token(t_token *node, char *input)
@@ -95,24 +96,27 @@ static char	*fill_token(t_token *node, char *input)
 
 	input = left_trim(input);
 	state = get_initial_state(*input);
-	if (state >= F_OR && state <= F_SEMICOLON)
+	if ((state >= F_OR && state <= F_CLOSE_BRACKET) || state == S_ERROR)
 	{
 		node->type = (t_token_type)state;
 		return (input + 1);
 	}
 	state = get_seccond_state(input, state);
-	if (state >= F_OR && state <= F_SEMICOLON)
+	if (state >= F_OR && state <= F_CLOSE_BRACKET)
 	{
 		node->type = (t_token_type)state;
 		if (state >= F_OR && state <= F_REDIR_OUT_APP)
 			return (input + 2);
 		return (input + 1);
 	}
-	if (state == S_ERROR)
-		return (input + ft_strlen(input));
-	state = handle_word(node, input, state);
-	node->type = (t_token_type)state;
-	return (input + node->content_size);
+	input = handle_word(node, input);
+	if (node->error)
+	{
+		ft_printf_fd(2,
+			"minishell: unexpected EOF while looking for matching `''\n");
+		ft_printf_fd(2, EOF_ERROR);
+	}
+	return (input);
 }
 
 t_token_list	*get_token_list(char *input)
@@ -137,6 +141,8 @@ t_token_list	*get_token_list(char *input)
 		input = fill_token(&node->token, input);
 		prev = node;
 	}
+	if (node->token.error)
+		return (NULL);
 	init = validate_tokens(init);
 	return (init);
 }
