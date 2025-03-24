@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:21:48 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/24 12:54:51 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:18:26 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_bool	validate_brackets(t_token_list *current)
 	if (current->token.type == CLOSE_BRACKET && current->next
 		&& current->next->token.type == WORD)
 	{
-		ft_printf_fd(2, SYNTAX_ERROR, current->token.full_content);
+		ft_printf_fd(2, SYNTAX_ERROR, current->next->token.full_content);
 		return (FALSE);
 	}
 	if (current->token.type == CLOSE_BRACKET && current->next
