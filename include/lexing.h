@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/24 12:39:31 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:38:01 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell.h"
 
 # define SYNTAX_ERROR "minishell: syntax error near unexpected token `%s'\n"
+# define QUOTE_ERROR "minishell: unclosed quote: `%c'\n"
 # define EOF_ERROR "minishell: syntax error: unexpected end of file\n"
 
 typedef enum e_state
@@ -60,7 +61,6 @@ typedef struct s_content_part
 {
 	char				*str;
 	char				quote;
-	t_bool				expandible;
 }						t_content_part;
 
 typedef struct s_token

@@ -6,62 +6,33 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/24 15:22:05 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:38:08 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-static void	read_new_line(t_token *node, char qoute)
-{
-	char	*tmp;
-	char	*line;
-
-	tmp = strdup("");
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-		{
-			node->error = TRUE;
-			return ;
-		}
-		if (!ft_strchr(line, qoute))
-		{
-			tmp = ft_strjoin_with_free(tmp, line);
-			tmp = ft_strjoin_with_free(tmp, "\n");
-		}
-		else
-		{
-			line = ft_substr(line, 0, ft_strchr(line, qoute) - line);
-			tmp = ft_strjoin_with_free(tmp, line);
-			return ;
-		}
-	}
-}
-
 static char	*handle_quote(t_token *node, char *input)
 {
-	int		len;
+	size_t	len;
 	char	quote;
 
 	if (*input != '\'' && *input != '"')
 		return (input);
 	quote = *input;
-	len = 2;
-	while (input[len - 1] && input[len - 1] != quote)
+	len = 0;
+	while (input[len + 1] && input[len + 1] != quote)
 		len++;
-	node->content[node->size].str = ft_substr(input, 0, len);
+	node->content[node->size].str = ft_substr(input, 1, len);
 	node->content[node->size].quote = quote;
-	if (quote == '\'')
-		node->content[node->size].expandible = FALSE;
-	else
-		node->content[node->size].expandible = TRUE;
 	node->size++;
-	if (!input[len - 1])
-		read_new_line(node, quote);
 	ft_gc_add(node->content[node->size].str);
-	return (input + len);
+	if (!input[len + 1])
+	{
+		node->error = TRUE;
+		return (input + ft_strlen(input));
+	}
+	return (input + len + 2);
 }
 
 static char	*handle_word(t_token *node, char *input)
@@ -69,23 +40,19 @@ static char	*handle_word(t_token *node, char *input)
 	size_t	len;
 
 	input = handle_quote(node, input);
-	if (node->error)
-		return (input + ft_strlen(input));
 	while (*input && is_word(*input))
 	{
 		len = 0;
 		while (is_word(input[len]))
 			len++;
 		node->content[node->size].str = ft_substr(input, 0, len);
-		node->content[node->size].expandible = TRUE;
 		node->size++;
 		input += len;
 		ft_gc_add(node->content[node->size].str);
 		input = handle_quote(node, input);
-		if (node->error)
-			return (input + ft_strlen(input));
 	}
-	fill_full_content(node);
+	if (!node->error)
+		fill_full_content(node);
 	node->type = WORD;
 	return (input);
 }
@@ -111,11 +78,7 @@ static char	*fill_token(t_token *node, char *input)
 	}
 	input = handle_word(node, input);
 	if (node->error)
-	{
-		ft_printf_fd(2,
-			"minishell: unexpected EOF while looking for matching `''\n");
-		ft_printf_fd(2, EOF_ERROR);
-	}
+		ft_printf_fd(2, QUOTE_ERROR, node->content[node->size - 1].quote);
 	return (input);
 }
 
