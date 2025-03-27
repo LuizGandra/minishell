@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:21:48 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/24 14:54:21 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:34:14 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_token_list	*validate_tokens(t_token_list *tokens)
 	t_token_list	*current;
 
 	current = tokens;
-	if (is_separator(current->token))
+	if (is_separator(current->token) || current->token.type == CLOSE_BRACKET)
 		return (print_token_error(current));
 	while (current)
 	{

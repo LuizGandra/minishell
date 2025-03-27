@@ -6,12 +6,11 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:04:12 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 08:09:41 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:34:36 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
-
 
 t_bool	match_wildcard(const char *pattern, const char *filename)
 {

@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/26 13:14:09 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:23:02 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*fill_token(t_token *node, char *input)
 
 	input = left_trim(input);
 	state = get_initial_state(*input);
-	if ((state >= F_OR && state <= F_CLOSE_BRACKET) || state == S_ERROR)
+	if (state >= F_OR && state <= F_CLOSE_BRACKET)
 	{
 		node->type = (t_token_type)state;
 		return (input + 1);
@@ -76,6 +76,8 @@ static char	*fill_token(t_token *node, char *input)
 			return (input + 2);
 		return (input + 1);
 	}
+	if (state == S_ERROR)
+		return (input + 1);
 	input = handle_word(node, input);
 	if (node->error)
 		ft_printf_fd(2, QUOTE_ERROR, node->content[node->size - 1].quote);
