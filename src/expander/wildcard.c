@@ -6,53 +6,17 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:21:33 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/26 15:49:27 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/27 08:37:02 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 #include <dirent.h>
 
-static t_bool	match_wildcard(const char *pattern, const char *filename)
+static t_bool	match_dot(char *pattern, char *file)
 {
-	if (*filename == '.')
-		return (FALSE);
-	if (*pattern == '\0' && *filename == '\0')
-		return (TRUE);
-	if (*pattern == '\x11')
-	{
-		return (match_wildcard(pattern + 1, filename) || (*filename
-				&& match_wildcard(pattern, filename + 1)));
-	}
-	if (*pattern == *filename)
-		return (match_wildcard(pattern + 1, filename + 1));
-	return (FALSE);
-}
-
-static t_token_list	*get_left_token(t_token_list *list, t_token *token)
-{
-	t_token_list	*prev;
-
-	prev = NULL;
-	while (list)
-	{
-		if (token == &list->token)
-			break ;
-		prev = list;
-		list = list->next;
-	}
-	return (prev);
-}
-
-static t_token_list	*get_current_token(t_token_list *list, t_token *token)
-{
-	while (list)
-	{
-		if (token == &list->token)
-			return (list);
-		list = list->next;
-	}
-	return (NULL);
+	return ((*file != '.' || *pattern == '.') && ft_strcmp(file, ".")
+		&& ft_strcmp(file, ".."));
 }
 
 static t_token_list	*add_token(t_token_list **list, t_token_list *prev,
@@ -63,11 +27,12 @@ static t_token_list	*add_token(t_token_list **list, t_token_list *prev,
 	new = ft_gc_malloc(sizeof(t_token_list));
 	if (!prev)
 	{
-		new->next = *list;
+		new->next = (*list)->next;
 		*list = new;
 		new->token.type = WORD;
 		new->token.full_content = ft_strdup(str);
 		ft_gc_add(new->token.full_content);
+		*first = FALSE;
 		return (new);
 	}
 	if (*first)
@@ -101,7 +66,8 @@ t_token_list	*expand_wildcards(t_token *token, t_token_list **list)
 		entry = readdir(dir);
 		if (!entry)
 			break ;
-		if (match_wildcard(token->full_content, entry->d_name))
+		if (match_wildcard(token->full_content, entry->d_name)
+			&& match_dot(token->full_content, entry->d_name))
 			prev = add_token(list, prev, entry->d_name, &first);
 	}
 	closedir(dir);

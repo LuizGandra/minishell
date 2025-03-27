@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:45:52 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/25 11:33:25 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:09:39 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_env(void)
 
 	get_minishell()->env = ft_map_create(12000);
 	ft_map_insert(get_minishell()->env, "?", "0");
+	ft_map_insert(get_minishell()->env, "a", "*");
 	value = ft_itoa(getpid());
 	ft_map_insert(get_minishell()->env, "$", value);
 	free(value);
