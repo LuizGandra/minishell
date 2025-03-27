@@ -3,3 +3,5 @@
 build/
 lib/libft/bin/
 minishell
+valgrind.log
+test/

@@ -39,6 +39,9 @@ FILES = \
 	main.c \
 	$(LEXING_PATH)utils.c \
 	$(LEXING_PATH)lexer.c \
+	$(LEXING_PATH)state.c \
+	$(LEXING_PATH)validation.c \
+	$(LEXING_PATH)validation_utils.c \
 	$(UTILS_PATH)error.c \
 	$(UTILS_PATH)global.c \
 	$(UTILS_PATH)get_env.c 
@@ -103,6 +106,7 @@ valgrind: all
 	--show-leak-kinds=all -s \
 	--track-origins=yes \
 	--log-file=$(VALGRIND_LOG) \
+	--suppressions=./readline.supp \
 	./$(NAME)
 	@cat $(VALGRIND_LOG)
 
