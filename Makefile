@@ -32,6 +32,7 @@ SRC_PATH = ./src/
 HEADER_PATH = ./include/
 BUILD_PATH = ./build/
 
+EXPANDER_PATH = ./expander/
 LEXING_PATH = ./lexing/
 UTILS_PATH = ./utils/
 
@@ -39,6 +40,13 @@ FILES = \
 	main.c \
 	$(LEXING_PATH)utils.c \
 	$(LEXING_PATH)lexer.c \
+	$(LEXING_PATH)state.c \
+	$(LEXING_PATH)validation.c \
+	$(LEXING_PATH)validation_utils.c \
+	$(EXPANDER_PATH)var.c \
+	$(EXPANDER_PATH)expander.c \
+	$(EXPANDER_PATH)wildcard.c \
+	$(EXPANDER_PATH)wildcard_utils.c \
 	$(UTILS_PATH)error.c \
 	$(UTILS_PATH)global.c \
 	$(UTILS_PATH)get_env.c 
@@ -61,6 +69,7 @@ ifeq ($(wildcard $(LIB_PATH)/$(LIB_NAME)),)
 endif
 
 $(BUILD_PATH):
+	@mkdir -p $(BUILD_PATH)$(EXPANDER_PATH)
 	@mkdir -p $(BUILD_PATH)$(LEXING_PATH)
 	@mkdir -p $(BUILD_PATH)$(UTILS_PATH)
 
