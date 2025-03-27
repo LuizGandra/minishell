@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/25 09:38:01 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:13:56 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct s_token_list
 	t_token				token;
 	struct s_token_list	*next;
 }						t_token_list;
+
+void					expand(t_token_list **token_list);
 
 t_token_list			*get_token_list(char *input);
 t_bool					is_word(char c);
