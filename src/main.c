@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/26 13:13:26 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:26:11 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	ft_loop(void);
 
-static char *get_type(t_token token)
+static char	*get_type(t_token token)
 {
 	if (token.type == PIPE)
 		return ("PIPE");
@@ -28,14 +28,15 @@ static char *get_type(t_token token)
 	return ("UNKNOWN");
 }
 
-static void print_tokens(t_token_list *tokens)
+static void	print_tokens(t_token_list *tokens)
 {
 	t_token_list	*tmp;
 
 	tmp = tokens;
 	while (tmp)
 	{
-		ft_printf( C_CYA "type: " C_RST "%s" C_RED  " value: " C_RST "%s\n", get_type(tmp->token), tmp->token.full_content);
+		ft_printf(C_CYA "type: " C_RST "%s" C_RED " value: " C_RST "%s\n",
+			get_type(tmp->token), tmp->token.full_content);
 		tmp = tmp->next;
 	}
 }
@@ -61,6 +62,8 @@ static void	ft_loop(void)
 			ft_printf("exit\n");
 			break ;
 		}
+		if (shell->user_input[0] == '\0')
+			continue ;
 		add_history(shell->user_input);
 		shell->tokens = get_token_list(shell->user_input);
 		print_tokens(shell->tokens);
