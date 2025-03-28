@@ -34,6 +34,7 @@ BUILD_PATH = ./build/
 
 EXPANDER_PATH = ./expander/
 LEXING_PATH = ./lexing/
+SIGNALS_PATH = ./signals/
 UTILS_PATH = ./utils/
 
 FILES = \
@@ -49,7 +50,8 @@ FILES = \
 	$(EXPANDER_PATH)wildcard_utils.c \
 	$(UTILS_PATH)error.c \
 	$(UTILS_PATH)global.c \
-	$(UTILS_PATH)get_env.c 
+	$(UTILS_PATH)get_env.c \
+	$(SIGNALS_PATH)handlers.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
 
@@ -71,6 +73,7 @@ endif
 $(BUILD_PATH):
 	@mkdir -p $(BUILD_PATH)$(EXPANDER_PATH)
 	@mkdir -p $(BUILD_PATH)$(LEXING_PATH)
+	@mkdir -p $(BUILD_PATH)$(SIGNALS_PATH)
 	@mkdir -p $(BUILD_PATH)$(UTILS_PATH)
 
 print:

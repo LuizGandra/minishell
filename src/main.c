@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 09:26:11 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/27 21:40:29 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
+#include "signals.h"
 #include "minishell.h"
+
+int	g_received_signal;
 
 static void	ft_loop(void);
 
@@ -52,6 +55,7 @@ static void	ft_loop(void)
 {
 	t_shell	*shell;
 
+	listen_signals();
 	shell = get_minishell();
 	while (TRUE)
 	{
@@ -62,7 +66,7 @@ static void	ft_loop(void)
 			ft_printf("exit\n");
 			break ;
 		}
-		if (shell->user_input[0] == '\0')
+		if (shell->user_input[0] == '\0' || g_received_signal == SIGINT)
 			continue ;
 		add_history(shell->user_input);
 		shell->tokens = get_token_list(shell->user_input);
