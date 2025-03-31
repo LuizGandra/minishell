@@ -48,7 +48,7 @@ FILES = \
 	$(EXPANDER_PATH)expander.c \
 	$(EXPANDER_PATH)wildcard.c \
 	$(EXPANDER_PATH)wildcard_utils.c \
-	$(UTILS_PATH)error.c \
+	$(UTILS_PATH)cleanner.c \
 	$(UTILS_PATH)global.c \
 	$(UTILS_PATH)get_env.c \
 	$(SIGNALS_PATH)handlers.c \
