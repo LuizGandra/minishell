@@ -25,6 +25,7 @@ LIB_SOURCES = \
 	ft_atost.c \
 	ft_bzero.c \
 	ft_split.c \
+	ft_atoui8.c \
 	ft_checkw.c \
 	ft_calloc.c \
 	ft_memset.c \
