@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/27 21:13:10 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:12:22 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_shell
 	t_hash_table			*env;
 	char					*user_input;
 	t_token_list			*tokens;
+	t_bool					exit;
 }							t_shell;
 
 t_shell						*get_minishell(void);
