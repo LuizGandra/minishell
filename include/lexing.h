@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/26 13:13:56 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/31 09:32:19 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_token
 typedef struct s_token_list
 {
 	t_token				token;
+	struct s_token_list	*prev;
 	struct s_token_list	*next;
 }						t_token_list;
 

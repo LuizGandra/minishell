@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 10:23:02 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/31 09:39:12 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,16 @@ t_token_list	*get_token_list(char *input)
 	if (!input)
 		return (NULL);
 	init = NULL;
-	prev = NULL;
 	while (*input)
 	{
 		node = ft_gc_malloc(sizeof(t_token_list));
-		if (!node)
-			handle_error(E_MALLOC_FAILED);
 		if (!init)
 			init = node;
 		else
+		{
 			prev->next = node;
+			node->prev = prev;
+		}
 		input = fill_token(&node->token, input);
 		prev = node;
 	}
