@@ -6,12 +6,15 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 09:26:11 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/31 09:50:39 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
+#include "signals.h"
 #include "minishell.h"
+
+int	g_received_signal;
 
 static void	ft_loop(void);
 
@@ -52,6 +55,7 @@ static void	ft_loop(void)
 {
 	t_shell	*shell;
 
+	listen_signals();
 	shell = get_minishell();
 	while (TRUE)
 	{

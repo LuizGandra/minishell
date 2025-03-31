@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 07:56:56 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/31 09:42:34 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/27 19:57:18 by lcosta-g          #+#    #+#             */
+/*   Updated: 2025/03/31 09:45:17 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-void	handle_error(t_error error)
-{
-	t_shell	*shell;
+# include <signal.h>
+# include "minishell.h"
 
-	shell = get_minishell();
-	ft_map_destroy(shell->env);
-	ft_gc_exit();
-	exit(error);
-}
+extern int	g_received_signal;
+
+void		listen_signals(void);
+
+#endif
