@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:26:05 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 10:34:43 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:31:26 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*handle_var(char *str, char **output)
 	len = 0;
 	while (is_varchar(str[len]))
 		len++;
-	if (*str == '?' || *str == '$')
+	if (*str == '?' || *str == '$' || ft_isdigit(str[0]))
 		len = 1;
 	key = ft_substr(str, 0, len);
 	value = ft_getenv(key);

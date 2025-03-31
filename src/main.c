@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 21:40:29 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/03/31 09:50:39 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	ft_loop(void)
 			ft_printf("exit\n");
 			break ;
 		}
-		if (shell->user_input[0] == '\0' || g_received_signal == SIGINT)
+		if (shell->user_input[0] == '\0')
 			continue ;
 		add_history(shell->user_input);
 		shell->tokens = get_token_list(shell->user_input);
