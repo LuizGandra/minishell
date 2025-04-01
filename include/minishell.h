@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/03/31 18:25:10 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/01 09:55:27 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define MINISHELL_H
 
 # include "../libs/libft/libft.h"
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <fcntl.h>
 
 typedef struct s_token_list	t_token_list;
 t_token_list				*get_token_list(char *input);
@@ -33,5 +33,6 @@ t_shell						*get_minishell(void);
 void						init_env(void);
 char						*ft_getenv(char *key);
 int							clean_all(void);
+char						*ft_readline(void);
 
 #endif

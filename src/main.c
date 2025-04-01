@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/31 16:54:20 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/01 09:56:58 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,10 @@ static void	ft_loop(void)
 
 	listen_signals();
 	shell = get_minishell();
-	shell->exit = TRUE;
 	while (!shell->exit)
 	{
 		g_received_signal = 0;
-		shell->user_input = readline(C_CYA "minishell$> " C_RST);
+		shell->user_input = ft_readline();
 		if (!shell->user_input)
 		{
 			ft_printf("exit\n");

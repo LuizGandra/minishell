@@ -51,6 +51,7 @@ FILES = \
 	$(UTILS_PATH)cleanner.c \
 	$(UTILS_PATH)global.c \
 	$(UTILS_PATH)get_env.c \
+	$(UTILS_PATH)ft_readline.c \
 	$(SIGNALS_PATH)handlers.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
