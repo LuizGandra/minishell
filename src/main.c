@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/31 17:15:26 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:54:20 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(void)
 {
 	init_env();
 	ft_loop();
-	handle_error(E_SUCCESS);
+	return (clean_all());
 }
 
 static void	ft_loop(void)

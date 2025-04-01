@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   cleanner.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:56:56 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/31 09:42:34 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:29:23 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_error(t_error error)
+int	clean_all(void)
 {
-	t_shell	*shell;
+	int	ret_code;
 
-	shell = get_minishell();
-	ft_map_destroy(shell->env);
+	ret_code = (int)ft_atoui8(ft_getenv("?"));
+	ft_map_destroy(get_minishell()->env);
 	ft_gc_exit();
-	exit(error);
+	return (ret_code);
 }
