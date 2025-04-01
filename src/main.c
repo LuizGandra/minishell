@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
 /*   Updated: 2025/03/31 16:54:20 by lhenriqu         ###   ########.fr       */
@@ -57,7 +57,8 @@ static void	ft_loop(void)
 
 	listen_signals();
 	shell = get_minishell();
-	while (g_received_signal != -1)
+	shell->exit = TRUE;
+	while (!shell->exit)
 	{
 		g_received_signal = 0;
 		shell->user_input = readline(C_CYA "minishell$> " C_RST);
@@ -67,7 +68,7 @@ static void	ft_loop(void)
 			break ;
 		}
 		if (shell->user_input[0] == '\0')
-		continue ;
+			continue ;
 		add_history(shell->user_input);
 		shell->tokens = get_token_list(shell->user_input);
 		print_tokens(shell->tokens);

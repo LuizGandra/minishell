@@ -26,6 +26,7 @@ typedef struct s_shell
 	t_hash_table			*env;
 	char					*user_input;
 	t_token_list			*tokens;
+	t_bool					exit;
 }							t_shell;
 
 t_shell						*get_minishell(void);
