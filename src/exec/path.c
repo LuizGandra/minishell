@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:02:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/01 13:19:05 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/02 08:45:17 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*search_in_path(char *cmd)
 		new_cmd = NULL;
 		i++;
 	}
-	ft_free_matrix((char **)path, free);
+	ft_free_matrix((void **)path, free);
 	return (new_cmd);
 }
 

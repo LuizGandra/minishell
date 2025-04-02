@@ -36,6 +36,7 @@ EXPANDER_PATH = ./expander/
 LEXING_PATH = ./lexing/
 SIGNALS_PATH = ./signals/
 UTILS_PATH = ./utils/
+EXEC_PATH = ./exec/
 
 FILES = \
 	main.c \
@@ -53,6 +54,8 @@ FILES = \
 	$(UTILS_PATH)get_env.c \
 	$(UTILS_PATH)ft_readline.c \
 	$(SIGNALS_PATH)handlers.c \
+	$(EXEC_PATH)exec.c \
+	$(EXEC_PATH)path.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
 
@@ -76,6 +79,7 @@ $(BUILD_PATH):
 	@mkdir -p $(BUILD_PATH)$(LEXING_PATH)
 	@mkdir -p $(BUILD_PATH)$(SIGNALS_PATH)
 	@mkdir -p $(BUILD_PATH)$(UTILS_PATH)
+	@mkdir -p $(BUILD_PATH)$(EXEC_PATH)
 
 print:
 ifeq ($(wildcard $(NAME)),)
