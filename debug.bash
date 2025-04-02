@@ -33,12 +33,17 @@ cat > .vscode/launch.json <<EOF
             "externalConsole": true,
             "MIMode": "gdb",
             "setupCommands": [
-                {
-                    "description": "Habilitar exibição das variáveis",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
+				{
+					"description": "Não desanexar do processo filho",
+					"text": "set detach-on-fork off",
+					"ignoreFailures": true
+				},
+				{
+					"description": "Seguir o pai por padrão",
+					"text": "set follow-fork-mode parent",
+					"ignoreFailures": true
+				}
+			],
             "miDebuggerPath": "/usr/bin/gdb",
             "preLaunchTask": "build",
             "miDebuggerArgs": "",
