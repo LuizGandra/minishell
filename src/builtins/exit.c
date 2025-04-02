@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 12:15:08 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/31 17:15:55 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:29:17 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	print_exit_error(char *str, char *error)
+{
+	if (str == NULL)
+		ft_printf_fd(2, "minishell: exit: %s\n", error);
+	else
+		ft_printf_fd(2, "minishell: exit: %s: %s\n", str, error);
+}
 
 static t_bool	is_valid_digit(char *str)
 {
@@ -47,7 +55,7 @@ int	exit(char **args)
 	}
 	if (args[2] != NULL)
 	{
-		print_exit_error(args[2], "too many arguments");
+		print_exit_error(NULL, "too many arguments");
 		return (1);
 	}
 	shell->exit = TRUE;

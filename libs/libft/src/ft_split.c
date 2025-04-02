@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 11:29:50 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/03 16:53:40 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:17:44 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ char	**ft_split(char const *str, char c)
 	char	**matrix;
 	int		count_words;
 
+	if (str == NULL)
+		return (NULL);
 	while (*str == c && *str)
 		str++;
 	count_words = ft_count_words(str, c);

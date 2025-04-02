@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/31 09:32:19 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/02 07:45:58 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ typedef enum e_state
 
 typedef enum e_token_type
 {
-	INVALID,
-	OR = 8,
-	AND,
-	REDIR_HDOC,
-	REDIR_OUT_APP,
-	WORD,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	OPEN_BRACKET,
-	CLOSE_BRACKET,
+	TOK_INVALID,
+	TOK_OR = 8,
+	TOK_AND,
+	TOK_REDIR_HDOC,
+	TOK_REDIR_OUT_APP,
+	TOK_WORD,
+	TOK_PIPE,
+	TOK_REDIR_IN,
+	TOK_REDIR_OUT,
+	TOK_OPEN_BRACKET,
+	TOK_CLOSE_BRACKET,
 }						t_token_type;
 
 typedef struct s_content_part

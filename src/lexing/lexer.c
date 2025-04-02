@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/31 09:39:12 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/02 07:45:14 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*handle_word(t_token *node, char *input)
 	}
 	if (!node->error)
 		fill_full_content(node);
-	node->type = WORD;
+	node->type = TOK_WORD;
 	return (input);
 }
 

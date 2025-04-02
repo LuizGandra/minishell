@@ -1,42 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 09:59:41 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/02 08:18:16 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/04/02 08:44:36 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef EXEC_H
+# define EXEC_H
 
-# include "lexing.h"
 # include "minishell.h"
+# include "parser.h"
 
-typedef enum e_tree_type
-{
-	TREE_PIPE,
-	TREE_AND,
-	TREE_OR,
-	TREE_REDIR_IN,
-	TREE_REDIR_OUT,
-	TREE_REDIR_APPEND,
-	TREE_REDIR_HEREDOC,
-	TREE_COMMAND,
-	TREE_SUBSHELL
-}						t_tree_type;
+# include <sys/wait.h>
 
-typedef struct s_exec_tree
-{
-	t_tree_type			type;
-	t_token_list		*command;
-	char				*file;
-	struct s_exec_tree	*subshell;
-	struct s_exec_tree	*left;
-	struct s_exec_tree	*right;
-}						t_exec_tree;
+int	exec(t_exec_tree *tree);
 
 #endif
