@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:47:20 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/26 15:22:46 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/02 07:45:14 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	expand(t_token_list **token_list)
 	while (current)
 	{
 		token = &current->token;
-		if (token->type == WORD)
+		if (token->type == TOK_WORD)
 		{
 			current = expand_word(token, token_list);
 			finish_wildcard(token);
