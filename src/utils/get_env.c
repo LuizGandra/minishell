@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:45:52 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/03 09:02:16 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:30:42 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**map_to_env(t_hash_table *map)
 	i = -1;
 	i_env = 0;
 	env = NULL;
-	while (++i < map->size)
+	while (++i < (int)map->size)
 	{
 		item = map->items[i];
 		if (!item || !ft_strcmp(item->key, "?") || !ft_strcmp(item->key, "$"))
