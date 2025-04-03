@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/03 08:32:40 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:28:33 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_shell
 	t_hash_table			*env;
 	char					*user_input;
 	t_token_list			*tokens;
+	int						default_fds[2];
 	t_bool					exit;
 	struct termios			termios;
 }							t_shell;

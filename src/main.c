@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/02 12:04:28 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:34:35 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_exec_tree	*build_test_tree(void)
 {
 	t_exec_tree	*root;
 
-	// ls | cat -e > file || echo "error" && echo "success"
+	// ls | grep m |cat -e > file || echo "error" && echo "success"
 	root = ft_calloc(1, sizeof(t_exec_tree));
 	root->type = TREE_AND;
 	root->left = ft_calloc(1, sizeof(t_exec_tree));
@@ -66,8 +66,13 @@ static t_exec_tree	*build_test_tree(void)
 	root->left->left = ft_calloc(1, sizeof(t_exec_tree));
 	root->left->left->type = TREE_PIPE;
 	root->left->left->left = ft_calloc(1, sizeof(t_exec_tree));
-	root->left->left->left->type = TREE_COMMAND;
-	root->left->left->left->command = get_token_list("ls");
+	root->left->left->left->type = TREE_PIPE;
+	root->left->left->left->left = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->left->left->left->type = TREE_COMMAND;
+	root->left->left->left->left->command = get_token_list("ls");
+	root->left->left->left->right = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->left->left->right->type = TREE_COMMAND;
+	root->left->left->left->right->command = get_token_list("grep m");
 	root->right = ft_calloc(1, sizeof(t_exec_tree));
 	root->right->type = TREE_COMMAND;
 	root->right->command = get_token_list("echo \"success\"");
@@ -95,7 +100,8 @@ static void clone_terminal(void)
 
 	shell = get_minishell();
 	tcgetattr(STDIN_FILENO, &shell->termios);
-	// REDUP FDS
+	shell->default_fds[READ_FD] = dup(STDIN_FILENO);
+	shell->default_fds[WRITE_FD] = dup(STDOUT_FILENO);
 }
 
 static void reset_terminal(void)
@@ -104,7 +110,8 @@ static void reset_terminal(void)
 
 	shell = get_minishell();
 	tcsetattr(STDIN_FILENO, TCSANOW, &shell->termios);
-	// REDUP FDS
+	dup2(shell->default_fds[READ_FD], STDIN_FILENO);
+	dup2(shell->default_fds[WRITE_FD], STDOUT_FILENO);
 }
 
 static void	ft_loop(void)
@@ -118,7 +125,7 @@ static void	ft_loop(void)
 	{
 		g_received_signal = 0;
 		reset_terminal();
-		ft_printf("ls | cat -e > file || echo \"error\" && echo \"success\"\n");
+		ft_printf("ls | grep m | cat -e > file || echo \"error\" && echo \"success\"\n");
 		shell->user_input = ft_readline();
 		if (!shell->user_input)
 		{
@@ -129,7 +136,7 @@ static void	ft_loop(void)
 			continue ;
 		add_history(shell->user_input);
 		// shell->tokens = get_token_list(shell->user_input);
-		exec(build_test_tree());
+		exec(build_test_tree(), shell->default_fds);
 		// print_tokens(shell->tokens);
 		ft_gc_exit();
 	}
