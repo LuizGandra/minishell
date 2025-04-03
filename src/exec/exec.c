@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/03 14:35:52 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:09:56 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,29 @@ static int	exec_redirect(t_exec_tree *tree, int fds[2])
 
 static int	exec_command(t_exec_tree *tree, int fds[2])
 {
-	t_token_list	*tmp;
-	t_bool			first;
+	int		pid;
+	int		status;
+	int		result;
+	t_shell	*shell;
 
-	(void)fds;
-	tmp = tree->command;
-	first = TRUE;
-	while (tmp)
+	shell = get_minishell();
+	dup2(fds[READ_FD], STDIN_FILENO);
+	dup2(fds[WRITE_FD], STDOUT_FILENO);
+	// if (is_builtin(tree->command))
+	// 	result = run_builtin(tree->command);
+	// else
+	// {
+	pid = fork();
+	if (pid == 0)
 	{
-		if (first)
-			ft_printf("cmd: %s ", tmp->token.full_content);
-		else
-			ft_printf("%s ", tmp->token.full_content);
-		first = FALSE;
-		tmp = tmp->next;
+		result = run_external(tree->command);
+		exit(result);
 	}
-	ft_printf("in_fd: %d, out_fd: %d", fds[READ_FD], fds[WRITE_FD]);
-	ft_printf("\n");
-	return (0);
+	waitpid(pid, &status, 0);
+	// }
+	dup2(shell->default_fds[READ_FD], STDIN_FILENO);
+	dup2(shell->default_fds[WRITE_FD], STDOUT_FILENO);
+	return (my_WEXITSTATUS(status));
 }
 
 static int	exec_pipe(t_exec_tree *tree, int fds[2])

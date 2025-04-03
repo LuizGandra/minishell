@@ -55,8 +55,10 @@ FILES = \
 	$(UTILS_PATH)get_pid.c \
 	$(UTILS_PATH)ft_readline.c \
 	$(SIGNALS_PATH)handlers.c \
+	$(EXEC_PATH)run.c \
 	$(EXEC_PATH)exec.c \
 	$(EXEC_PATH)path.c \
+	$(EXEC_PATH)macros.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
 
