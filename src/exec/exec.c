@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 08:22:44 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:31:04 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	exec_command(t_exec_tree *tree, int fds[2])
 	int		result;
 	t_shell	*shell;
 
+	status = 0;
 	shell = get_minishell();
 	dup2(fds[READ_FD], STDIN_FILENO);
 	dup2(fds[WRITE_FD], STDOUT_FILENO);

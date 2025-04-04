@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 14:28:05 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 08:43:36 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:30:02 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	b_echo(char **args)
 	int		i;
 
 	i = 1;
+	n_flag = FALSE;
 	if (args[i] && !ft_strcmp(args[i], "-n"))
 	{
 		i++;
