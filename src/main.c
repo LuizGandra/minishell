@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 08:02:29 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:47:29 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,30 @@ static t_exec_tree	*build_test_tree(void)
 	t_exec_tree	*root;
 
 	// ls | grep m |cat -e > file || echo "error" && echo "success"
-	root = ft_calloc(1, sizeof(t_exec_tree));
+	root = ft_gc_malloc(sizeof(t_exec_tree));
 	root->type = TREE_AND;
-	root->left = ft_calloc(1, sizeof(t_exec_tree));
+	root->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->type = TREE_OR;
-	root->left->left = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->left->type = TREE_PIPE;
-	root->left->left->left = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->left->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->left->left->type = TREE_PIPE;
-	root->left->left->left->left = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->left->left->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->left->left->left->type = TREE_COMMAND;
 	root->left->left->left->left->command = get_token_list("ls");
-	root->left->left->left->right = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->left->left->right = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->left->left->right->type = TREE_COMMAND;
 	root->left->left->left->right->command = get_token_list("grep m");
-	root->right = ft_calloc(1, sizeof(t_exec_tree));
+	root->right = ft_gc_malloc(sizeof(t_exec_tree));
 	root->right->type = TREE_COMMAND;
 	root->right->command = get_token_list("echo \"success\"");
-	root->left->right = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->right = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->right->type = TREE_COMMAND;
 	root->left->right->command = get_token_list("echo \"error\"");
-	root->left->left->right = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->left->right = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->left->right->type = TREE_REDIR_OUT;
 	root->left->left->right->file = "file";
-	root->left->left->right->left = ft_calloc(1, sizeof(t_exec_tree));
+	root->left->left->right->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->left->right->left->type = TREE_COMMAND;
 	root->left->left->right->left->command = get_token_list("cat -e");
 	return (root);
@@ -94,7 +94,7 @@ int	main(void)
 	ft_loop();
 	return (clean_all());
 }
-static void clone_terminal(void)
+static void	clone_terminal(void)
 {
 	t_shell	*shell;
 
@@ -104,7 +104,7 @@ static void clone_terminal(void)
 	shell->default_fds[WRITE_FD] = dup(STDOUT_FILENO);
 }
 
-static void reset_terminal(void)
+static void	reset_terminal(void)
 {
 	t_shell	*shell;
 
