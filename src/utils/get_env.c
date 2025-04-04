@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:45:52 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/03 14:30:42 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:36:12 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	init_env(void)
 
 	shell = get_minishell();
 	shell->env = env_to_map(__environ);
-	ft_setenv("?", "0");
+	ft_setenv("?", "0", FALSE);
 	pid = ft_getpid();
-	ft_setenv("$", pid);
+	ft_setenv("$", pid, FALSE);
 	free(pid);
 }
 
@@ -75,7 +75,7 @@ char	**map_to_env(t_hash_table *map)
 	return (env);
 }
 
-void	ft_setenv(char *key, char *value)
+void	ft_setenv(char *key, char *value, t_bool free_value)
 {
 	t_shell	*shell;
 
@@ -83,6 +83,8 @@ void	ft_setenv(char *key, char *value)
 	if (!key || !value)
 		return ;
 	ft_map_insert(shell->env, key, value);
+	if (free_value)
+		free(value);
 }
 
 char	*ft_getenv(char *key)

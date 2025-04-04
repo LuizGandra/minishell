@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 15:08:23 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:30:37 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,16 @@ int		run_builtin(t_token_list *command);
 
 // ================================= MACROS ===================================
 
-// Retorna 1 se o processo terminou normalmente
-int		wifexited(int status);
-// Retorna o código de saída do processo
+// Calculate the exit code of a process
+int		get_return_value(int status);
+// Return the exit code of a process
 int		wexitstatus(int status);
-// Retorna 1 se o processo foi terminado por um sinal
+// Return true if the process was killed by a signal
 int		wifsignaled(int status);
-// Retorna o número do sinal que matou o processo
+// Return the signal number that killed the process
 int		wtermsig(int status);
+// Return true if the process dumped core
+int		wcoredump(int status);
 
 // ================================= BUILTINS =================================
 

@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 12:14:27 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:22:54 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ static void	ft_loop(void)
 			continue ;
 		add_history(shell->user_input);
 		// shell->tokens = get_token_list(shell->user_input);
-		exec(build_sleep_tree(), shell->default_fds);
+		exec(build_python3_tree(), shell->default_fds);
 		// print_tokens(shell->tokens);
 		ft_gc_exit();
 	}

@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 15:06:45 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:34:00 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static int	exec_command(t_exec_tree *tree, int fds[2])
 	dup2(get_minishell()->default_fds[READ_FD], STDIN_FILENO);
 	dup2(get_minishell()->default_fds[WRITE_FD], STDOUT_FILENO);
 	if (ret_code == -1)
-		ret_code = wexitstatus(status);
+		ret_code = get_return_value(status);
+	ft_setenv("?", ft_itoa(ret_code), TRUE);
 	return (ret_code);
 }
 
