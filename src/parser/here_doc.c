@@ -6,22 +6,24 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:17:54 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/03 14:40:43 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:10:39 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static char	*get_line(counter)
+static char	*get_line(size_t counter)
 {
 	ft_printf(C_PUR "heredoc" C_ITA " %ith " C_RST "> ", counter);
 	return (get_next_line(get_minishell()->default_fds[READ_FD]));
 }
+
 static void	write_line(char *line, int pipe_fd[2])
 {
 	ft_printf_fd(pipe_fd[WRITE_FD], line);
 	free(line);
 }
+
 int	here_doc(char *delimiter)
 {
 	char	*line;

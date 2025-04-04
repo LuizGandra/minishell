@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 14:46:04 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:08:23 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ void	run_external(t_token_list *command);
 char	*handle_path(char *cmd);
 int		run_builtin(t_token_list *command);
 
-// ========================================================= MACROS =========================================================
+// ================================= MACROS ===================================
 
 // Retorna 1 se o processo terminou normalmente
-int		my_WIFEXITED(int status);
+int		wifexited(int status);
 // Retorna o código de saída do processo
-int		my_WEXITSTATUS(int status);
+int		wexitstatus(int status);
 // Retorna 1 se o processo foi terminado por um sinal
-int		my_WIFSIGNALED(int status);
+int		wifsignaled(int status);
 // Retorna o número do sinal que matou o processo
-int		my_WTERMSIG(int status);
+int		wtermsig(int status);
 
-// ========================================================= BUILTINS =========================================================
+// ================================= BUILTINS =================================
 
 typedef	int(t_builtin)(char **args);
 
