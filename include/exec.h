@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 09:15:39 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:46:04 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum e_pipe_fd
 char	**handle_argv(t_token_list *list);
 t_bool	is_builtin(t_token_list *command);
 int		exec(t_exec_tree *tree, int fds[2]);
-int		run_external(t_token_list *command);
+void	run_external(t_token_list *command);
 char	*handle_path(char *cmd);
 int		run_builtin(t_token_list *command);
 
