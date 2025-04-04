@@ -6,13 +6,13 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/03 16:20:40 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 08:59:53 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static char	**handle_argv(t_token_list *list)
+char	**handle_argv(t_token_list *list)
 {
 	char	*line;
 	char	**argv;

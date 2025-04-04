@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 07:59:25 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 08:22:44 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,17 @@ static int	exec_command(t_exec_tree *tree, int fds[2])
 	shell = get_minishell();
 	dup2(fds[READ_FD], STDIN_FILENO);
 	dup2(fds[WRITE_FD], STDOUT_FILENO);
-	// if (is_builtin(tree->command))
-	// 	result = run_builtin(tree->command);
-	// else
-	// {
-	pid = fork();
-	if (pid == 0)
+	if (is_builtin(tree->command))
+		result = run_builtin(tree->command);
+	else
 	{
-		result = run_external(tree->command);
-		exit(result);
+		pid = fork();
+		if (pid == 0)
+		{
+			result = run_external(tree->command);
+			exit(result);
+		}
 	}
-	// }
 	dup2(shell->default_fds[READ_FD], STDIN_FILENO);
 	dup2(shell->default_fds[WRITE_FD], STDOUT_FILENO);
 	waitpid(pid, &status, 0);
@@ -77,7 +77,7 @@ static int	exec_pipe(t_exec_tree *tree, int fds[2])
 	new_fds[READ_FD] = fds[READ_FD];
 	new_fds[WRITE_FD] = pipe_fds[WRITE_FD];
 	exec(tree->left, new_fds);
-	close (pipe_fds[WRITE_FD]);
+	close(pipe_fds[WRITE_FD]);
 	new_fds[READ_FD] = pipe_fds[READ_FD];
 	new_fds[WRITE_FD] = fds[WRITE_FD];
 	result = exec(tree->right, new_fds);
