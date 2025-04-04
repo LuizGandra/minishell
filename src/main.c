@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/03 14:34:35 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 08:02:29 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ static void	ft_loop(void)
 	{
 		g_received_signal = 0;
 		reset_terminal();
-		ft_printf("ls | grep m | cat -e > file || echo \"error\" && echo \"success\"\n");
 		shell->user_input = ft_readline();
 		if (!shell->user_input)
 		{

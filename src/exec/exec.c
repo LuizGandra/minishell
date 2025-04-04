@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/03 16:09:56 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 07:59:25 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ static int	exec_command(t_exec_tree *tree, int fds[2])
 		result = run_external(tree->command);
 		exit(result);
 	}
-	waitpid(pid, &status, 0);
 	// }
 	dup2(shell->default_fds[READ_FD], STDIN_FILENO);
 	dup2(shell->default_fds[WRITE_FD], STDOUT_FILENO);
+	waitpid(pid, &status, 0);
 	return (my_WEXITSTATUS(status));
 }
 
@@ -77,11 +77,11 @@ static int	exec_pipe(t_exec_tree *tree, int fds[2])
 	new_fds[READ_FD] = fds[READ_FD];
 	new_fds[WRITE_FD] = pipe_fds[WRITE_FD];
 	exec(tree->left, new_fds);
+	close (pipe_fds[WRITE_FD]);
 	new_fds[READ_FD] = pipe_fds[READ_FD];
 	new_fds[WRITE_FD] = fds[WRITE_FD];
 	result = exec(tree->right, new_fds);
 	close(pipe_fds[READ_FD]);
-	close(pipe_fds[WRITE_FD]);
 	return (result);
 }
 
