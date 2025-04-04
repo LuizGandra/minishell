@@ -6,10 +6,11 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 08:59:53 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:00:56 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "signals.h"
 #include "exec.h"
 
 char	**handle_argv(t_token_list *list)
@@ -36,6 +37,9 @@ int	run_external(t_token_list *list)
 	char **argv;
 	char **envp;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGPIPE, SIG_DFL);
 	path = handle_path(list->token.full_content);
 	argv = handle_argv(list);
 	envp = map_to_env(get_minishell()->env);

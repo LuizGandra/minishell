@@ -6,11 +6,12 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 09:35:07 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:11:42 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "signals.h"
 
 static int	exec_redirect(t_exec_tree *tree, int fds[2])
 {
@@ -42,30 +43,30 @@ static int	exec_redirect(t_exec_tree *tree, int fds[2])
 
 static int	exec_command(t_exec_tree *tree, int fds[2])
 {
-	int		pid;
-	int		status;
-	int		result;
-	t_shell	*shell;
+	int	pid;
+	int	status;
+	int	ret_code;
 
 	status = 0;
-	shell = get_minishell();
 	dup2(fds[READ_FD], STDIN_FILENO);
 	dup2(fds[WRITE_FD], STDOUT_FILENO);
+	ret_code = -1;
 	if (is_builtin(tree->command))
-		result = run_builtin(tree->command);
+		ret_code = run_builtin(tree->command);
 	else
 	{
+		signal(SIGINT, handle_signal);
 		pid = fork();
 		if (pid == 0)
-		{
-			result = run_external(tree->command);
-			exit(result);
-		}
+			run_external(tree->command);
 		waitpid(pid, &status, 0);
+		signal(SIGINT, ft_rl_newline);
 	}
-	dup2(shell->default_fds[READ_FD], STDIN_FILENO);
-	dup2(shell->default_fds[WRITE_FD], STDOUT_FILENO);
-	return (my_WEXITSTATUS(status));
+	dup2(get_minishell()->default_fds[READ_FD], STDIN_FILENO);
+	dup2(get_minishell()->default_fds[WRITE_FD], STDOUT_FILENO);
+	if (ret_code == -1)
+		ret_code = my_WEXITSTATUS(status);
+	return (ret_code);
 }
 
 static int	exec_pipe(t_exec_tree *tree, int fds[2])

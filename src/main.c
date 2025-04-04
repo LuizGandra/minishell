@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 09:47:29 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 12:14:27 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,46 +19,159 @@ int					g_received_signal;
 
 static void			ft_loop(void);
 
-// static char	*get_type(t_token token)
-// {
-// 	if (token.type == TOK_PIPE)
-// 		return ("TOK_PIPE");
-// 	else if (token.type == WORD)
-// 		return ("WORD");
-// 	else if (token.type == TOK_REDIR_IN)
-// 		return ("TOK_REDIR_IN");
-// 	else if (token.type == TOK_REDIR_OUT)
-// 		return ("TOK_REDIR_OUT");
-// 	return ("UNKNOWN");
-// }
+// sleep 500
+static t_exec_tree	*build_sleep_tree(void)
+{
+    t_exec_tree	*root;
 
-// static void	print_tokens(t_token_list *tokens)
-// {
-// 	t_token_list	*tmp;
+    root = ft_gc_malloc(sizeof(t_exec_tree));
+    root->type = TREE_COMMAND;
+    root->command = get_token_list("sleep 500");
 
-// 	tmp = tokens;
-// 	while (tmp)
-// 	{
-// 		ft_printf(C_CYA "type: " C_RST "%s" C_RED " value: " C_RST "%s\n",
-// 			get_type(tmp->token), tmp->token.full_content);
-// 		tmp = tmp->next;
-// 	}
-// }
+    return (root);
+}
 
-// typedef struct s_exec_tree
-// {
-// 	t_tree_type			type;
-// 	t_token_list		*command;
-// 	struct s_exec_tree	*subshell;
-// 	struct s_exec_tree	*left;
-// 	struct s_exec_tree	*right;
-// }						t_exec_tree;
+// python3
+static t_exec_tree	*build_python3_tree(void)
+{
+    t_exec_tree	*root;
 
+    root = ft_gc_malloc(sizeof(t_exec_tree));
+    root->type = TREE_COMMAND;
+    root->command = get_token_list("python3");
+
+    return (root);
+}
+
+// (echo "hello") > output.txt
+static t_exec_tree	*build_redir_subshell_tree(void)
+{
+    t_exec_tree	*root;
+
+    root = ft_gc_malloc(sizeof(t_exec_tree));
+    root->type = TREE_REDIR_OUT;
+    root->file = "output.txt";
+
+    root->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->type = TREE_SUBSHELL;
+    root->left->subshell = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->subshell->type = TREE_COMMAND;
+    root->left->subshell->command = get_token_list("echo \"hello\"");
+
+    return (root);
+}
+
+// mkdir test || echo "failed" && echo "success"
+static t_exec_tree	*build_and_or_tree(void)
+{
+    t_exec_tree	*root;
+
+    root = ft_gc_malloc(sizeof(t_exec_tree));
+    root->type = TREE_AND;
+
+    root->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->type = TREE_OR;
+    root->left->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->left->type = TREE_COMMAND;
+    root->left->left->command = get_token_list("mkdir test");
+    root->left->right = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->right->type = TREE_COMMAND;
+    root->left->right->command = get_token_list("echo \"failed\"");
+
+    root->right = ft_gc_malloc(sizeof(t_exec_tree));
+    root->right->type = TREE_COMMAND;
+    root->right->command = get_token_list("echo \"success\"");
+
+    return (root);
+}
+
+// ls | grep txt | wc -l
+static t_exec_tree	*build_multi_pipe_tree(void)
+{
+    t_exec_tree	*root;
+
+    root = ft_gc_malloc(sizeof(t_exec_tree));
+    root->type = TREE_PIPE;
+
+    root->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->type = TREE_PIPE;
+    root->left->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->left->type = TREE_COMMAND;
+    root->left->left->command = get_token_list("ls");
+    root->left->right = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->right->type = TREE_COMMAND;
+    root->left->right->command = get_token_list("grep txt");
+
+    root->right = ft_gc_malloc(sizeof(t_exec_tree));
+    root->right->type = TREE_COMMAND;
+    root->right->command = get_token_list("wc -l");
+
+    return (root);
+}
+
+// echo "hello" >> output.txt
+static t_exec_tree	*build_redir_append_tree(void)
+{
+    t_exec_tree	*root;
+
+    root = ft_gc_malloc(sizeof(t_exec_tree));
+    root->type = TREE_REDIR_APPEND;
+    root->file = "output.txt";
+
+    root->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->type = TREE_COMMAND;
+    root->left->command = get_token_list("echo \"hello\"");
+
+    return (root);
+}
+
+// cat < input.txt
+static t_exec_tree	*build_redir_in_tree(void)
+{
+    t_exec_tree	*root;
+
+    root = ft_gc_malloc(sizeof(t_exec_tree));
+    root->type = TREE_REDIR_IN;
+    root->file = "input.txt";
+
+    root->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->type = TREE_COMMAND;
+    root->left->command = get_token_list("cat");
+
+    return (root);
+}
+
+// (ls -l | grep txt) && echo "done"
+static t_exec_tree	*build_subshell_tree(void)
+{
+    t_exec_tree	*root;
+
+    root = ft_gc_malloc(sizeof(t_exec_tree));
+    root->type = TREE_AND;
+
+    root->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->type = TREE_SUBSHELL;
+    root->left->subshell = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->subshell->type = TREE_PIPE;
+    root->left->subshell->left = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->subshell->left->type = TREE_COMMAND;
+    root->left->subshell->left->command = get_token_list("ls -l");
+    root->left->subshell->right = ft_gc_malloc(sizeof(t_exec_tree));
+    root->left->subshell->right->type = TREE_COMMAND;
+    root->left->subshell->right->command = get_token_list("grep txt");
+
+    root->right = ft_gc_malloc(sizeof(t_exec_tree));
+    root->right->type = TREE_COMMAND;
+    root->right->command = get_token_list("echo \"done\"");
+
+    return (root);
+}
+
+// ls | grep m |cat -e > file || echo "error" && echo "success"
 static t_exec_tree	*build_test_tree(void)
 {
 	t_exec_tree	*root;
 
-	// ls | grep m |cat -e > file || echo "error" && echo "success"
 	root = ft_gc_malloc(sizeof(t_exec_tree));
 	root->type = TREE_AND;
 	root->left = ft_gc_malloc(sizeof(t_exec_tree));
@@ -135,7 +248,7 @@ static void	ft_loop(void)
 			continue ;
 		add_history(shell->user_input);
 		// shell->tokens = get_token_list(shell->user_input);
-		exec(build_test_tree(), shell->default_fds);
+		exec(build_sleep_tree(), shell->default_fds);
 		// print_tokens(shell->tokens);
 		ft_gc_exit();
 	}
