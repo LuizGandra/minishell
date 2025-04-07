@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:55:57 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/07 09:53:17 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:28:39 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ int	get_return_value(int status)
 	{
 		if (wtermsig(status) == SIGQUIT)
 			ft_printf_fd(2, C_RED "Quit" C_RST);
-		if (wtermsig(status) == SIGKILL)
+		else if (wtermsig(status) == SIGKILL)
 			ft_printf_fd(2, C_RED "Killed" C_RST);
-		if (wtermsig(status) == SIGSTOP)
+		else if (wtermsig(status) == SIGSTOP)
 			ft_printf_fd(2, C_RED "Stopped" C_RST);
-		if (wtermsig(status) == SIGABRT)
+		else if (wtermsig(status) == SIGABRT)
 			ft_printf_fd(2, C_RED "Aborted" C_RST);
-		if (wtermsig(status) == SIGSEGV)
+		else if (wtermsig(status) == SIGSEGV)
 			ft_printf_fd(2, C_RED "Segmentation fault" C_RST);
-		if (wtermsig(status) == SIGFPE)
+		else if (wtermsig(status) == SIGFPE)
 			ft_printf_fd(2, C_RED "Floating point exception" C_RST);
-		if (wtermsig(status) == SIGXFSZ)
+		else if (wtermsig(status) == SIGXFSZ)
 			ft_printf_fd(2, C_RED "File size limit exceeded" C_RST);
 		if (wcoredump(status))
 			ft_printf_fd(2, " (core dumped)");

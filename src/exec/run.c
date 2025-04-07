@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 14:44:51 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:10:17 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ static int	display_error(char *cmd)
 	if (access(cmd, F_OK) != 0 || ft_strchr(cmd, '/') == NULL)
 	{
 		if (ft_strchr(cmd, '/') == NULL)
-			ft_printf_fd(2, "%s - Command not found\n", cmd);
+			ft_printf_fd(2, "%s: " CMD_NFOUND, cmd);
 		else
-			ft_printf_fd(2, "%s - No such file or directory\n", cmd);
+			ft_printf_fd(2, MINISHELL "%s: " FILE_NFOUND, cmd);
 		ret_code = 127;
 	}
 	else if (access(cmd, F_OK | X_OK) != 0 || is_directory(cmd))
 	{
 		ret_code = 126;
 		if (is_directory(cmd))
-			ft_printf_fd(2, "%s - Is a directory\n", cmd);
+			ft_printf_fd(2, MINISHELL "%s: " IS_A_DIR, cmd);
 		else
-			ft_printf_fd(2, "%s - Permission denied\n", cmd);
+			ft_printf_fd(2, MINISHELL "%s: " PERM_DENIED, cmd);
 	}
 	else
 	{
