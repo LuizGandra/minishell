@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 15:30:37 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:20:42 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "minishell.h"
 # include "parser.h"
+
 # include <sys/wait.h>
 
 # define O_C O_CREAT
@@ -29,17 +30,22 @@ typedef enum e_pipe_fd
 	WRITE_FD = 1,
 }		t_pipe_fd;
 
+// Iterate through the execution tree recursively and execute each node
+int		exec(t_exec_tree *tree, int fds[2]);
+
+// ================================= RUN FUNCTIONS ============================
+
+int		run_builtin(t_token_list *command);
+void	run_external(t_token_list *command);
+
+// ================================= UTILS ====================================
+
+char	*handle_path(char *cmd);
 char	**handle_argv(t_token_list *list);
 t_bool	is_builtin(t_token_list *command);
-int		exec(t_exec_tree *tree, int fds[2]);
-void	run_external(t_token_list *command);
-char	*handle_path(char *cmd);
-int		run_builtin(t_token_list *command);
 
 // ================================= MACROS ===================================
 
-// Calculate the exit code of a process
-int		get_return_value(int status);
 // Return the exit code of a process
 int		wexitstatus(int status);
 // Return true if the process was killed by a signal
@@ -48,6 +54,8 @@ int		wifsignaled(int status);
 int		wtermsig(int status);
 // Return true if the process dumped core
 int		wcoredump(int status);
+// Calculate the exit code of a process
+int		get_return_value(int status);
 
 // ================================= BUILTINS =================================
 
