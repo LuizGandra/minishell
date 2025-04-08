@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/31 09:39:12 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:56:23 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static char	*handle_quote(t_token *node, char *input)
 	while (input[len + 1] && input[len + 1] != quote)
 		len++;
 	node->content[node->size].str = ft_substr(input, 1, len);
+	ft_gc_add(node->content[node->size].str);
 	node->content[node->size].quote = quote;
 	node->size++;
-	ft_gc_add(node->content[node->size].str);
 	if (!input[len + 1])
 	{
 		node->error = TRUE;
@@ -46,14 +46,14 @@ static char	*handle_word(t_token *node, char *input)
 		while (is_word(input[len]))
 			len++;
 		node->content[node->size].str = ft_substr(input, 0, len);
+		ft_gc_add(node->content[node->size].str);
 		node->size++;
 		input += len;
-		ft_gc_add(node->content[node->size].str);
 		input = handle_quote(node, input);
 	}
 	if (!node->error)
 		fill_full_content(node);
-	node->type = WORD;
+	node->type = TOK_WORD;
 	return (input);
 }
 

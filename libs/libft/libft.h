@@ -23,6 +23,9 @@
 # include "./ft_printf/includes/ft_printf.h"
 # include "./get_next_line/includes/get_next_line.h"
 
+typedef char			t_int8;
+typedef unsigned char	t_uint8;
+
 // Returns the absolute value of a floating-point number
 float			ft_abs(float number);
 
@@ -64,6 +67,9 @@ long			ft_atol(const char *str);
 
 // Converts a string to a size_t integer (base 10)
 size_t			ft_atost(const char *str);
+
+// Converts a string to a t_uint8 integer (base 10)
+t_uint8			ft_atoui8(const char *str);
 
 // Converts a string to an integer for a specific base
 int				ft_atoi_base(const char *str, int str_base);
@@ -123,10 +129,10 @@ size_t			ft_strlcpy(char *dest, const char *src, size_t d_size);
 void			*ft_calloc(size_t n, size_t size);
 
 // Reallocates memory and copies the old content to the new memory block
-void			*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+void			*ft_realloc(void *ptr, size_t new_size, size_t old_size);
 
 // Reallocates using calloc and copies the old content to the new memory block
-void			*ft_recalloc(void *ptr, size_t old_size, size_t new_size);
+void			*ft_recalloc(void *ptr, size_t new_size, size_t old_size);
 
 // Fills a block of memory with a specific byte value
 void			*ft_memset(void *b, int c, size_t len);

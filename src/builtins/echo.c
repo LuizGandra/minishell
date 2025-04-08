@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handlers.c                                         :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 19:54:07 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/04 12:11:52 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/27 14:28:05 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/04/04 09:30:02 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signals.h"
+#include "minishell.h"
 
-void	ft_rl_newline(int signal)
+int	b_echo(char **args)
 {
-	(void)signal;
-	ft_printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	t_bool	n_flag;
+	int		i;
 
-void	handle_signal(int signal)
-{
-	g_received_signal = signal;
-}
-
-void	listen_signals(void)
-{
-	signal(SIGINT, ft_rl_newline);
-	signal(SIGQUIT, handle_signal);
+	i = 1;
+	n_flag = FALSE;
+	if (args[i] && !ft_strcmp(args[i], "-n"))
+	{
+		i++;
+		n_flag = TRUE;
+	}
+	while (args[i] != NULL)
+	{
+		ft_putstr(args[i]);
+		if (args[i + 1] != NULL)
+			ft_putstr(" ");
+		i++;
+	}
+	if (!n_flag)
+		ft_putstr("\n");
+	return (0);
 }

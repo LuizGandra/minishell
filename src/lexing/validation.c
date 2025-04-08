@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:21:48 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 10:34:14 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:09:31 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static t_bool	check_brackets(t_token_list *list)
 	current = list;
 	while (current)
 	{
-		if (current->token.type == OPEN_BRACKET)
+		if (current->token.type == TOK_OPEN_BRACKET)
 			open_brackets++;
-		if (current->token.type == CLOSE_BRACKET)
+		if (current->token.type == TOK_CLOSE_BRACKET)
 			open_brackets--;
 		current = current->next;
 	}
@@ -52,26 +52,26 @@ static t_bool	validate_separators(t_token_list *current)
 
 static t_bool	validate_brackets(t_token_list *current)
 {
-	if (current->token.type == OPEN_BRACKET && (current->next->token.type
-			== CLOSE_BRACKET || is_separator(current->next->token)))
+	if (current->token.type == TOK_OPEN_BRACKET && (current->next->token.type
+			== TOK_CLOSE_BRACKET || is_separator(current->next->token)))
 	{
 		print_token_error(current->next);
 		return (FALSE);
 	}
-	if (current->token.type == WORD && current->next
-		&& current->next->token.type == OPEN_BRACKET)
+	if (current->token.type == TOK_WORD && current->next
+		&& current->next->token.type == TOK_OPEN_BRACKET)
 	{
 		print_token_error(current->next);
 		return (FALSE);
 	}
-	if (current->token.type == CLOSE_BRACKET && current->next
-		&& current->next->token.type == WORD)
+	if (current->token.type == TOK_CLOSE_BRACKET && current->next
+		&& current->next->token.type == TOK_WORD)
 	{
 		ft_printf_fd(2, SYNTAX_ERROR, current->next->token.full_content);
 		return (FALSE);
 	}
-	if (current->token.type == CLOSE_BRACKET && current->next
-		&& current->next->token.type == OPEN_BRACKET)
+	if (current->token.type == TOK_CLOSE_BRACKET && current->next
+		&& current->next->token.type == TOK_OPEN_BRACKET)
 	{
 		print_token_error(current->next);
 		return (FALSE);
@@ -84,15 +84,17 @@ t_token_list	*validate_tokens(t_token_list *tokens)
 	t_token_list	*current;
 
 	current = tokens;
-	if (is_separator(current->token) || current->token.type == CLOSE_BRACKET)
+	if (is_separator(current->token)
+		|| current->token.type == TOK_CLOSE_BRACKET)
 		return (print_token_error(current));
 	while (current)
 	{
-		if (current->token.type == INVALID)
+		if (current->token.type == TOK_INVALID)
 			return (print_token_error(current));
 		if (!can_finish(current->token) && !current->next)
 			return (print_token_error(NULL));
-		if (is_redirector(current->token) && current->next->token.type != WORD)
+		if (is_redirector(current->token)
+			&& current->next->token.type != TOK_WORD)
 			return (print_token_error(current->next));
 		if (!validate_separators(current))
 			return (NULL);

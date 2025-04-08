@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handlers.c                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 19:54:07 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/04 12:11:52 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/27 14:39:25 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/04/04 08:53:03 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signals.h"
+#include "minishell.h"
 
-void	ft_rl_newline(int signal)
+int	b_pwd(char **args)
 {
-	(void)signal;
-	ft_printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	char	cwd[4096];
 
-void	handle_signal(int signal)
-{
-	g_received_signal = signal;
-}
-
-void	listen_signals(void)
-{
-	signal(SIGINT, ft_rl_newline);
-	signal(SIGQUIT, handle_signal);
+	(void)args;
+	if (!getcwd(cwd, 4096))
+		return (1);
+	ft_putendl_fd(cwd, STDOUT_FILENO);
+	return (0);
 }

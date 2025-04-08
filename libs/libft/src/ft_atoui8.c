@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handlers.c                                         :+:      :+:    :+:   */
+/*   ft_atoui.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 19:54:07 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/04 12:11:52 by lhenriqu         ###   ########.fr       */
+/*   Created: 2025/03/31 14:48:17 by lhenriqu          #+#    #+#             */
+/*   Updated: 2025/03/31 15:10:06 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signals.h"
+#include "libft.h"
 
-void	ft_rl_newline(int signal)
+t_uint8	ft_atoui8(const char *str)
 {
-	(void)signal;
-	ft_printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	t_uint8	num;
+	int		sign;
 
-void	handle_signal(int signal)
-{
-	g_received_signal = signal;
-}
-
-void	listen_signals(void)
-{
-	signal(SIGINT, ft_rl_newline);
-	signal(SIGQUIT, handle_signal);
+	sign = 1;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	num = 0;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str++;
+	}
+	while (ft_isdigit(*str))
+	{
+		num = num * 10 + (*str - '0');
+		str++;
+	}
+	return (num * sign);
 }

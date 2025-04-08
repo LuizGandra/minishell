@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:21:33 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 08:37:02 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:23:41 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_token_list	*add_token(t_token_list **list, t_token_list *prev,
 	{
 		new->next = (*list)->next;
 		*list = new;
-		new->token.type = WORD;
+		new->token.type = TOK_WORD;
 		new->token.full_content = ft_strdup(str);
 		ft_gc_add(new->token.full_content);
 		*first = FALSE;
@@ -40,7 +40,7 @@ static t_token_list	*add_token(t_token_list **list, t_token_list *prev,
 	else
 		new->next = prev->next;
 	prev->next = new;
-	new->token.type = WORD;
+	new->token.type = TOK_WORD;
 	new->token.full_content = ft_strdup(str);
 	ft_gc_add(new->token.full_content);
 	*first = FALSE;
@@ -49,9 +49,9 @@ static t_token_list	*add_token(t_token_list **list, t_token_list *prev,
 
 t_token_list	*expand_wildcards(t_token *token, t_token_list **list)
 {
-	t_bool			first;
+	struct dirent	*entry;
 	t_token_list	*prev;
-	t_entry			*entry;
+	t_bool			first;
 	DIR				*dir;
 
 	first = TRUE;

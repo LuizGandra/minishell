@@ -32,25 +32,37 @@ SRC_PATH = ./src/
 HEADER_PATH = ./include/
 BUILD_PATH = ./build/
 
+BUILTINS_PATH = ./builtins/
 EXPANDER_PATH = ./expander/
-LEXING_PATH = ./lexing/
 SIGNALS_PATH = ./signals/
+LEXING_PATH = ./lexing/
 UTILS_PATH = ./utils/
+EXEC_PATH = ./exec/
 
 FILES = \
 	main.c \
+	$(BUILTINS_PATH)echo.c \
+	$(BUILTINS_PATH)pwd.c \
+	$(BUILTINS_PATH)exit.c \
 	$(LEXING_PATH)utils.c \
 	$(LEXING_PATH)lexer.c \
 	$(LEXING_PATH)state.c \
 	$(LEXING_PATH)validation.c \
 	$(LEXING_PATH)validation_utils.c \
+	$(EXEC_PATH)run.c \
+	$(EXEC_PATH)exec.c \
+	$(EXEC_PATH)path.c \
+	$(EXEC_PATH)macros.c \
+	$(EXEC_PATH)builtin.c \
 	$(EXPANDER_PATH)var.c \
 	$(EXPANDER_PATH)expander.c \
 	$(EXPANDER_PATH)wildcard.c \
 	$(EXPANDER_PATH)wildcard_utils.c \
-	$(UTILS_PATH)error.c \
 	$(UTILS_PATH)global.c \
+	$(UTILS_PATH)get_pid.c \
 	$(UTILS_PATH)get_env.c \
+	$(UTILS_PATH)cleanner.c \
+	$(UTILS_PATH)ft_readline.c \
 	$(SIGNALS_PATH)handlers.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
@@ -71,10 +83,12 @@ ifeq ($(wildcard $(LIB_PATH)/$(LIB_NAME)),)
 endif
 
 $(BUILD_PATH):
+	@mkdir -p $(BUILD_PATH)$(BUILTINS_PATH)
 	@mkdir -p $(BUILD_PATH)$(EXPANDER_PATH)
-	@mkdir -p $(BUILD_PATH)$(LEXING_PATH)
 	@mkdir -p $(BUILD_PATH)$(SIGNALS_PATH)
+	@mkdir -p $(BUILD_PATH)$(LEXING_PATH)
 	@mkdir -p $(BUILD_PATH)$(UTILS_PATH)
+	@mkdir -p $(BUILD_PATH)$(EXEC_PATH)
 
 print:
 ifeq ($(wildcard $(NAME)),)
