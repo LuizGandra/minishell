@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 09:15:01 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 09:45:50 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ int	exec(t_exec_tree *tree, int fds[2])
 	if (tree->type == TREE_PIPE)
 		return (exec_pipe(tree, fds));
 	if (tree->type == TREE_COMMAND)
+	{
+		expand(&tree->command);
 		return (exec_command(tree, fds));
+	}
 	if (is_redirect_type(tree->type))
 		return (exec_redirect(tree, fds));
 	result = exec(tree->left, fds);

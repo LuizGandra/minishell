@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 08:10:28 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:14:59 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,6 @@ static void	ft_loop(void)
 	shell = get_minishell();
 	while (!shell->exit)
 	{
-		g_received_signal = 0;
 		reset_terminal();
 		shell->user_input = ft_readline();
 		if (!shell->user_input)
