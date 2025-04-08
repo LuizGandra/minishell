@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:02:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/02 08:45:17 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:53:21 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ char	*handle_path(char *cmd)
 {
 	char	*new_cmd;
 
-	new_cmd = NULL;
 	if (ft_strchr(cmd, '/') == NULL)
 	{
 		new_cmd = search_in_path(cmd);
+		if (new_cmd == NULL)
+			new_cmd = ft_strdup(cmd);
 	}
 	else
 	{
