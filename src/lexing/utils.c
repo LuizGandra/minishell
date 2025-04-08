@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:06:14 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/25 13:04:00 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 09:35:31 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,23 @@ void	fill_full_content(t_token *node)
 		i++;
 	}
 	ft_gc_add(node->full_content);
+}
+
+void	assign_redirects(t_token_list *list)
+{
+	t_token_list	*redirect;
+	t_token_list	*file;
+
+	while (list)
+	{
+		if (is_redirector(list->token))
+		{
+			redirect = list;
+			file = redirect->next;
+			redirect->token.full_content = file->token.full_content;
+			redirect->next = file->next;
+			file->next->prev = redirect;
+		}
+		list = list->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/07 12:24:31 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 09:21:46 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char					*left_trim(char *input);
 t_state					get_initial_state(char c);
 t_state					get_seccond_state(char *input, t_state state);
 void					fill_full_content(t_token *node);
+void					assign_redirects(t_token_list **list);
 
 // =========================== VALIDATION PART ================================
 t_token_list			*validate_tokens(t_token_list *tokens);
