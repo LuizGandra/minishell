@@ -58,9 +58,9 @@ FILES = \
 	$(EXPANDER_PATH)expander.c \
 	$(EXPANDER_PATH)wildcard.c \
 	$(EXPANDER_PATH)wildcard_utils.c \
+	$(UTILS_PATH)env.c \
 	$(UTILS_PATH)global.c \
 	$(UTILS_PATH)get_pid.c \
-	$(UTILS_PATH)get_env.c \
 	$(UTILS_PATH)cleanner.c \
 	$(UTILS_PATH)ft_readline.c \
 	$(SIGNALS_PATH)handlers.c \

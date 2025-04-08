@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 15:22:54 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 08:10:28 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "lexing.h"
 #include "minishell.h"
 #include "signals.h"
-
-int					g_received_signal;
 
 static void			ft_loop(void);
 

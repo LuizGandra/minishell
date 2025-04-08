@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/07 20:51:59 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 09:15:01 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ static int	exec_command(t_exec_tree *tree, int fds[2])
 		ret_code = run_builtin(tree->command);
 	else
 	{
-		signal(SIGINT, handle_signal);
+		signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid == 0)
 			run_external(tree->command);
 		waitpid(pid, &status, 0);
-		signal(SIGINT, ft_rl_newline);
+		signal(SIGINT, sig_new_line);
 	}
 	dup2(get_minishell()->default_fds[READ_FD], STDIN_FILENO);
 	dup2(get_minishell()->default_fds[WRITE_FD], STDOUT_FILENO);
