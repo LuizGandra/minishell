@@ -6,14 +6,14 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 13:07:39 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:48:26 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "signals.h"
 
-static void	open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd)
+static int	open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd)
 {
 	if (type == TREE_REDIR_IN)
 		fds[READ_FD] = open(file, O_R);
@@ -23,23 +23,35 @@ static void	open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd)
 		fds[WRITE_FD] = open(file, O_W | O_C | O_A, 0644);
 	else if (type == TREE_REDIR_HEREDOC)
 		fds[READ_FD] = heredoc_fd;
+	if (fds[READ_FD] == -1)
+	{
+		ft_printf_fd(2, MINISHELL "%s: " FILE_NFOUND, file);
+		return (1);
+	}
+	return (0);
 }
 
 static int	exec_redirect(t_exec_tree *tree, int fds[2])
 {
 	int		redir_fds[2];
+	char	*old_path;
 	int		result;
 	char	*path;
 
 	redir_fds[READ_FD] = fds[READ_FD];
 	redir_fds[WRITE_FD] = fds[WRITE_FD];
-	path = tree->file->token.full_content;
-	open_file(path, redir_fds, tree->type, tree->here_doc_fd);
-	if (redir_fds[READ_FD] == -1)
+	old_path = ft_strdup(tree->file->token.full_content);
+	expand(&tree->file);
+	if (tree->file->next)
 	{
-		ft_printf_fd(2, MINISHELL "%s: " FILE_NFOUND, path);
+		ft_printf_fd(2, MINISHELL "%s: " AMBIG_REDIR, old_path);
+		free(old_path);
 		return (1);
 	}
+	free(old_path);
+	path = tree->file->token.full_content;
+	if (open_file(path, redir_fds, tree->type, tree->here_doc_fd))
+		return (1);
 	result = exec(tree->left, redir_fds);
 	if (redir_fds[READ_FD] != fds[READ_FD])
 		close(redir_fds[READ_FD]);
@@ -112,10 +124,7 @@ int	exec(t_exec_tree *tree, int fds[2])
 	}
 	if (tree->type == TREE_REDIR_IN || tree->type == TREE_REDIR_OUT
 		|| tree->type == TREE_REDIR_APPEND || tree->type == TREE_REDIR_HEREDOC)
-	{
-		expand(&tree->file);
 		return (exec_redirect(tree, fds));
-	}
 	result = exec(tree->left, fds);
 	if (tree->type == TREE_OR && result)
 		return (exec(tree->right, fds));

@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/07 13:07:56 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:43:35 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <sys/wait.h>
 
 # define MINISHELL "\033[36mminishell: \033[0m"
-# define IS_A_DIR "\033[31mPermission denied\n\033[0m"
+# define IS_A_DIR "\033[31mIs a directory\n\033[0m"
 # define CMD_NFOUND "\033[31mcommand not found\n\033[0m"
 # define PERM_DENIED "\033[31mPermission denied\n\033[0m"
+# define AMBIG_REDIR "\033[31mambiguous redirect\n\033[0m"
 # define FILE_NFOUND "\033[31mNo such file or directory\n\033[0m"
 
 # define O_C O_CREAT
