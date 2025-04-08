@@ -6,31 +6,38 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:19 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 09:45:50 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:07:39 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "signals.h"
 
+static void	open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd)
+{
+	if (type == TREE_REDIR_IN)
+		fds[READ_FD] = open(file, O_R);
+	else if (type == TREE_REDIR_OUT)
+		fds[WRITE_FD] = open(file, O_W | O_C | O_T, 0644);
+	else if (type == TREE_REDIR_APPEND)
+		fds[WRITE_FD] = open(file, O_W | O_C | O_A, 0644);
+	else if (type == TREE_REDIR_HEREDOC)
+		fds[READ_FD] = heredoc_fd;
+}
+
 static int	exec_redirect(t_exec_tree *tree, int fds[2])
 {
-	int	redir_fds[2];
-	int	result;
+	int		redir_fds[2];
+	int		result;
+	char	*path;
 
 	redir_fds[READ_FD] = fds[READ_FD];
 	redir_fds[WRITE_FD] = fds[WRITE_FD];
-	if (tree->type == TREE_REDIR_IN)
-		redir_fds[READ_FD] = open(tree->file, O_R);
-	else if (tree->type == TREE_REDIR_OUT)
-		redir_fds[WRITE_FD] = open(tree->file, O_W | O_C | O_T, 0644);
-	else if (tree->type == TREE_REDIR_APPEND)
-		redir_fds[WRITE_FD] = open(tree->file, O_W | O_C | O_A, 0644);
-	else if (tree->type == TREE_REDIR_HEREDOC)
-		redir_fds[READ_FD] = tree->here_doc_fd;
+	path = tree->file->token.full_content;
+	open_file(path, redir_fds, tree->type, tree->here_doc_fd);
 	if (redir_fds[READ_FD] == -1)
 	{
-		perror(tree->file);
+		ft_printf_fd(2, MINISHELL "%s: " FILE_NFOUND, path);
 		return (1);
 	}
 	result = exec(tree->left, redir_fds);
@@ -88,12 +95,6 @@ static int	exec_pipe(t_exec_tree *tree, int fds[2])
 	return (result);
 }
 
-static t_bool	is_redirect_type(t_tree_type type)
-{
-	return (type == TREE_REDIR_IN || type == TREE_REDIR_OUT
-		|| type == TREE_REDIR_APPEND || type == TREE_REDIR_HEREDOC);
-}
-
 int	exec(t_exec_tree *tree, int fds[2])
 {
 	int	result;
@@ -109,8 +110,12 @@ int	exec(t_exec_tree *tree, int fds[2])
 		expand(&tree->command);
 		return (exec_command(tree, fds));
 	}
-	if (is_redirect_type(tree->type))
+	if (tree->type == TREE_REDIR_IN || tree->type == TREE_REDIR_OUT
+		|| tree->type == TREE_REDIR_APPEND || tree->type == TREE_REDIR_HEREDOC)
+	{
+		expand(&tree->file);
 		return (exec_redirect(tree, fds));
+	}
 	result = exec(tree->left, fds);
 	if (tree->type == TREE_OR && result)
 		return (exec(tree->right, fds));
