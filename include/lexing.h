@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/07 12:24:31 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:08:35 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,12 @@ typedef struct s_token_list
 }						t_token_list;
 
 // =========================== EXTERN FUNCTIONS ===============================
-
 extern void				expand(t_token_list **token_list);
 
 // =========================== TOKENIZATION PART ==============================
 t_token_list			*get_token_list(char *input);
-// ============== UTILS ===============
 
+// ============== UTILS ===============
 t_bool					is_word(char c);
 char					*left_trim(char *input);
 t_state					get_initial_state(char c);
@@ -97,11 +96,12 @@ void					fill_full_content(t_token *node);
 
 // =========================== VALIDATION PART ================================
 t_token_list			*validate_tokens(t_token_list *tokens);
-// ============== UTILS ===============
 
+// ============== UTILS ===============
 t_bool					can_finish(t_token c);
 t_bool					is_separator(t_token token);
 t_bool					is_redirector(t_token token);
+t_bool					is_bracket(t_token token);
 void					*print_token_error(t_token_list *node);
 
 #endif

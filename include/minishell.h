@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/07 12:24:01 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:01:59 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 # define MINISHELL_H
 
 # include "../libs/libft/libft.h"
-
 # include <fcntl.h>
-# include <termios.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <termios.h>
 
 // =========================== EXTERN FUNCTIONS ===============================
 
