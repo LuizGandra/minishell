@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 09:56:23 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 09:36:43 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ t_token_list	*get_token_list(char *input)
 	if (node->token.error)
 		return (NULL);
 	init = validate_tokens(init);
-	expand(&init);
+	assign_redirects(init);
 	return (init);
 }

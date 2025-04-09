@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:29:34 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/25 11:27:50 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:58:50 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ void	ft_map_insert(t_hash_table *table, char *key, char *value)
 {
 	unsigned long int	hash;
 	t_h_item			*tmp;
+	t_h_item			*prev;
 
 	hash = ft_hash(key, table->size);
 	if (!table->items[hash])
 	{
 		table->items[hash] = ft_item_create(key, value);
-		if (table->items[hash])
-			table->count++;
+		table->count++;
 		return ;
 	}
 	tmp = table->items[hash];
-	while (tmp->next)
+	while (tmp)
 	{
 		if (tmp->key && !ft_strcmp(tmp->key, key))
 		{
@@ -53,9 +53,10 @@ void	ft_map_insert(t_hash_table *table, char *key, char *value)
 			tmp->value = ft_strdup(value);
 			return ;
 		}
+		prev = tmp;
 		tmp = tmp->next;
 	}
-	tmp->next = ft_item_create(key, value);
+	prev->next = ft_item_create(key, value);
 	table->count++;
 }
 
