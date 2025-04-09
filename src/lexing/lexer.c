@@ -6,30 +6,32 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 09:36:43 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:14:08 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-static char	*handle_quote(t_token *node, char *input)
+static char	*handle_quote(t_prop *props, char *input)
 {
 	size_t	len;
 	char	quote;
 
 	if (*input != '\'' && *input != '"')
 		return (input);
+	props->content = ft_recalloc(props->content, (props->size + 1)
+			* sizeof(t_content_part), props->size * sizeof(t_content_part));
 	quote = *input;
 	len = 0;
 	while (input[len + 1] && input[len + 1] != quote)
 		len++;
-	node->content[node->size].str = ft_substr(input, 1, len);
-	ft_gc_add(node->content[node->size].str);
-	node->content[node->size].quote = quote;
-	node->size++;
+	props->content[props->size].str = ft_substr(input, 1, len);
+	ft_gc_add(props->content[props->size].str);
+	props->content[props->size].quote = quote;
+	props->size++;
 	if (!input[len + 1])
 	{
-		node->error = TRUE;
+		props->error = TRUE;
 		return (input + ft_strlen(input));
 	}
 	return (input + len + 2);
@@ -38,20 +40,24 @@ static char	*handle_quote(t_token *node, char *input)
 static char	*handle_word(t_token *node, char *input)
 {
 	size_t	len;
+	t_prop	*props;
 
-	input = handle_quote(node, input);
+	props = &node->props;
+	input = handle_quote(props, input);
 	while (*input && is_word(*input))
 	{
+		props->content = ft_recalloc(props->content, (props->size + 1)
+				* sizeof(t_content_part), props->size * sizeof(t_content_part));
 		len = 0;
 		while (is_word(input[len]))
 			len++;
-		node->content[node->size].str = ft_substr(input, 0, len);
-		ft_gc_add(node->content[node->size].str);
-		node->size++;
+		props->content[props->size].str = ft_substr(input, 0, len);
+		ft_gc_add(props->content[props->size].str);
+		props->size++;
 		input += len;
-		input = handle_quote(node, input);
+		input = handle_quote(props, input);
 	}
-	if (!node->error)
+	if (!props->error)
 		fill_full_content(node);
 	node->type = TOK_WORD;
 	return (input);
@@ -60,7 +66,9 @@ static char	*handle_word(t_token *node, char *input)
 static char	*fill_token(t_token *node, char *input)
 {
 	t_state	state;
+	t_prop	*props;
 
+	props = &node->props;
 	input = left_trim(input);
 	state = get_initial_state(*input);
 	if (state >= F_OR && state <= F_CLOSE_BRACKET)
@@ -79,8 +87,8 @@ static char	*fill_token(t_token *node, char *input)
 	if (state == S_ERROR)
 		return (input + 1);
 	input = handle_word(node, input);
-	if (node->error)
-		ft_printf_fd(2, QUOTE_ERROR, node->content[node->size - 1].quote);
+	if (props->error)
+		ft_printf_fd(2, QUOTE_ERROR, props->content[props->size - 1].quote);
 	return (input);
 }
 
@@ -106,7 +114,7 @@ t_token_list	*get_token_list(char *input)
 		input = fill_token(&node->token, input);
 		prev = node;
 	}
-	if (node->token.error)
+	if (node->token.props.error)
 		return (NULL);
 	init = validate_tokens(init);
 	assign_redirects(init);

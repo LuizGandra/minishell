@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:45:52 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 08:03:44 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:15:49 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,19 @@ char	**map_to_env(t_hash_table *map)
 	return (env);
 }
 
-void	ft_setenv(char *key, char *value, t_bool free_value)
+t_int8	ft_setenv(char *key, char *value, t_bool free_value)
 {
 	t_shell	*shell;
+	t_int8	ret;
 
 	shell = get_minishell();
 	if (!key || !value)
-		return ;
+		return (0);
 	ft_map_insert(shell->env, key, value);
+	ret = ft_atoui8(value);
 	if (free_value)
 		free(value);
+	return (ret);
 }
 
 char	*ft_getenv(char *key)

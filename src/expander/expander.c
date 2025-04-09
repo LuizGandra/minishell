@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:47:20 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/02 07:45:14 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:27:48 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static t_token_list	*expand_word(t_token *token, t_token_list **list)
 	t_content_part	*part;
 
 	i = 0;
-	while (i < token->size)
+	while (i < token->props.size)
 	{
-		part = &token->content[i];
+		part = &token->props.content[i];
 		if (part->quote != '\'')
 			expand_vars(part);
 		if (part->quote == '\0')
