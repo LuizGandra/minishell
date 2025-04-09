@@ -50,6 +50,7 @@ FILES = \
 	$(LEXING_PATH)state.c \
 	$(LEXING_PATH)validation.c \
 	$(LEXING_PATH)validation_utils.c \
+	$(EXEC_PATH)pid.c \
 	$(EXEC_PATH)run.c \
 	$(EXEC_PATH)exec.c \
 	$(EXEC_PATH)path.c \
@@ -59,9 +60,9 @@ FILES = \
 	$(EXPANDER_PATH)expander.c \
 	$(EXPANDER_PATH)wildcard.c \
 	$(EXPANDER_PATH)wildcard_utils.c \
+	$(UTILS_PATH)env.c \
 	$(UTILS_PATH)global.c \
 	$(UTILS_PATH)get_pid.c \
-	$(UTILS_PATH)get_env.c \
 	$(UTILS_PATH)cleanner.c \
 	$(UTILS_PATH)ft_readline.c \
 	$(SIGNALS_PATH)handlers.c \

@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 09:59:41 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/09 14:11:26 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:40:06 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_exec_tree
 {
 	t_tree_type			type;
 	t_token_list		*command;
-	char				*file;
+	t_token_list		*file;
 	int					here_doc_fd;
 	struct s_exec_tree	*subshell;
 	struct s_exec_tree	*left;

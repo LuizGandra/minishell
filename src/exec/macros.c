@@ -6,12 +6,12 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:55:57 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/07 12:28:39 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:14:31 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include <signal.h>
+#include "signals.h"
 
 int	wexitstatus(int status)
 {

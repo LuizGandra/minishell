@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:06:14 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/25 13:04:00 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:20:02 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,38 @@ char	*left_trim(char *input)
 void	fill_full_content(t_token *node)
 {
 	size_t	i;
+	t_prop	*props;
 	char	*str;
 
 	i = 0;
+	props = &node->props;
 	node->full_content = ft_strdup("");
-	while (i < node->size)
+	while (i < props->size)
 	{
-		str = node->content[i].str;
+		str = props->content[i].str;
 		node->full_content = ft_strjoin_with_free(node->full_content, str);
 		i++;
 	}
 	ft_gc_add(node->full_content);
+}
+
+void	assign_redirects(t_token_list *list)
+{
+	t_token_list	*redirect;
+	t_token_list	*file;
+
+	while (list)
+	{
+		if (is_redirector(list->token))
+		{
+			redirect = list;
+			file = redirect->next;
+			redirect->token.file = &file->token;
+			redirect->next = file->next;
+			file->next->prev = redirect;
+			file->next = NULL;
+			file->prev = NULL;
+		}
+		list = list->next;
+	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:45:52 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 15:36:12 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:15:49 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 void	init_env(void)
 {
-	char	*pid;
 	t_shell	*shell;
 
 	shell = get_minishell();
 	shell->env = env_to_map(__environ);
 	ft_setenv("?", "0", FALSE);
-	pid = ft_getpid();
-	ft_setenv("$", pid, FALSE);
-	free(pid);
+	ft_setenv("$", ft_getpid(), TRUE);
 }
 
 t_hash_table	*env_to_map(char **env)
@@ -49,7 +46,7 @@ t_hash_table	*env_to_map(char **env)
 char	**map_to_env(t_hash_table *map)
 {
 	char		**env;
-	t_h_item	*item;
+	t_h_item	*tmp;
 	size_t		i_env;
 	int			i;
 
@@ -58,33 +55,36 @@ char	**map_to_env(t_hash_table *map)
 	env = NULL;
 	while (++i < (int)map->size)
 	{
-		item = map->items[i];
-		if (!item || !ft_strcmp(item->key, "?") || !ft_strcmp(item->key, "$"))
-			continue ;
-		while (item)
+		tmp = map->items[i];
+		while (tmp)
 		{
-			env = ft_recalloc(env, sizeof(char *) * (i_env + 2), sizeof(char *)
-					* (i_env + 1));
-			env[i_env] = ft_strjoin(item->key, "=");
-			env[i_env] = ft_strjoin_with_free(env[i_env], item->value);
-			i_env++;
-			item = item->next;
+			if (ft_strcmp(tmp->key, "?") && ft_strcmp(tmp->key, "$"))
+			{
+				env = ft_recalloc(env, sizeof(char *) * (i_env + 2),
+						sizeof(char *) * (i_env + 1));
+				env[i_env] = ft_strjoin(tmp->key, "=");
+				env[i_env] = ft_strjoin_with_free(env[i_env], tmp->value);
+				i_env++;
+			}
+			tmp = tmp->next;
 		}
 	}
-	env[i_env] = NULL;
 	return (env);
 }
 
-void	ft_setenv(char *key, char *value, t_bool free_value)
+t_int8	ft_setenv(char *key, char *value, t_bool free_value)
 {
 	t_shell	*shell;
+	t_int8	ret;
 
 	shell = get_minishell();
 	if (!key || !value)
-		return ;
+		return (0);
 	ft_map_insert(shell->env, key, value);
+	ret = ft_atoui8(value);
 	if (free_value)
 		free(value);
+	return (ret);
 }
 
 char	*ft_getenv(char *key)

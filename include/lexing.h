@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/09 14:08:35 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:27:00 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,19 @@ typedef struct s_content_part
 	char				quote;
 }						t_content_part;
 
+typedef struct s_prop
+{
+	t_content_part		*content;
+	size_t				size;
+	t_bool				error;
+}						t_prop;
+
 typedef struct s_token
 {
 	t_token_type		type;
+	struct s_token		*file;
 	char				*full_content;
-	t_content_part		content[2000];
-	size_t				size;
-	t_bool				error;
+	t_prop				props;
 }						t_token;
 
 typedef struct s_token_list
@@ -93,6 +99,7 @@ char					*left_trim(char *input);
 t_state					get_initial_state(char c);
 t_state					get_seccond_state(char *input, t_state state);
 void					fill_full_content(t_token *node);
+void					assign_redirects(t_token_list *list);
 
 // =========================== VALIDATION PART ================================
 t_token_list			*validate_tokens(t_token_list *tokens);

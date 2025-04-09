@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/09 14:01:59 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:17:50 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char						*ft_readline(void);
 
 void						init_env(void);
 char						*ft_getenv(char *key);
-void						ft_setenv(char *key, char *value, t_bool free_val);
+t_int8						ft_setenv(char *key, char *value, t_bool free_val);
 t_hash_table				*env_to_map(char **env);
 char						**map_to_env(t_hash_table *map);
 
