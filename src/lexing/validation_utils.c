@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 07:57:42 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/02 07:48:37 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:02:39 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ t_bool	is_redirector(t_token c)
 t_bool	is_separator(t_token c)
 {
 	return (c.type == TOK_AND || c.type == TOK_OR || c.type == TOK_PIPE);
+}
+
+t_bool	is_bracket(t_token c)
+{
+	return (c.type == TOK_OPEN_BRACKET || c.type == TOK_CLOSE_BRACKET);
 }
 
 t_bool	can_finish(t_token c)
