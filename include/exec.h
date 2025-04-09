@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 13:43:35 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:19:04 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "minishell.h"
 # include "parser.h"
-
 # include <sys/wait.h>
 
 # define MINISHELL "\033[36mminishell: \033[0m"
@@ -31,45 +30,61 @@
 # define O_R O_RDONLY
 # define O_A O_APPEND
 
+# define NOT_BUILTIN -1
+
 typedef enum e_pipe_fd
 {
 	READ_FD = 0,
 	WRITE_FD = 1,
-}		t_pipe_fd;
+}			t_pipe_fd;
+
+typedef struct s_pid_list
+{
+	pid_t	*pids;
+	size_t	len;
+}			t_pid_list;
 
 // Iterate through the execution tree recursively and execute each node
-int		exec(t_exec_tree *tree, int fds[2]);
+int			exec(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfrk);
 
 // ================================= RUN FUNCTIONS ============================
 
-int		run_builtin(t_token_list *command);
-void	run_external(t_token_list *command);
+int			run_builtin(t_token_list *command);
+void		run_external(t_token_list *command);
+int			run(t_token_list *cmd, int fds[2], t_pid_list *lst, t_bool b_fork);
 
 // ================================= UTILS ====================================
 
-char	*handle_path(char *cmd);
-char	**handle_argv(t_token_list *list);
-t_bool	is_builtin(t_token_list *command);
+char		*handle_path(char *cmd);
+char		**handle_argv(t_token_list *list);
+t_bool		is_builtin(t_token_list *command);
+
+// ================================= PID UTILS ================================
+
+int			wait_pids(t_pid_list *list);
+void		free_pid_list(t_pid_list *list);
+t_pid_list	*create_pid_list(t_exec_tree *tree);
+void		add_pid(t_pid_list *list, pid_t pid);
 
 // ================================= MACROS ===================================
 
 // Return the exit code of a process
-int		wexitstatus(int status);
+int			wexitstatus(int status);
 // Return true if the process was killed by a signal
-int		wifsignaled(int status);
+int			wifsignaled(int status);
 // Return the signal number that killed the process
-int		wtermsig(int status);
+int			wtermsig(int status);
 // Return true if the process dumped core
-int		wcoredump(int status);
+int			wcoredump(int status);
 // Calculate the exit code of a process
-int		get_return_value(int status);
+int			get_return_value(int status);
 
 // ================================= BUILTINS =================================
 
-typedef	int(t_builtin)(char **args);
+typedef		int(t_builtin)(char **args);
 
-int		b_echo(char **args);
-int		b_pwd(char **args);
-int		b_exit(char **args);
+int			b_echo(char **args);
+int			b_pwd(char **args);
+int			b_exit(char **args);
 
 #endif

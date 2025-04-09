@@ -49,6 +49,7 @@ FILES = \
 	$(LEXING_PATH)state.c \
 	$(LEXING_PATH)validation.c \
 	$(LEXING_PATH)validation_utils.c \
+	$(EXEC_PATH)pid.c \
 	$(EXEC_PATH)run.c \
 	$(EXEC_PATH)exec.c \
 	$(EXEC_PATH)path.c \

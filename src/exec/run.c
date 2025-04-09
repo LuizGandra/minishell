@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 09:18:21 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:20:31 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,6 @@ char	**handle_argv(t_token_list *list)
 	return (argv);
 }
 
-static t_bool	validate_path(char *path)
-{
-	return (ft_strchr(path, '/') != NULL || access(path, F_OK | X_OK) == 0);
-}
-
 void	run_external(t_token_list *list)
 {
 	char	*path;
@@ -85,9 +80,10 @@ void	run_external(t_token_list *list)
 	signal(SIGQUIT, SIG_DFL);
 	ret_code = 0;
 	path = handle_path(list->token.full_content);
-	if (!validate_path(path))
+	if (!(ft_strchr(path, '/') != NULL || access(path, F_OK | X_OK) == 0))
 	{
 		ret_code = display_error(path);
+		// NEED CLEEN MAYBE
 		exit(ret_code);
 	}
 	argv = handle_argv(list);
@@ -95,6 +91,37 @@ void	run_external(t_token_list *list)
 	if (execve(path, argv, envp) == -1)
 	{
 		ret_code = display_error(path);
+		// NEED CLEEN
 		exit(ret_code);
+	}
+}
+
+int	run(t_token_list *command, int fds[2], t_pid_list *list,
+		t_bool builtin_fork)
+{
+	int		ret_code;
+	pid_t	pid;
+
+	if (is_builtin(command))
+	{
+		if (!builtin_fork)
+			ret_code = run_builtin(command);
+		else
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				ret_code = run_builtin(command);
+				// CLEAN_UP
+				exit(ret_code);
+			}
+		}
+	}
+	else
+	{
+		pid = fork();
+		add_pid(list, pid);
+		if (pid == 0)
+			run_external(command);
 	}
 }
