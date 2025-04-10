@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 13:08:38 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:31:29 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include "signals.h"
 
-void	run_external(t_token_list *list)
+void	run_external(t_token_list *command, t_pid_list *list)
 {
 	char	*path;
 	char	**argv;
@@ -24,7 +24,7 @@ void	run_external(t_token_list *list)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	ret_code = 0;
-	path = handle_path(list->token.full_content);
+	path = handle_path(command->token.full_content);
 	if (!(ft_strchr(path, '/') != NULL || access(path, F_OK | X_OK) == 0))
 	{
 		ret_code = display_error(path);
@@ -32,7 +32,7 @@ void	run_external(t_token_list *list)
 		clean_all();
 		exit(ret_code);
 	}
-	argv = handle_argv(list);
+	argv = handle_argv(command);
 	envp = map_to_env(get_minishell()->env);
 	if (execve(path, argv, envp) == -1)
 	{
@@ -76,7 +76,7 @@ int	run(t_token_list *command, int fds[2], t_pid_list *list, t_bool bfork)
 	else
 	{
 		if (ft_fork(list) == 0)
-			run_external(command);
+			run_external(command, list);
 	}
 	return (ret_code);
 }
