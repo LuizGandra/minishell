@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 10:04:29 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:08:38 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	run_external(t_token_list *list)
 	if (!(ft_strchr(path, '/') != NULL || access(path, F_OK | X_OK) == 0))
 	{
 		ret_code = display_error(path);
+		free_pid_list(list);
 		clean_all();
 		exit(ret_code);
 	}
@@ -36,6 +37,7 @@ void	run_external(t_token_list *list)
 	if (execve(path, argv, envp) == -1)
 	{
 		ret_code = display_error(path);
+		free_pid_list(list);
 		clean_all();
 		exit(ret_code);
 	}
@@ -65,6 +67,7 @@ int	run(t_token_list *command, int fds[2], t_pid_list *list, t_bool bfork)
 			if (ft_fork(list) == 0)
 			{
 				ret_code = run_builtin(command);
+				free_pid_list(list);
 				clean_all();
 				exit(ret_code);
 			}

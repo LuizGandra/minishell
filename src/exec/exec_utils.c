@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:30:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 09:43:35 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:36:18 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_redirect(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfrk)
 	redir_fds[READ_FD] = fds[READ_FD];
 	redir_fds[WRITE_FD] = fds[WRITE_FD];
 	old_path = ft_strdup(tree->file->token.full_content);
-	expand(&tree->file);
+	expand(&tree->file, TRUE);
 	if (tree->file->next)
 	{
 		ft_printf_fd(2, MINISHELL "%s: " AMBIG_REDIR, old_path);
@@ -49,7 +49,7 @@ int	exec_command(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 	dup2(fds[READ_FD], STDIN_FILENO);
 	dup2(fds[WRITE_FD], STDOUT_FILENO);
 	signal(SIGINT, SIG_IGN);
-	expand(&tree->command);
+	expand(&tree->command, FALSE);
 	ret_code = run(tree->command, fds, list, bfork);
 	dup2(get_minishell()->default_fds[READ_FD], STDIN_FILENO);
 	dup2(get_minishell()->default_fds[WRITE_FD], STDOUT_FILENO);

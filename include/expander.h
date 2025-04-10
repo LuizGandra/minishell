@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:46:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/07 11:49:06 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:34:15 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "minishell.h"
 
 // Expand the variables and wildcards changing the token list.
-void			expand(t_token_list **token_list);
+void			expand(t_token_list **token_list, t_bool file);
 
 // ================================= EXPANDERS ================================
 
