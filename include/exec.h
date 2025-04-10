@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/09 15:19:04 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:31:48 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define O_R O_RDONLY
 # define O_A O_APPEND
 
-# define NOT_BUILTIN -1
+# define FORKED -1
 
 typedef enum e_pipe_fd
 {
@@ -44,20 +44,28 @@ typedef struct s_pid_list
 	size_t	len;
 }			t_pid_list;
 
-// Iterate through the execution tree recursively and execute each node
+// ================================= EXEC FUNCTIONS ============================
+
 int			exec(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfrk);
+int			exec_redirect(t_exec_tree *t, int fds[2], t_pid_list *l, t_bool f);
+int			exec_command(t_exec_tree *tr, int fds[2], t_pid_list *l, t_bool f);
+int			exec_pipe(t_exec_tree *tree, int fds[2], t_pid_list *l, t_bool bf);
+int			exec_and_or(t_exec_tree *t, int fds[2], t_pid_list *lst, t_bool f);
+int			exec_subshell(t_exec_tree *t, int fds[2], t_pid_list *l, t_bool f);
 
 // ================================= RUN FUNCTIONS ============================
 
 int			run_builtin(t_token_list *command);
-void		run_external(t_token_list *command);
+void		run_external(t_token_list *command, t_pid_list *list);
 int			run(t_token_list *cmd, int fds[2], t_pid_list *lst, t_bool b_fork);
 
 // ================================= UTILS ====================================
 
 char		*handle_path(char *cmd);
+int			display_error(char *cmd);
 char		**handle_argv(t_token_list *list);
 t_bool		is_builtin(t_token_list *command);
+int			open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd);
 
 // ================================= PID UTILS ================================
 

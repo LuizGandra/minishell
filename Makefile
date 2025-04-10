@@ -38,6 +38,7 @@ SIGNALS_PATH = ./signals/
 LEXING_PATH = ./lexing/
 UTILS_PATH = ./utils/
 EXEC_PATH = ./exec/
+PARSER_PATH = ./parser/
 
 FILES = \
 	main.c \
@@ -49,12 +50,15 @@ FILES = \
 	$(LEXING_PATH)state.c \
 	$(LEXING_PATH)validation.c \
 	$(LEXING_PATH)validation_utils.c \
-	$(EXEC_PATH)pid.c \
 	$(EXEC_PATH)run.c \
 	$(EXEC_PATH)exec.c \
+	$(EXEC_PATH)file.c \
 	$(EXEC_PATH)path.c \
 	$(EXEC_PATH)macros.c \
 	$(EXEC_PATH)builtin.c \
+	$(EXEC_PATH)pid_list.c \
+	$(EXEC_PATH)run_utils.c \
+	$(EXEC_PATH)exec_utils.c \
 	$(EXPANDER_PATH)var.c \
 	$(EXPANDER_PATH)expander.c \
 	$(EXPANDER_PATH)wildcard.c \
@@ -65,6 +69,11 @@ FILES = \
 	$(UTILS_PATH)cleanner.c \
 	$(UTILS_PATH)ft_readline.c \
 	$(SIGNALS_PATH)handlers.c \
+	$(PARSER_PATH)here_doc.c \
+	$(PARSER_PATH)parser_utils.c \
+	$(PARSER_PATH)parser.c \
+	$(PARSER_PATH)print.c \
+	$(PARSER_PATH)token_utils.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
 
@@ -90,6 +99,7 @@ $(BUILD_PATH):
 	@mkdir -p $(BUILD_PATH)$(LEXING_PATH)
 	@mkdir -p $(BUILD_PATH)$(UTILS_PATH)
 	@mkdir -p $(BUILD_PATH)$(EXEC_PATH)
+	@mkdir -p $(BUILD_PATH)$(PARSER_PATH)
 
 print:
 ifeq ($(wildcard $(NAME)),)
