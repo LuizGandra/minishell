@@ -72,6 +72,7 @@ FILES = \
 	$(PARSER_PATH)here_doc.c \
 	$(PARSER_PATH)parser_utils.c \
 	$(PARSER_PATH)parser.c \
+	$(PARSER_PATH)print.c \
 	$(PARSER_PATH)token_utils.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
