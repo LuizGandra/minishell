@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
 /*   Updated: 2025/04/10 12:35:49 by lhenriqu         ###   ########.fr       */
@@ -93,8 +93,8 @@ extern void				expand(t_token_list **token_list, t_bool file);
 
 // =========================== TOKENIZATION PART ==============================
 t_token_list			*get_token_list(char *input);
-// ============== UTILS ===============
 
+// ============== UTILS ===============
 t_bool					is_word(char c);
 char					*left_trim(char *input);
 t_state					get_initial_state(char c);
@@ -104,11 +104,12 @@ void					assign_redirects(t_token_list *list);
 
 // =========================== VALIDATION PART ================================
 t_token_list			*validate_tokens(t_token_list *tokens);
-// ============== UTILS ===============
 
+// ============== UTILS ===============
 t_bool					can_finish(t_token c);
 t_bool					is_separator(t_token token);
 t_bool					is_redirector(t_token token);
+t_bool					is_bracket(t_token token);
 void					*print_token_error(t_token_list *node);
 
 #endif
