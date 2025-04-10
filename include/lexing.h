@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 11:27:00 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:35:49 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ typedef struct s_token_list
 }						t_token_list;
 
 // =========================== EXTERN FUNCTIONS ===============================
-extern void				expand(t_token_list **token_list);
+
+extern void				expand(t_token_list **token_list, t_bool file);
 
 // =========================== TOKENIZATION PART ==============================
 t_token_list			*get_token_list(char *input);

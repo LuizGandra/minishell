@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 10:30:14 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:52:04 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_exec_tree	*build_redir_subshell_tree(void)
 
 	root = ft_gc_malloc(sizeof(t_exec_tree));
 	root->type = TREE_REDIR_OUT;
-	root->file = "output.txt";
+	root->file = get_token_list("> output.txt");
 	root->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->type = TREE_SUBSHELL;
 	root->left->subshell = ft_gc_malloc(sizeof(t_exec_tree));
@@ -104,7 +104,7 @@ static t_exec_tree	*build_redir_append_tree(void)
 
 	root = ft_gc_malloc(sizeof(t_exec_tree));
 	root->type = TREE_REDIR_APPEND;
-	root->file = "output.txt";
+	root->file = get_token_list(">> output.txt");
 	root->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->type = TREE_COMMAND;
 	root->left->command = get_token_list("echo \"hello\"");
@@ -118,7 +118,7 @@ static t_exec_tree	*build_redir_in_tree(void)
 
 	root = ft_gc_malloc(sizeof(t_exec_tree));
 	root->type = TREE_REDIR_IN;
-	root->file = "input.txt";
+	root->file = get_token_list("< input.txt");
 	root->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->type = TREE_COMMAND;
 	root->left->command = get_token_list("cat");
@@ -175,7 +175,7 @@ static t_exec_tree	*build_test_tree(void)
 	root->left->right->command = get_token_list("echo \"error\"");
 	root->left->left->right = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->left->right->type = TREE_REDIR_OUT;
-	root->left->left->right->file = "file";
+	root->left->left->right->file = get_token_list("> file");
 	root->left->left->right->left = ft_gc_malloc(sizeof(t_exec_tree));
 	root->left->left->right->left->type = TREE_COMMAND;
 	root->left->left->right->left->command = get_token_list("cat -e");

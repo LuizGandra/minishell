@@ -50,12 +50,15 @@ FILES = \
 	$(LEXING_PATH)state.c \
 	$(LEXING_PATH)validation.c \
 	$(LEXING_PATH)validation_utils.c \
-	$(EXEC_PATH)pid.c \
 	$(EXEC_PATH)run.c \
 	$(EXEC_PATH)exec.c \
+	$(EXEC_PATH)file.c \
 	$(EXEC_PATH)path.c \
 	$(EXEC_PATH)macros.c \
 	$(EXEC_PATH)builtin.c \
+	$(EXEC_PATH)pid_list.c \
+	$(EXEC_PATH)run_utils.c \
+	$(EXEC_PATH)exec_utils.c \
 	$(EXPANDER_PATH)var.c \
 	$(EXPANDER_PATH)expander.c \
 	$(EXPANDER_PATH)wildcard.c \
