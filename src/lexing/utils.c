@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:06:14 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 11:20:02 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:34:06 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	assign_redirects(t_token_list *list)
 			file = redirect->next;
 			redirect->token.file = &file->token;
 			redirect->next = file->next;
-			file->next->prev = redirect;
+			if (file->next)
+				file->next->prev = redirect;
 			file->next = NULL;
 			file->prev = NULL;
 		}

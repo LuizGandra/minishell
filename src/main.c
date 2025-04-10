@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 12:52:04 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:24:32 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,10 @@ static void	reset_terminal(void)
 	dup2(shell->default_fds[WRITE_FD], STDOUT_FILENO);
 }
 
+void				print_tree(t_exec_tree *tree, int level);
+t_exec_tree			*get_token_tree(t_token_list *token_list,
+						t_tree_hierarchy hierarchy);
+
 static void	ft_loop(void)
 {
 	t_shell		*shell;
@@ -229,11 +233,12 @@ static void	ft_loop(void)
 		if (shell->user_input[0] == '\0')
 			continue ;
 		add_history(shell->user_input);
+		print_tree(build_test_tree(), 0);
 		// shell->tokens = get_token_list(shell->user_input);
-		pid_list = create_pid_list(build_python3_tree());
-		exec(build_python3_tree(), shell->default_fds, pid_list, FALSE);
-		ft_setenv("?", ft_itoa(wait_pids(pid_list)), TRUE);
-		free_pid_list(pid_list);
+		// pid_list = create_pid_list(build_python3_tree());
+		// // exec(build_python3_tree(), shell->default_fds, pid_list, FALSE);
+		// ft_setenv("?", ft_itoa(wait_pids(pid_list)), TRUE);
+		// free_pid_list(pid_list);
 		// print_tokens(shell->tokens);
 		ft_gc_exit();
 	}
