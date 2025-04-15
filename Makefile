@@ -113,7 +113,10 @@ ifeq ($(wildcard $(NAME)),)
 endif
 
 $(NAME): $(OBJS) $(HEADER_PATH)minishell.h
+	@printf "$(YELLOW)[Building]$(RESET) $(NAME)...\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(HEADER_PATH) -L$(LIB_PATH) -lft $(RFLAGS)
+	@printf "$(UP)$(CUT)"
+	@printf "$(GREEN)[Builded]$(RESET) $(NAME)...\n"
 	@printf "$(CYAN)------ --------------------------------------------- ------$(RESET)\n"
 	@printf "$(CYAN)------| MINISHELL executable was created successfully!! |------$(RESET)\n"
 	@printf "$(CYAN)------ --------------------------------------------- ------$(RESET)\n"
