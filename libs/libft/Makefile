@@ -1,12 +1,15 @@
 # ===========================================================================
-# ================================ COLORS ===================================
+# ================================ CONTROL ==================================
 # ===========================================================================
 
-GREEN = \033[32;1m
+UP = \033[A
+CUT = \033[K
+RESET = \033[0m
 RED = \033[31;1m
+GREEN = \033[32;1m
+YELLOW = \033[33;3m
 CYAN = \033[36;1;3;208m
 WHITE = \033[37;1;4m
-COLOR_LIMITER = \033[0m
 
 # ===========================================================================
 # ================================= LIBFT ===================================
@@ -154,14 +157,16 @@ CFLAGS := -Wall -Wextra -Werror
 all: $(LIB_BIN_PATH) $(NAME)
 
 $(LIB_BIN_PATH)%.o: $(LIB_SOURCES_PATH)%.c
-	@printf "$(GREEN)[Compiling]$(COLOR_LIMITER) $(WHITE)%s...$(COLOR_LIMITER)\n" "$(notdir $(<))"
+	@printf "$(YELLOW)[Compiling]$(RESET) $(WHITE)%s...$(RESET)\n" "$(notdir $(<))"
 	@$(CC) $(CFLAGS) -c $< -o $@ -I $(LIB_HEADER_PATH)
+	@printf "$(UP)$(CUT)"
+	@printf "$(GREEN)[Finished]$(RESET) $(WHITE)%s...$(RESET)\n" "$(notdir $(<))"
 	@printf "\n"
 
 $(NAME): $(LIB_OBJECTS)
-	@printf "$(CYAN) ---------------------------------------\n$(COLOR_LIMITER)"
-	@printf "$(CYAN)|  %s  Was Compiled Successfully!! |\n$(COLOR_LIMITER)" "$(LIB_NAME)"
-	@printf "$(CYAN)---------------------------------------\n$(COLOR_LIMITER)"
+	@printf "$(CYAN) ---------------------------------------\n$(RESET)"
+	@printf "$(CYAN)|  %s  Was Compiled Successfully!! |\n$(RESET)" "$(LIB_NAME)"
+	@printf "$(CYAN)---------------------------------------\n$(RESET)"
 	@printf "\n"
 	@ar rcs $(NAME) $?
 
@@ -209,7 +214,7 @@ gc:
 	LIB_HEADER_PATH="$(GC_HEADER_PATH)"
 
 clean:
-	@printf "$(RED)[Removing Objects]$(COLOR_LIMITER)\n"
+	@printf "$(RED)[Removing Objects]$(RESET)\n"
 	@rm -rf $(LIB_BIN_PATH)
 	@rm -rf $(GNL_BIN_PATH)
 	@rm -rf $(PRINTF_BIN_PATH)
@@ -218,7 +223,7 @@ clean:
 	@rm -rf $(GC_BIN_PATH)
 
 fclean: clean
-	@printf "$(RED)[Removing %s]$(COLOR_LIMITER)\n" "$(NAME)"
+	@printf "$(RED)[Removing %s]$(RESET)\n" "$(NAME)"
 	@rm -f $(NAME)
 
 re: fclean all

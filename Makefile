@@ -1,12 +1,15 @@
 # ===========================================================================
-#  =============================== COLORS ==================================
+#  =============================== CONTROL =================================
 # ===========================================================================
 
-GREEN = \033[32;3m
+UP = \033[A
+CUT = \033[K
+RESET = \033[0m
 RED = \033[31;3m
-CYAN = \033[36;1;3;208m
+GREEN = \033[32;3m
+YELLOW = \033[33;3m
 WHITE = \033[37;1;4m
-COLOR_LIMITER = \033[0m
+CYAN = \033[36;1;3;208m
 
 # ===========================================================================
 #  =============================== COMPILER ================================
@@ -86,9 +89,9 @@ all: libft $(BUILD_PATH) print $(NAME)
 
 libft:
 ifeq ($(wildcard $(LIB_PATH)/$(LIB_NAME)),)
-	@printf "$(CYAN)------------------- ----------------- -------------------$(COLOR_LIMITER)\n"
-	@printf "$(CYAN)-------------------| COMPILING LIBFT |-------------------$(COLOR_LIMITER)\n"
-	@printf "$(CYAN)------------------- ----------------- -------------------$(COLOR_LIMITER)\n"
+	@printf "$(CYAN)------------------- ----------------- -------------------$(RESET)\n"
+	@printf "$(CYAN)-------------------| COMPILING LIBFT |-------------------$(RESET)\n"
+	@printf "$(CYAN)------------------- ----------------- -------------------$(RESET)\n"
 	@make build -C $(LIB_PATH) --no-print-directory
 endif
 
@@ -103,31 +106,34 @@ $(BUILD_PATH):
 
 print:
 ifeq ($(wildcard $(NAME)),)
-	@printf "$(GREEN) ------------------------$(COLOR_LIMITER)"
-	@printf "$(GREEN)| Compiling Main Project |$(COLOR_LIMITER)"
-	@printf "$(GREEN)------------------------$(COLOR_LIMITER)"
+	@printf "$(GREEN) ------------------------$(RESET)"
+	@printf "$(GREEN)| Compiling Main Project |$(RESET)"
+	@printf "$(GREEN)------------------------$(RESET)"
 	@echo " "
 endif
 
 $(NAME): $(OBJS) $(HEADER_PATH)minishell.h
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(HEADER_PATH) -L$(LIB_PATH) -lft $(RFLAGS)
-	@printf "$(CYAN)------ --------------------------------------------- ------$(COLOR_LIMITER)\n"
-	@printf "$(CYAN)------| MINISHELL executable was created successfully!! |------$(COLOR_LIMITER)\n"
-	@printf "$(CYAN)------ --------------------------------------------- ------$(COLOR_LIMITER)\n"
+	@printf "$(CYAN)------ --------------------------------------------- ------$(RESET)\n"
+	@printf "$(CYAN)------| MINISHELL executable was created successfully!! |------$(RESET)\n"
+	@printf "$(CYAN)------ --------------------------------------------- ------$(RESET)\n"
 	@echo " "
 
 $(BUILD_PATH)%.o: $(SRC_PATH)%.c
-	@printf "$(GREEN)[Compiling]$(COLOR_LIMITER) $(notdir $<)...\n"
+	@printf "$(YELLOW)[Compiling]$(RESET) $(notdir $<)...\n"
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER_PATH)
+	@printf "$(UP)$(CUT)"
+	@printf "$(GREEN)[Compiled]$(RESET) $(notdir $<)...\n"
+
 
 clean:
-	@printf "$(RED)[Removing Objects...]$(COLOR_LIMITER)\n"
+	@printf "$(RED)[Removing Objects...]$(RESET)\n"
 	@make fclean -C $(LIB_PATH) --no-print-directory
 	@rm -rf $(BUILD_PATH)
 	@rm -rf $(VALGRIND_LOG)
 
 fclean: clean
-	@printf "$(RED)[Removing $(notdir $(NAME))...]$(COLOR_LIMITER)\n"
+	@printf "$(RED)[Removing $(notdir $(NAME))...]$(RESET)\n"
 	@rm -rf $(NAME)
 
 re: fclean
