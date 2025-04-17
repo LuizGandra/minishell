@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:47:20 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 11:27:48 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:34:07 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	finish_wildcard(t_token *token)
 	}
 }
 
-void	expand(t_token_list **token_list)
+void	expand(t_token_list **token_list, t_bool file)
 {
 	t_token_list	*current;
 	t_token			*token;
@@ -62,7 +62,10 @@ void	expand(t_token_list **token_list)
 	current = *token_list;
 	while (current)
 	{
-		token = &current->token;
+		if (file)
+			token = current->token.file;
+		else
+			token = &current->token;
 		if (token->type == TOK_WORD)
 		{
 			current = expand_word(token, token_list);

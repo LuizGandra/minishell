@@ -1,12 +1,15 @@
 # ===========================================================================
-#  =============================== COLORS ==================================
+#  =============================== CONTROL =================================
 # ===========================================================================
 
-GREEN = \033[32;3m
+UP = \033[A
+CUT = \033[K
+RESET = \033[0m
 RED = \033[31;3m
-CYAN = \033[36;1;3;208m
+GREEN = \033[32;3m
+YELLOW = \033[33;3m
 WHITE = \033[37;1;4m
-COLOR_LIMITER = \033[0m
+CYAN = \033[36;1;3;208m
 
 # ===========================================================================
 #  =============================== COMPILER ================================
@@ -38,6 +41,7 @@ SIGNALS_PATH = ./signals/
 LEXING_PATH = ./lexing/
 UTILS_PATH = ./utils/
 EXEC_PATH = ./exec/
+PARSER_PATH = ./parser/
 
 FILES = \
 	main.c \
@@ -49,12 +53,15 @@ FILES = \
 	$(LEXING_PATH)state.c \
 	$(LEXING_PATH)validation.c \
 	$(LEXING_PATH)validation_utils.c \
-	$(EXEC_PATH)pid.c \
 	$(EXEC_PATH)run.c \
 	$(EXEC_PATH)exec.c \
+	$(EXEC_PATH)file.c \
 	$(EXEC_PATH)path.c \
 	$(EXEC_PATH)macros.c \
 	$(EXEC_PATH)builtin.c \
+	$(EXEC_PATH)pid_list.c \
+	$(EXEC_PATH)run_utils.c \
+	$(EXEC_PATH)exec_utils.c \
 	$(EXPANDER_PATH)var.c \
 	$(EXPANDER_PATH)expander.c \
 	$(EXPANDER_PATH)wildcard.c \
@@ -65,6 +72,11 @@ FILES = \
 	$(UTILS_PATH)cleanner.c \
 	$(UTILS_PATH)ft_readline.c \
 	$(SIGNALS_PATH)handlers.c \
+	$(PARSER_PATH)here_doc.c \
+	$(PARSER_PATH)parser_utils.c \
+	$(PARSER_PATH)parser.c \
+	$(PARSER_PATH)print.c \
+	$(PARSER_PATH)token_utils.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))
 
@@ -77,9 +89,9 @@ all: libft $(BUILD_PATH) print $(NAME)
 
 libft:
 ifeq ($(wildcard $(LIB_PATH)/$(LIB_NAME)),)
-	@printf "$(CYAN)------------------- ----------------- -------------------$(COLOR_LIMITER)\n"
-	@printf "$(CYAN)-------------------| COMPILING LIBFT |-------------------$(COLOR_LIMITER)\n"
-	@printf "$(CYAN)------------------- ----------------- -------------------$(COLOR_LIMITER)\n"
+	@printf "$(CYAN)------------------- ----------------- -------------------$(RESET)\n"
+	@printf "$(CYAN)-------------------| COMPILING LIBFT |-------------------$(RESET)\n"
+	@printf "$(CYAN)------------------- ----------------- -------------------$(RESET)\n"
 	@make build -C $(LIB_PATH) --no-print-directory
 endif
 
@@ -90,34 +102,41 @@ $(BUILD_PATH):
 	@mkdir -p $(BUILD_PATH)$(LEXING_PATH)
 	@mkdir -p $(BUILD_PATH)$(UTILS_PATH)
 	@mkdir -p $(BUILD_PATH)$(EXEC_PATH)
+	@mkdir -p $(BUILD_PATH)$(PARSER_PATH)
 
 print:
 ifeq ($(wildcard $(NAME)),)
-	@printf "$(GREEN) ------------------------$(COLOR_LIMITER)"
-	@printf "$(GREEN)| Compiling Main Project |$(COLOR_LIMITER)"
-	@printf "$(GREEN)------------------------$(COLOR_LIMITER)"
+	@printf "$(GREEN) ------------------------$(RESET)"
+	@printf "$(GREEN)| Compiling Main Project |$(RESET)"
+	@printf "$(GREEN)------------------------$(RESET)"
 	@echo " "
 endif
 
 $(NAME): $(OBJS) $(HEADER_PATH)minishell.h
+	@printf "$(YELLOW)[Building]$(RESET) $(NAME)...\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(HEADER_PATH) -L$(LIB_PATH) -lft $(RFLAGS)
-	@printf "$(CYAN)------ --------------------------------------------- ------$(COLOR_LIMITER)\n"
-	@printf "$(CYAN)------| MINISHELL executable was created successfully!! |------$(COLOR_LIMITER)\n"
-	@printf "$(CYAN)------ --------------------------------------------- ------$(COLOR_LIMITER)\n"
+	@printf "$(UP)$(CUT)"
+	@printf "$(GREEN)[Builded]$(RESET) $(NAME)...\n"
+	@printf "$(CYAN)------ --------------------------------------------- ------$(RESET)\n"
+	@printf "$(CYAN)------| MINISHELL executable was created successfully!! |------$(RESET)\n"
+	@printf "$(CYAN)------ --------------------------------------------- ------$(RESET)\n"
 	@echo " "
 
 $(BUILD_PATH)%.o: $(SRC_PATH)%.c
-	@printf "$(GREEN)[Compiling]$(COLOR_LIMITER) $(notdir $<)...\n"
+	@printf "$(YELLOW)[Compiling]$(RESET) $(notdir $<)...\n"
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HEADER_PATH)
+	@printf "$(UP)$(CUT)"
+	@printf "$(GREEN)[Compiled]$(RESET) $(notdir $<)...\n"
+
 
 clean:
-	@printf "$(RED)[Removing Objects...]$(COLOR_LIMITER)\n"
+	@printf "$(RED)[Removing Objects...]$(RESET)\n"
 	@make fclean -C $(LIB_PATH) --no-print-directory
 	@rm -rf $(BUILD_PATH)
 	@rm -rf $(VALGRIND_LOG)
 
 fclean: clean
-	@printf "$(RED)[Removing $(notdir $(NAME))...]$(COLOR_LIMITER)\n"
+	@printf "$(RED)[Removing $(notdir $(NAME))...]$(RESET)\n"
 	@rm -rf $(NAME)
 
 re: fclean
