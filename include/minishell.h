@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/08 14:17:50 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/17 08:35:21 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libs/libft/libft.h"
+# include "parser.h"
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -22,6 +23,7 @@
 // =========================== EXTERN FUNCTIONS ===============================
 
 typedef struct s_token_list	t_token_list;
+typedef struct s_exec_tree	t_exec_tree;
 
 extern t_token_list			*get_token_list(char *input);
 
@@ -31,6 +33,7 @@ extern t_token_list			*get_token_list(char *input);
 typedef struct s_shell
 {
 	t_hash_table			*env;
+	t_exec_tree				*tree;
 	char					*user_input;
 	t_token_list			*tokens;
 	int						default_fds[2];

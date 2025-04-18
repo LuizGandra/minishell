@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 09:59:41 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 12:40:06 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:20:23 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@
 # include "lexing.h"
 # include "minishell.h"
 
+typedef struct s_token_list	t_token_list;
+typedef enum e_token_type t_token_type;
+
 typedef enum e_tree_type
 {
-	TREE_PIPE,
 	TREE_AND,
+	TREE_PIPE,
 	TREE_OR,
 	TREE_REDIR_IN,
 	TREE_REDIR_OUT,
-	TREE_REDIR_APPEND,
-	TREE_REDIR_HEREDOC,
-	TREE_COMMAND,
+	TREE_REDIR_OUT_APP,
+	TREE_REDIR_HDOC,
+	TREE_CMD,
 	TREE_SUBSHELL
 }						t_tree_type;
 
@@ -75,5 +78,8 @@ t_token_list			*get_next_token(t_token_list *token_list,
 t_bool					is_a_subshell(t_token_list *token_list);
 void					pass_brackets(t_token_list **token_list,
 							t_tree_hierarchy hierarchy);
+
+// TODO REMOVE
+void	print_token_list(t_token_list *list);
 
 #endif

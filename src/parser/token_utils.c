@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:02:15 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/09 14:09:48 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:37:32 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static t_token_list	*ft_nodecpy(t_token_list *lst)
 
 	node = ft_gc_malloc(sizeof(t_token_list));
 	ft_memmove(&node->token, &lst->token, sizeof(t_token));
-	node->token.full_content = ft_strdup(lst->token.full_content);
+	if (lst->token.full_content)
+		node->token.full_content = ft_strdup(lst->token.full_content);
 	ft_gc_add(node->token.full_content);
 	return (node);
 }
@@ -35,21 +36,34 @@ static t_token_list	*ft_nodecpy(t_token_list *lst)
 t_token_list	*ft_sublist(t_token_list *lst, t_token_list *start,
 		t_token_list *end)
 {
-	t_token_list	*sublist;
-	t_token_list	*node;
-	t_token_list	*prev;
+	// ! vi dnv e acho q n é isso n kkk, acho que essa func tá fazendo a sublist errada mesmo
+	// TODO pelo que eu entendi eu to passando a sublist errada, por algum motivo q eu n sei
+	// TODO ela tá iniciando do ls e indo até o &&, ao invés de iniciar do cat normalmente
+	// TODO preciso entender o pq disso
+	ft_printf("ft_sublist recebeu a lista: ");
+	print_token_list(lst);
+	ft_printf("start: %s, end: %s\n",
+		start ? start->token.full_content : "NULL",
+		end ? end->token.full_content : "NULL");
 
+	t_token_list	*sublist;
+	t_token_list	*tail;
+	t_token_list	*node;
+	
 	sublist = NULL;
+	tail = NULL;
 	while (lst && lst != start)
 		lst = lst->next;
 	while (lst && lst != end)
 	{
 		node = ft_nodecpy(lst);
+		if (!node)
+			return (NULL);
 		if (!sublist)
 			sublist = node;
 		else
-			prev->next = node;
-		prev = node;
+			tail->next = node;
+		tail = node;
 		lst = lst->next;
 	}
 	return (sublist);
