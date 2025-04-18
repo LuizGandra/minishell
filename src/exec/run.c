@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 14:31:29 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/17 08:40:48 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ static pid_t	ft_fork(t_pid_list *list)
 	return (pid);
 }
 
-int	run(t_token_list *command, int fds[2], t_pid_list *list, t_bool bfork)
+int	run(t_token_list *command, t_pid_list *list, t_bool bfork)
 {
 	int		ret_code;
-	pid_t	pid;
 
 	ret_code = FORKED;
 	if (is_builtin(command))

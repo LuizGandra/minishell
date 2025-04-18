@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:52:05 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/09 14:05:58 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:00:39 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ t_token_list	*get_next_token(t_token_list *token_list,
 		t_tree_hierarchy hierarchy)
 {
 	if (hierarchy == ROOT || hierarchy == LEFT_CHILD)
-		return (token_list->next);
-	else
 		return (token_list->prev);
+	else
+		return (token_list->next);
 }
 
 t_bool	is_a_subshell(t_token_list *token_list)

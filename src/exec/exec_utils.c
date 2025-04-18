@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:30:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/11 07:45:37 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/17 08:42:16 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exec_command(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 	dup2(fds[WRITE_FD], STDOUT_FILENO);
 	signal(SIGINT, SIG_IGN);
 	expand(&tree->command, FALSE);
-	ret_code = run(tree->command, fds, list, bfork);
+	ret_code = run(tree->command, list, bfork);
 	dup2(get_minishell()->default_fds[READ_FD], STDIN_FILENO);
 	dup2(get_minishell()->default_fds[WRITE_FD], STDOUT_FILENO);
 	return (ret_code);
@@ -78,7 +78,6 @@ int	exec_pipe(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 int	exec_and_or(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 {
 	int		ret;
-	pid_t	pid;
 
 	list = create_pid_list(tree);
 	ret = exec(tree->left, fds, list, bfork);

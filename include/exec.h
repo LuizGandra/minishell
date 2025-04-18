@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 14:31:48 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/17 08:41:17 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			exec_subshell(t_exec_tree *t, int fds[2], t_pid_list *l, t_bool f);
 
 int			run_builtin(t_token_list *command);
 void		run_external(t_token_list *command, t_pid_list *list);
-int			run(t_token_list *cmd, int fds[2], t_pid_list *lst, t_bool b_fork);
+int			run(t_token_list *cmd, t_pid_list *lst, t_bool b_fork);
 
 // ================================= UTILS ====================================
 
