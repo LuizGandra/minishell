@@ -47,6 +47,7 @@ void	print_token_list(t_token_list *list)
 	ft_printf("\n");
 }
 
+// TODO check if this function works correctly for subshells
 void	print_tree(t_exec_tree *tree, int level)
 {
 	if (!tree)
