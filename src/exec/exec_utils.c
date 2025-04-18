@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:30:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/17 08:42:16 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:00:05 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exec_command(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 	dup2(fds[WRITE_FD], STDOUT_FILENO);
 	signal(SIGINT, SIG_IGN);
 	expand(&tree->command, FALSE);
-	ret_code = run(tree->command, list, bfork);
+	ret_code = run(tree->command, list, bfork, fds);
 	dup2(get_minishell()->default_fds[READ_FD], STDIN_FILENO);
 	dup2(get_minishell()->default_fds[WRITE_FD], STDOUT_FILENO);
 	return (ret_code);
@@ -64,6 +64,8 @@ int	exec_pipe(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 
 	bfork = TRUE;
 	pipe(pipe_fds);
+	fd_list_add(pipe_fds[0]);
+	fd_list_add(pipe_fds[1]);
 	new_fds[READ_FD] = fds[READ_FD];
 	new_fds[WRITE_FD] = pipe_fds[WRITE_FD];
 	exec(tree->left, new_fds, list, bfork);
@@ -77,13 +79,16 @@ int	exec_pipe(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 
 int	exec_and_or(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 {
-	int		ret;
+	int			ret;
+	t_pid_list	*prev;
 
+	prev = list;
 	list = create_pid_list(tree);
 	ret = exec(tree->left, fds, list, bfork);
 	if (ret == FORKED)
 		ret = wait_pids(list);
 	free_pid_list(list);
+	list = prev;
 	if (tree->type == TREE_OR && ret)
 		ret = exec(tree->right, fds, list, bfork);
 	else if (tree->type == TREE_AND && !ret)

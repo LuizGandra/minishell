@@ -59,6 +59,7 @@ FILES = \
 	$(EXEC_PATH)path.c \
 	$(EXEC_PATH)macros.c \
 	$(EXEC_PATH)builtin.c \
+	$(EXEC_PATH)fd_list.c \
 	$(EXEC_PATH)pid_list.c \
 	$(EXEC_PATH)run_utils.c \
 	$(EXEC_PATH)exec_utils.c \

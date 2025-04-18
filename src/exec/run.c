@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/17 08:40:48 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/18 18:16:37 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,24 @@ void	run_external(t_token_list *command, t_pid_list *list)
 	}
 }
 
-static pid_t	ft_fork(t_pid_list *list)
+static pid_t	ft_fork(t_pid_list *list, int fds[2])
 {
 	pid_t	pid;
 
 	pid = fork();
+	if (pid == 0)
+	{
+		dup2(fds[READ_FD], STDIN_FILENO);
+		dup2(fds[WRITE_FD], STDOUT_FILENO);
+		fd_list_close();
+	}
 	add_pid(list, pid);
 	return (pid);
 }
 
-int	run(t_token_list *command, t_pid_list *list, t_bool bfork)
+int	run(t_token_list *command, t_pid_list *list, t_bool bfork, int fds[2])
 {
-	int		ret_code;
+	int	ret_code;
 
 	ret_code = FORKED;
 	if (is_builtin(command))
@@ -63,7 +69,7 @@ int	run(t_token_list *command, t_pid_list *list, t_bool bfork)
 			ret_code = run_builtin(command);
 		else
 		{
-			if (ft_fork(list) == 0)
+			if (ft_fork(list, fds) == 0)
 			{
 				ret_code = run_builtin(command);
 				free_pid_list(list);
@@ -74,7 +80,7 @@ int	run(t_token_list *command, t_pid_list *list, t_bool bfork)
 	}
 	else
 	{
-		if (ft_fork(list) == 0)
+		if (ft_fork(list, fds) == 0)
 			run_external(command, list);
 	}
 	return (ret_code);
