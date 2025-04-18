@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/17 12:24:06 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:20:03 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,37 @@ t_exec_tree	*get_token_tree(t_token_list *token_list,
 	t_token_list	*priority;
 	t_exec_tree		*tree;
 
-	ft_printf("\nget token tree foi chamada! %s -> %s\n",
-		token_list->token.full_content, ft_lstlast(token_list)->token.full_content);
+	ft_printf("\n\nget_token_tree foi chamada com a lista:");
+	print_token_list(token_list);
+	ft_printf("\n\n");
 	if (!token_list)
 		return (NULL);
 	tree = ft_gc_malloc(sizeof(t_exec_tree));
 	if (!tree)
 		return (NULL);
 	priority = get_priority_token(token_list, hierarchy);
-	ft_printf("\npriority token: (%s, %i)\n",
+	ft_printf("\nPriority token: (%s, %i)\n",
 			priority->token.full_content, priority->token.type);
 	tree->type = get_tree_type(priority->token.type);
 	if (priority->token.type == TOK_WORD)
 	{
-		ft_printf("\nget_token_tree é word!\n");
+		ft_printf("\nToken type: word\n");
 		tree->command = ft_sublist(token_list, token_list, NULL);
 	}
 	else if (is_bracket(priority->token))
 	{
-		ft_printf("\nget_token_tree é subshell!\n");
+		ft_printf("\nToken type: subshell\n");
 		tree->subshell = get_token_tree(ft_sublist(token_list, token_list->next,
 			ft_lstlast(token_list)->prev), ROOT);
 	}
 	else if (is_redirector(priority->token))
 	{
-		ft_printf("\nget_token_tree é redirect!\n");
+		ft_printf("\nToken type: redirect!\n");
 		handle_redirect(tree, priority, hierarchy);
 	}
 	else
 	{
-		ft_printf("\nget_token_tree caiu no último else!\n");
+		ft_printf("\nToken type no último else\n");
 		tree->left = get_token_tree(ft_sublist(token_list, token_list,
 					priority), LEFT_CHILD);
 		tree->right = get_token_tree(ft_sublist(token_list, priority->next,
@@ -75,7 +76,6 @@ static void	handle_redirect(t_exec_tree *tree, t_token_list *priority,
 	// * 2. fill here_doc_fd attribute, if necessary
 }
 
-// TODO aparentemente ta mt errado? kkkkkkkkkkkk
 static t_token_list	*get_priority_token(t_token_list *token_list,
 		t_tree_hierarchy hierarchy)
 {
@@ -84,12 +84,13 @@ static t_token_list	*get_priority_token(t_token_list *token_list,
 
 	priority = NULL;
 	if (hierarchy == ROOT || hierarchy == LEFT_CHILD)
-	list = ft_lstlast(token_list);
+		list = ft_lstlast(token_list);	
 	else
-	list = token_list;
+		list = token_list;
 
-	ft_printf("get_priority_token recebeu a lista: ");
+	ft_printf("\n\nget_priority_token recebeu a lista: ");
 	print_token_list(list);
+	ft_printf("\n");
 
 	if (is_a_subshell(list))
 		return (list);
@@ -102,11 +103,7 @@ static t_token_list	*get_priority_token(t_token_list *token_list,
 			return (list);
 		if (!priority || compare_priority(list->token.type,
 				priority->token.type) == 1)
-		{
-			ft_printf("Nova prioridade: ['%s', %i]\n",
-				list->token.full_content, list->token.type);
 			priority = list;
-		}
 		list = get_next_token(list, hierarchy);
 	}
 	return (priority);

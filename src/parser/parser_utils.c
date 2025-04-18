@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:52:05 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/17 10:03:23 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:00:39 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,10 @@ int	compare_priority(t_token_type type_1, t_token_type type_2)
 t_token_list	*get_next_token(t_token_list *token_list,
 		t_tree_hierarchy hierarchy)
 {
-	ft_printf("get next token foi chamada com hierarchy %i e com o token (%s, %i)\n",
-			hierarchy, token_list->token.full_content, token_list->token.type);
 	if (hierarchy == ROOT || hierarchy == LEFT_CHILD)
-	{
-		if (token_list->prev)
-			ft_printf("retornou o proximo token: %i\n", token_list->prev->token.type);
 		return (token_list->prev);
-	}
 	else
-	{
-		if (token_list->next)
-			ft_printf("retornou o token anterior: %i\n", token_list->next->token.type);
 		return (token_list->next);
-	}
 }
 
 t_bool	is_a_subshell(t_token_list *token_list)
