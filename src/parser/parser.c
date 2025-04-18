@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/18 16:20:03 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/18 17:35:34 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,22 @@ t_exec_tree	*get_token_tree(t_token_list *token_list,
 	t_token_list	*priority;
 	t_exec_tree		*tree;
 
-	ft_printf("\n\nget_token_tree foi chamada com a lista:");
-	print_token_list(token_list);
-	ft_printf("\n\n");
 	if (!token_list)
 		return (NULL);
 	tree = ft_gc_malloc(sizeof(t_exec_tree));
 	if (!tree)
 		return (NULL);
 	priority = get_priority_token(token_list, hierarchy);
-	ft_printf("\nPriority token: (%s, %i)\n",
-			priority->token.full_content, priority->token.type);
 	tree->type = get_tree_type(priority->token.type);
 	if (priority->token.type == TOK_WORD)
-	{
-		ft_printf("\nToken type: word\n");
 		tree->command = ft_sublist(token_list, token_list, NULL);
-	}
 	else if (is_bracket(priority->token))
-	{
-		ft_printf("\nToken type: subshell\n");
 		tree->subshell = get_token_tree(ft_sublist(token_list, token_list->next,
-			ft_lstlast(token_list)->prev), ROOT);
-	}
+					ft_lstlast(token_list)->prev), ROOT);
 	else if (is_redirector(priority->token))
-	{
-		ft_printf("\nToken type: redirect!\n");
 		handle_redirect(tree, priority, hierarchy);
-	}
 	else
 	{
-		ft_printf("\nToken type no último else\n");
 		tree->left = get_token_tree(ft_sublist(token_list, token_list,
 					priority), LEFT_CHILD);
 		tree->right = get_token_tree(ft_sublist(token_list, priority->next,
@@ -65,7 +50,7 @@ t_exec_tree	*get_token_tree(t_token_list *token_list,
 }
 
 // TODO create a function to put the priority token in the left child
-// TODO recursively,until all redirects are finished
+// TODO recursively, until all redirects are finished
 static void	handle_redirect(t_exec_tree *tree, t_token_list *priority,
 		t_tree_hierarchy hierarchy)
 {
@@ -84,14 +69,9 @@ static t_token_list	*get_priority_token(t_token_list *token_list,
 
 	priority = NULL;
 	if (hierarchy == ROOT || hierarchy == LEFT_CHILD)
-		list = ft_lstlast(token_list);	
+		list = ft_lstlast(token_list);
 	else
 		list = token_list;
-
-	ft_printf("\n\nget_priority_token recebeu a lista: ");
-	print_token_list(list);
-	ft_printf("\n");
-
 	if (is_a_subshell(list))
 		return (list);
 	while (list)
