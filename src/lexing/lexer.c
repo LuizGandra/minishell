@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 11:14:08 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/18 21:53:26 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,23 @@ static char	*fill_token(t_token *node, char *input)
 	return (input);
 }
 
+static void trim_right(char *input)
+{
+	char *end;
+
+	end = input + ft_strlen(input) - 1;
+	while (end >= input && ft_isspace(*end))
+        end--;
+	*(end + 1) = '\0';
+}
+
 t_token_list	*get_token_list(char *input)
 {
 	t_token_list	*node;
 	t_token_list	*init;
 	t_token_list	*prev;
 
-	if (!input)
-		return (NULL);
+	trim_right(input);
 	init = NULL;
 	while (*input)
 	{

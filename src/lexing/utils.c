@@ -6,13 +6,13 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:06:14 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 15:34:06 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/18 21:51:10 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-static t_bool	ft_isspace(char c)
+t_bool	ft_isspace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
 		|| c == '\r');

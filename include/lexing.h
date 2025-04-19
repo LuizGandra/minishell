@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 12:35:49 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/18 21:51:35 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_token_list			*get_token_list(char *input);
 
 // ============== UTILS ===============
 t_bool					is_word(char c);
+t_bool					ft_isspace(char c);
 char					*left_trim(char *input);
 t_state					get_initial_state(char c);
 t_state					get_seccond_state(char *input, t_state state);
