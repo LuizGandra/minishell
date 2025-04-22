@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 09:40:14 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/19 08:44:31 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:23:34 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ void	ft_gc_free(void *ptr)
 	{
 		if (ctx->ptr == ptr)
 		{
-			free(ctx->ptr);
 			tmp = ctx->next;
 			ctx->ptr = tmp->ptr;
 			ctx->next = tmp->next;
 			free(tmp);
-			return ;
+			break ;
 		}
 		ctx = ctx->next;
 	}
+	free(ptr);
 }
 
 void	ft_gc_exit(void)
