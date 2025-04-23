@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:21:33 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/07 11:23:41 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:40:00 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_token_list	*expand_wildcards(t_token *token, t_token_list **list)
 			prev = add_token(list, prev, entry->d_name, &first);
 	}
 	closedir(dir);
-	if (!prev)
+	if (!prev || first)
 		return ((get_current_token(*list, token)));
 	return (prev);
 }

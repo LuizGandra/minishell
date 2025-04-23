@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pid_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:28:57 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/17 08:50:19 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:08:27 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static size_t	count_cmds(t_exec_tree *tree)
 	size_t	count;
 
 	count = 0;
+	if (tree == NULL)
+		return (0);
 	if (tree->type == TREE_CMD)
 		return (1);
 	if (tree->subshell)

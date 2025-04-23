@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/08 11:14:08 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:54:29 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static char	*handle_word(t_token *node, char *input)
 		input += len;
 		input = handle_quote(props, input);
 	}
+	ft_gc_add(props->content);
 	if (!props->error)
 		fill_full_content(node);
 	node->type = TOK_WORD;
@@ -92,15 +93,25 @@ static char	*fill_token(t_token *node, char *input)
 	return (input);
 }
 
+static void	trim_right(char *input)
+{
+	char	*end;
+
+	end = input + ft_strlen(input) - 1;
+	while (end >= input && ft_isspace(*end))
+		end--;
+	*(end + 1) = '\0';
+}
+
 t_token_list	*get_token_list(char *input)
 {
 	t_token_list	*node;
 	t_token_list	*init;
 	t_token_list	*prev;
 
-	if (!input)
-		return (NULL);
+	trim_right(input);
 	init = NULL;
+	node = NULL;
 	while (*input)
 	{
 		node = ft_gc_malloc(sizeof(t_token_list));
@@ -114,7 +125,7 @@ t_token_list	*get_token_list(char *input)
 		input = fill_token(&node->token, input);
 		prev = node;
 	}
-	if (node->token.props.error)
+	if (!node || node->token.props.error)
 		return (NULL);
 	init = validate_tokens(init);
 	assign_redirects(init);

@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:26:05 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/28 15:31:26 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:21:56 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ void	expand_vars(t_content_part *part)
 		str += len;
 		str = handle_var(str, &output);
 	}
-	free(part->str);
+	ft_gc_free(part->str);
 	part->str = output;
 }
