@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/18 17:06:18 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:34:29 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ static void	ft_loop(void)
 		add_history(shell->user_input);
 		shell->tokens = get_token_list(shell->user_input);
 		shell->tree = get_token_tree(shell->tokens, ROOT);
+		if (!shell->tree)
+		{
+			ft_gc_exit();
+			continue ;
+		}
 		print_tree(shell->tree, 0);
 		pid_list = create_pid_list(shell->tree);
 		exec(shell->tree, shell->default_fds, pid_list, FALSE);

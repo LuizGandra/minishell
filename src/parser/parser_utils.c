@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:52:05 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/18 17:00:39 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:33:58 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,31 @@ t_bool	is_a_subshell(t_token_list *token_list)
 
 void	pass_brackets(t_token_list **token_list, t_tree_hierarchy hierarchy)
 {
+	int	brackets_count;
+	t_token_type	open_bracket;
+	t_token_type	close_bracket;
+
+	brackets_count = 0;
+	if ((*token_list)->token.type == TOK_OPEN_BRACKET)
+	{
+		open_bracket = TOK_OPEN_BRACKET;
+		close_bracket = TOK_CLOSE_BRACKET;
+	}
+	else
+	{
+		open_bracket = TOK_CLOSE_BRACKET;
+		close_bracket = TOK_OPEN_BRACKET;
+	}
 	while (*token_list)
 	{
-		if ((*token_list)->prev
-			&& ((*token_list)->prev->token.type == TOK_OPEN_BRACKET
-				|| (*token_list)->prev->token.type == TOK_CLOSE_BRACKET))
-			break ;
+		if ((*token_list)->token.type == open_bracket)
+			brackets_count++;
+		else if ((*token_list)->token.type == close_bracket)
+			brackets_count--;
+		else if (brackets_count == 0)
+			break;
+		ft_printf("pass_brackets rodou e retornou no token [%i, %s]\n",
+			(*token_list)->token.type, (*token_list)->token.full_content);
 		*token_list = get_next_token(*token_list, hierarchy);
 	}
 }

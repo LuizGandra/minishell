@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/18 17:35:34 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:32:30 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 static t_token_list	*get_priority_token(t_token_list *token_list,
 						t_tree_hierarchy hierarchy);
-static void			handle_redirect(t_exec_tree *tree, t_token_list *priority,
-						t_tree_hierarchy hierarchy);
+static void			handle_redirect(t_exec_tree *tree, t_token_list *priority);
 t_tree_type			get_tree_type(t_token_type token_type);
 
 t_exec_tree	*get_token_tree(t_token_list *token_list,
@@ -38,7 +37,7 @@ t_exec_tree	*get_token_tree(t_token_list *token_list,
 		tree->subshell = get_token_tree(ft_sublist(token_list, token_list->next,
 					ft_lstlast(token_list)->prev), ROOT);
 	else if (is_redirector(priority->token))
-		handle_redirect(tree, priority, hierarchy);
+		handle_redirect(tree, hierarchy);
 	else
 	{
 		tree->left = get_token_tree(ft_sublist(token_list, token_list,
@@ -51,14 +50,17 @@ t_exec_tree	*get_token_tree(t_token_list *token_list,
 
 // TODO create a function to put the priority token in the left child
 // TODO recursively, until all redirects are finished
-static void	handle_redirect(t_exec_tree *tree, t_token_list *priority,
-		t_tree_hierarchy hierarchy)
+static void	handle_redirect(t_exec_tree *tree, t_token_list *priority)
 {
-	(void)tree;
-	(void)priority;
-	(void)hierarchy;
-	// * 1. add redirect in the left child
+	// * Criar uma função que pega sempre o redirect mais a esquerda
+	// * Essa função precisa tirar todos os redirects da esquerda pra direita e retornar oq sobrar pra tratar
+	// * na outra função
+	// ! "> b ↔️ ls ↔️ -a ↔️ < a"
 	// * 2. fill here_doc_fd attribute, if necessary
+	if (tree->type == TOK_REDIR_HDOC)
+		tree->here_doc_fd = here_doc(priority->token.file->full_content);
+	else
+		tree->file = priority;
 }
 
 static t_token_list	*get_priority_token(t_token_list *token_list,
