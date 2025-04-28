@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # COLORS
 RED='\033[0;31m'
@@ -77,7 +77,7 @@ cat > .vscode/launch.json <<EOF
             "stopAtEntry": false,
             "cwd": "\${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": $config,
             "miDebuggerPath": "/usr/bin/gdb",
@@ -96,6 +96,6 @@ EOF
 echo "${CYAN}Arquivos .vscode/tasks.json e .vscode/launch.json criados!\n${NC}"
 if [[ $1 == "dual" ]]; then
 	echo "${GREEN}Para manipular os processos é preciso escrever no debugger do vscode os comandos abaixo:${NC}"
-	echo "	${YELLOW}-exec${CYAN} inferiors${NC}: Mostra todos os processos em andamento"
+	echo "	${YELLOW}-exec${CYAN} info inferiors${NC}: Mostra todos os processos em andamento"
 	echo "	${YELLOW}-exec${CYAN} inferior <n>${NC}: Muda o processo atual para o processo de número <n>"
 fi
