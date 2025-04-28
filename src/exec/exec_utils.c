@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:30:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/18 19:00:05 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:16:23 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,16 @@ int	exec_subshell(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfrk)
 	int		ret;
 	pid_t	pid;
 
+	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
 		bfrk = FALSE;
+		list = create_pid_list(tree);
 		ret = exec(tree->subshell, fds, list, bfrk);
+		if (ret == FORKED)
+			ret = wait_pids(list);
+		free_pid_list(list);
 		clean_all();
 		exit(ret);
 	}
