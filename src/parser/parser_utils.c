@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:52:05 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/26 19:14:07 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:32:14 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ t_token_list	*get_next_token(t_token_list *token_list,
 		return (token_list->next);
 }
 
-t_bool	is_a_subshell(t_token_list *token_list)
-{
-	if (token_list->token.type == TOK_OPEN_BRACKET
-		&& ft_lstlast(token_list)->token.type == TOK_CLOSE_BRACKET)
-		return (TRUE);
-	return (FALSE);
-}
-
 void	pass_brackets(t_token_list **token_list, t_tree_hierarchy hierarchy)
 {
 	int	brackets_count;
@@ -87,4 +79,12 @@ void	pass_brackets(t_token_list **token_list, t_tree_hierarchy hierarchy)
 			break;
 		*token_list = get_next_token(*token_list, hierarchy);
 	}
+}
+
+t_bool	is_subshell(t_token_list *token_list)
+{
+	pass_brackets(&token_list, RIGHT_CHILD);
+	if (!token_list)
+		return (TRUE);
+	return (FALSE);
 }
