@@ -48,6 +48,7 @@ FILES = \
 	$(BUILTINS_PATH)echo.c \
 	$(BUILTINS_PATH)pwd.c \
 	$(BUILTINS_PATH)exit.c \
+	$(BUILTINS_PATH)cd.c \
 	$(LEXING_PATH)utils.c \
 	$(LEXING_PATH)lexer.c \
 	$(LEXING_PATH)state.c \

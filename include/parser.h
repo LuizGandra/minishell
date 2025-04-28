@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 09:59:41 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/28 10:56:05 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:12:33 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int						compare_priority(t_token_type type_1,
 							t_token_type type_2);
 t_token_list			*get_next_token(t_token_list *token_list,
 							t_tree_hierarchy hierarchy);
-t_bool					is_a_subshell(t_token_list *token_list);
+t_bool					is_subshell(t_token_list *token_list);
 void					pass_brackets(t_token_list **token_list,
 							t_tree_hierarchy hierarchy);
 
