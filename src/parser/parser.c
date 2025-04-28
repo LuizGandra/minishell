@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/28 10:59:27 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:03:30 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static t_token_list	*get_priority_token(t_token_list *token_list,
 		list = ft_lstlast(token_list);
 	else
 		list = token_list;
-	if (is_a_subshell(list))
+	if (is_a_subshell(token_list))
 		return (list);
 	while (list)
 	{
