@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # COLORS
 RED='\033[0;31m'
