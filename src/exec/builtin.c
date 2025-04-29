@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 08:23:10 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 15:02:48 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/29 09:38:09 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ t_bool	is_builtin(t_token_list *command)
 		return (TRUE);
 	else if (ft_strcmp(command->token.full_content, "exit") == 0)
 		return (TRUE);
+	else if (ft_strcmp(command->token.full_content, "cd") == 0)
+		return (TRUE);
+	else if (ft_strcmp(command->token.full_content, "env") == 0)
+		return (TRUE);
 	return (FALSE);
 }
 
@@ -42,5 +46,9 @@ int	run_builtin(t_token_list *command)
 		return (build(&b_pwd, command));
 	else if (ft_strcmp(command->token.full_content, "exit") == 0)
 		return (build(&b_exit, command));
+	else if (ft_strcmp(command->token.full_content, "cd") == 0)
+		return (build(&b_cd, command));
+	else if (ft_strcmp(command->token.full_content, "env") == 0)
+		return (build(&b_env, command));
 	return (-1);
 }

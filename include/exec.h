@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/18 18:29:34 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/29 09:39:20 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,7 @@ typedef		int(t_builtin)(char **args);
 int			b_echo(char **args);
 int			b_pwd(char **args);
 int			b_exit(char **args);
+int			b_cd(char **args);
+int			b_env(char **args);
 
 #endif

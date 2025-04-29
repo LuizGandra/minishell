@@ -11,10 +11,10 @@
 - [x] Implementar os redirections:
 	- [x] `<` redireciona o input.
 	- [x] `>` redireciona o output.
-	- [ ] `<<` recebe um delimitador e lê o input até a linha que contém o delimitador ser encontrada. *Ele não deve atualizar o histórico.*
+	- [x] `<<` recebe um delimitador e lê o input até a linha que contém o delimitador ser encontrada. *Ele não deve atualizar o histórico.*
 	- [x] `>>` redireciona o output no append mode.
 - [x] Implementar pipes (`|`). O output de cada comando na pipeline é conectado com o input do próximo comando via pipe.
-- [ ]  Implementar variáveis de ambiente (`$`). Elas devem ser expandidas para o valor armazenado na variável.
+- [x]  Implementar variáveis de ambiente (`$`). Elas devem ser expandidas para o valor armazenado na variável.
 - [x] Implementar o `$?`, que deve expandir para o exit status do último comando executado.
 - [x] Implementar no modo interativo:
 	- [x] `ctrl + C` deve exibir um novo prompt em uma nova linha.
@@ -22,11 +22,11 @@
 	- [x] `ctrl + \` não deve fazer nada.
 - [x] Implementar os seguintes builtins:
 	- [x] `echo` com a flag `-n`.
-	- [ ] `cd` com apenas um caminho relativo ou absoluto.
+	- [x] `cd` com apenas um caminho relativo ou absoluto.
 	- [x] `pwd` sem nenhuma flag.
 	- [ ] `export` sem nenhuma flag.
 	- [ ] `unset` sem nenhuma flag.
-	- [ ] `env` sem nenhuma opção ou argumento.
+	- [x] `env` sem nenhuma opção ou argumento.
 	- [x] `exit` sem nenhuma opção.
 
 ### Proibições
