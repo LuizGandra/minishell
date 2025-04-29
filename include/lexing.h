@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/28 10:51:13 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:23:49 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 
 # include "minishell.h"
 
-# define SYNTAX_ERROR "minishell: syntax error near unexpected token `%s'\n"
-# define QUOTE_ERROR "minishell: unclosed quote: `%c'\n"
-# define EOF_ERROR "minishell: syntax error: unexpected end of file\n"
+# define SYNTAX_ERROR "\033[36mminishell: \
+\033[31msyntax error near unexpected token\033[0m `%s'\n"
+# define QUOTE_ERROR "\033[36mminishell: \
+\033[31munclosed quote:\033[0m `%c'\n"
+# define EOF_ERROR "\033[36mminishell: \
+\033[31msyntax error: unexpected\033[0m end of file\n"
 
 // enum for controling the state of the current token
 typedef enum e_state
