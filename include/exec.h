@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 09:39:20 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:48:41 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int			run(t_token_list *cmd, t_pid_list *lst, t_bool b_fork, int fds[2]);
 
 char		*handle_path(char *cmd);
 int			display_error(char *cmd);
+t_bool		expand_file(t_exec_tree *tree);
 char		**handle_argv(t_token_list *list);
 t_bool		is_builtin(t_token_list *command);
 int			open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd);

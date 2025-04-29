@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:02:15 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/28 10:57:18 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:09:04 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_token_list	*ft_sublist(t_token_list *lst, t_token_list *start,
 		node = ft_nodecpy(lst);
 		if (!node)
 			return (NULL);
+		// ft_memmove(&node->file, &lst->file, sizeof(t_token_list)); // CORRIGIR SEGFAULT NO GC_MALLOC
 		if (!sublist)
 			sublist = node;
 		else

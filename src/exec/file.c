@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:31:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/17 08:51:43 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:49:27 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+t_bool	expand_file(t_exec_tree *tree)
+{
+	char	*old_path;
+
+	old_path = ft_strdup(tree->file->token.full_content);
+	expand(&tree->file);
+	if (tree->file->next)
+	{
+		ft_printf_fd(2, MINISHELL "%s: " AMBIG_REDIR, old_path);
+		free(old_path);
+		return (FALSE);
+	}
+	free(old_path);
+	return (TRUE);
+}
 
 int	open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd)
 {
