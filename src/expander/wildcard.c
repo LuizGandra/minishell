@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 12:21:33 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/22 09:40:00 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:11:50 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ t_token_list	*expand_wildcards(t_token *token, t_token_list **list)
 
 	first = TRUE;
 	if (!ft_strchr(token->full_content, '\x11'))
-		return (get_current_token(*list, token));
+		return (*list);
 	dir = opendir(".");
 	if (!dir)
-		return (get_current_token(*list, token));
+		return (*list);
 	prev = get_left_token(*list, token);
 	while (TRUE)
 	{
@@ -72,6 +72,6 @@ t_token_list	*expand_wildcards(t_token *token, t_token_list **list)
 	}
 	closedir(dir);
 	if (!prev || first)
-		return ((get_current_token(*list, token)));
+		return (*list);
 	return (prev);
 }

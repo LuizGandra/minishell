@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:04:12 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/03/27 10:34:36 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:25:28 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_token_list	*get_left_token(t_token_list *list, t_token *token)
 	t_token_list	*prev;
 
 	prev = NULL;
-	while (list)
+	while (list->next)
 	{
 		if (token == &list->token)
 			break ;
@@ -39,15 +39,4 @@ t_token_list	*get_left_token(t_token_list *list, t_token *token)
 		list = list->next;
 	}
 	return (prev);
-}
-
-t_token_list	*get_current_token(t_token_list *list, t_token *token)
-{
-	while (list)
-	{
-		if (token == &list->token)
-			return (list);
-		list = list->next;
-	}
-	return (NULL);
 }

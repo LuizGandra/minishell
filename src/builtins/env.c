@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 08:41:28 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/29 10:45:20 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:04:10 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int b_env(char **args) {
 		ft_printf("env: no environment variables set\n");
 		return (1);
 	}
+	i = 0;
 	while (i < (int)env->size)
 	{
 		ft_printf("i: %i\n---------------\n", i);

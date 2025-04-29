@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:47:20 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/10 12:34:07 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:48:50 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	finish_wildcard(t_token *token)
 
 void	expand(t_token_list **token_list, t_bool file)
 {
-	t_token_list	*current;
+/*	t_token_list	*current;
 	t_token			*token;
 
 	current = *token_list;
@@ -73,4 +73,5 @@ void	expand(t_token_list **token_list, t_bool file)
 		}
 		current = current->next;
 	}
-}
+*/
+	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:30:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/28 15:30:42 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:54:40 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	exec_redirect(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfrk)
 
 	redir_fds[READ_FD] = fds[READ_FD];
 	redir_fds[WRITE_FD] = fds[WRITE_FD];
-	old_path = ft_strdup(tree->file->token.full_content);
+	// LIDAR COM HEREDOC SEPARADAMENTE
+	old_path = ft_strdup(tree->file->token.file->full_content);
 	expand(&tree->file, TRUE);
 	if (tree->file->next)
 	{
@@ -31,7 +32,7 @@ int	exec_redirect(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfrk)
 		return (1);
 	}
 	free(old_path);
-	path = tree->file->token.full_content;
+	path = tree->file->token.file->full_content;
 	if (open_file(path, redir_fds, tree->type, tree->here_doc_fd))
 		return (1);
 	result = exec(tree->left, redir_fds, list, bfrk);

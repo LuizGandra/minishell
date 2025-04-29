@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/28 12:12:43 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:52:25 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,18 @@ static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list)
 	if (!new_list)
 		return (NULL);
 	temp = new_list;
+	// TODO o new list precisa ser alterado pro início da lista se o token prioritário for o primeiro da lista
 	while (temp)
 	{
 		if (is_redirector(temp->token))
 		{
-			new_priority = temp;
 			if (prev)
 				prev->next = temp->next;
+			else
+				new_list = temp->next;
 			if (temp->next)
 				temp->next->prev = prev;
+			new_priority = temp;
 			break ;
 		}
 		prev = temp;
@@ -81,7 +84,7 @@ static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list)
 	if (tree->type == TREE_REDIR_HDOC)
 		tree->here_doc_fd = here_doc(new_priority->token.file->full_content);
 	else
-		tree->file = new_priority;
+		tree->file = ft_sublist(new_priority, new_priority, new_priority->next);
 	return (get_token_tree(new_list, LEFT_CHILD));
 }
 

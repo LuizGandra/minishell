@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:17:54 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 15:10:39 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:57:09 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	here_doc(char *delimiter)
 			ft_printf_fd(2, "here_doc: (required '%s')\n", delimiter);
 			break ;
 		}
-		if (!ft_strcmp(line, delimiter))
+		if (!ft_strncmp(line, delimiter, ft_strlen(line) - 1))
 		{
 			free(line);
 			break ;

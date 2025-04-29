@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 09:59:41 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/28 12:12:33 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:58:41 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "minishell.h"
 
 typedef struct s_token_list	t_token_list;
-typedef enum e_token_type t_token_type;
+typedef enum e_token_type	t_token_type;
 
 typedef enum e_tree_type
 {
@@ -80,6 +80,6 @@ void					pass_brackets(t_token_list **token_list,
 							t_tree_hierarchy hierarchy);
 
 // TODO REMOVE
-void	print_token_list(t_token_list *list);
+void					print_token_list(t_token_list *list);
 
 #endif
