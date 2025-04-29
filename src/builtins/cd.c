@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 11:37:23 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/28 15:10:54 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:54:14 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*validate_args(char **args)
 		return (NULL);
 	}
 	if (!args[1])
-		path = ft_getenv("HOME");
+		path = ft_strdup(ft_getenv("HOME"));
 	else
 		path = ft_strdup(args[1]);
 	if (!path[0])
