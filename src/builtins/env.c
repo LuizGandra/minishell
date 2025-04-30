@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 08:41:28 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/30 12:55:18 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:59:19 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,22 @@
 
 int	b_env(char **args)
 {
-	t_hash_table	*env;
-	char			**temp;
-	int				i;
+	char	**temp;
+	char	*str;
 
 	if (args[1])
 	{
-		ft_printf("env: too many arguments\n");
+		ft_printf_fd(2, MINISHELL "env: " C_RED "too many arguments\n" C_RST);
 		return (1);
 	}
-	env = get_minishell()->env;
-	temp = map_to_env(env);
-	if (env->size == 0)
+	temp = map_to_env(get_minishell()->env);
+	while (temp)
 	{
-		ft_printf("env: no environment variables set\n");
-		return (1);
-	}
-	i = 0;
-	while (i < (int)env->size)
-	{
-		ft_printf("i: %i\n---------------\n", i);
-		if (temp[i])
-			ft_printf("%s\n", temp[i]);
-		i++;
+		str = *temp;
+		if (!str)
+			break ;
+		ft_printf("%s\n", str);
+		temp++;
 	}
 	return (0);
 }
