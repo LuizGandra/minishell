@@ -70,6 +70,7 @@ FILES = \
 	$(EXPANDER_PATH)wildcard.c \
 	$(EXPANDER_PATH)wildcard_utils.c \
 	$(UTILS_PATH)env.c \
+	$(UTILS_PATH)term.c \
 	$(UTILS_PATH)global.c \
 	$(UTILS_PATH)get_pid.c \
 	$(UTILS_PATH)cleanner.c \
@@ -78,7 +79,6 @@ FILES = \
 	$(PARSER_PATH)here_doc.c \
 	$(PARSER_PATH)parser_utils.c \
 	$(PARSER_PATH)parser.c \
-	$(PARSER_PATH)print.c \
 	$(PARSER_PATH)token_utils.c \
 
 OBJS = $(addprefix $(BUILD_PATH), $(FILES:%.c=%.o))

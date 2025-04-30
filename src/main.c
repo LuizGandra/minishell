@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/30 11:31:43 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:44:54 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "signals.h"
 
 static void	ft_loop(void);
-static void	clone_terminal(void);
+static void	init_exec(t_shell *shell);
 
 int	main(void)
 {
@@ -27,31 +27,6 @@ int	main(void)
 	ft_loop();
 	return (clean_all());
 }
-
-static void	clone_terminal(void)
-{
-	t_shell	*shell;
-
-	shell = get_minishell();
-	tcgetattr(STDIN_FILENO, &shell->termios);
-	shell->default_fds[READ_FD] = dup(STDIN_FILENO);
-	shell->default_fds[WRITE_FD] = dup(STDOUT_FILENO);
-}
-
-static void	reset_terminal(void)
-{
-	t_shell	*shell;
-
-	shell = get_minishell();
-	signal(SIGINT, sig_new_line);
-	tcsetattr(STDIN_FILENO, TCSANOW, &shell->termios);
-	dup2(shell->default_fds[READ_FD], STDIN_FILENO);
-	dup2(shell->default_fds[WRITE_FD], STDOUT_FILENO);
-}
-
-void		print_tree(t_exec_tree *tree, int level);
-t_exec_tree	*get_token_tree(t_token_list *token_list,
-				t_tree_hierarchy hierarchy);
 
 static void	init_exec(t_shell *shell)
 {

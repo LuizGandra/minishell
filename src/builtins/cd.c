@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 11:37:23 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/28 15:10:54 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:34:36 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include "minishell.h"
 
-static char	*validate_args(char **args);
-static void	print_cd_error(char *path);
+static char	*handle_cd_path(int argc, char **args);
+static void	print_cd_error(char *cd_path);
+static char	*get_pwd(void);
 
-int b_cd(char **args) {
+int	b_cd(char **args)
+{
 	char	*path;
 	char	*oldpwd;
+	int		argc;
 
-	path = validate_args(args);
+	argc = 0;
+	while (args[argc])
+		argc++;
+	path = handle_cd_path(argc, args);
 	if (!path)
 		return (1);
-	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
-		oldpwd = ft_getenv("PWD");
+	oldpwd = get_pwd();
 	if (chdir(path) == -1)
 	{
 		print_cd_error(path);
@@ -34,41 +39,56 @@ int b_cd(char **args) {
 	}
 	ft_setenv("OLDPWD", oldpwd, TRUE);
 	free(path);
-	path = getcwd(NULL, 0);
-	ft_setenv("PWD", path, TRUE);
+	ft_setenv("PWD", get_pwd(), TRUE);
 	return (0);
 }
 
-static char	*validate_args(char **args)
+static char	*handle_cd_path(int argc, char **args)
 {
 	char	*path;
+	char	*home;
 
-	path = NULL;
-	if (args[2]) {
-		ft_printf("cd: too many arguments\n");
+	if (argc > 2)
+	{
+		ft_printf_fd(2, MINISHELL "cd: " C_RED "too many arguments\n" C_RST);
 		return (NULL);
 	}
-	if (!args[1])
-		path = ft_getenv("HOME");
+	path = NULL;
+	if (argc == 1 || (argc == 2 && !ft_strcmp(args[1], "~")))
+	{
+		home = ft_getenv("HOME");
+		if (!home || home[0] == '\0')
+		{
+			ft_printf_fd(2, MINISHELL "cd: " C_RED "HOME not set\n" C_RST);
+			return (NULL);
+		}
+		path = ft_strdup(home);
+	}
 	else
 		path = ft_strdup(args[1]);
-	if (!path[0])
-	{
-		ft_printf("cd: HOME not set\n");
-		free(path);
-		return (NULL);
-	}
 	return (path);
 }
 
 static void	print_cd_error(char *path)
 {
-	char	*default_error_msg[2];
-	char	*error_msg;
+	if (access(path, F_OK) == -1)
+		ft_printf_fd(2, MINISHELL "cd: " C_YEL "%s" C_RST ": " FILE_NFOUND,
+			path);
+	else if (!is_directory(path))
+		ft_printf_fd(2, MINISHELL "cd: " C_YEL "%s" C_RST ": " NOT_A_DIR, path);
+	else
+		ft_printf_fd(2, MINISHELL "cd: " C_YEL "%s" C_RST ": " PERM_DENIED,
+			path);
+}
 
-	default_error_msg[0] = "cd: ";
-	default_error_msg[1] = ": No such file or directory";
-	error_msg = ft_strjoin(default_error_msg[0], path);
-	error_msg = ft_strjoin_with_free(error_msg, default_error_msg[1]);
-	ft_printf("%s\n", error_msg);
+static char	*get_pwd(void)
+{
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		cwd = ft_strdup(ft_getenv("PWD"));
+	if (!cwd)
+		cwd = ft_strdup("");
+	return (cwd);
 }

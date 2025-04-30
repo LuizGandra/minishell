@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/29 09:12:43 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:53:18 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_token_list	t_token_list;
 typedef struct s_exec_tree	t_exec_tree;
 
 extern t_token_list			*get_token_list(char *input);
+void						clone_terminal(void);
+void						reset_terminal(void);
 
 // =========================== ================ ===============================
 

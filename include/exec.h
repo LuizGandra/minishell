@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/30 10:14:44 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:42:54 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "parser.h"
 # include <sys/wait.h>
 
-# define MINISHELL "\033[36mminishell: \033[0m"
 # define IS_A_DIR "\033[31mIs a directory\n\033[0m"
+# define NOT_A_DIR "\033[31mNot a directory\n\033[0m"
 # define CMD_NFOUND "\033[31mcommand not found\n\033[0m"
 # define PERM_DENIED "\033[31mPermission denied\n\033[0m"
 # define AMBIG_REDIR "\033[31mambiguous redirect\n\033[0m"
