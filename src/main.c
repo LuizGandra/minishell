@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 16:00:41 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:31:43 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@
 #include "signals.h"
 
 static void	ft_loop(void);
+static void	clone_terminal(void);
 
 int	main(void)
 {
 	init_env();
+	listen_signals();
+	clone_terminal();
 	ft_loop();
 	return (clean_all());
 }
+
 static void	clone_terminal(void)
 {
 	t_shell	*shell;
@@ -49,13 +53,23 @@ void		print_tree(t_exec_tree *tree, int level);
 t_exec_tree	*get_token_tree(t_token_list *token_list,
 				t_tree_hierarchy hierarchy);
 
+static void	init_exec(t_shell *shell)
+{
+	t_pid_list	*pid_list;
+	t_int8		ret;
+
+	pid_list = create_pid_list(shell->tree);
+	ret = exec(shell->tree, shell->default_fds, pid_list, FALSE);
+	if (ret == FORKED)
+		ret = wait_pids(pid_list);
+	free_pid_list(pid_list);
+	ft_setenv("?", ft_itoa(ret), TRUE);
+}
+
 static void	ft_loop(void)
 {
-	t_shell		*shell;
-	t_pid_list	*pid_list;
+	t_shell	*shell;
 
-	listen_signals();
-	clone_terminal();
 	shell = get_minishell();
 	while (!shell->exit)
 	{
@@ -76,11 +90,7 @@ static void	ft_loop(void)
 			ft_gc_exit();
 			continue ;
 		}
-		print_tree(shell->tree, 0);
-		pid_list = create_pid_list(shell->tree);
-		exec(shell->tree, shell->default_fds, pid_list, FALSE);
-		ft_setenv("?", ft_itoa(wait_pids(pid_list)), TRUE);
-		free_pid_list(pid_list);
+		init_exec(shell);
 		ft_gc_exit();
 	}
 }

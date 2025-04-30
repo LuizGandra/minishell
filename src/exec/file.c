@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:31:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/30 10:19:07 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:04:41 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,16 @@ t_bool	expand_file(t_exec_tree *tree)
 
 static void	print_file_error(char *file)
 {
+	char	*path;
+
+	path = handle_path(file);
 	if (is_directory(file))
 		ft_printf_fd(2, MINISHELL "%s: " IS_A_DIR, file);
+	else if (access(path, F_OK | R_OK | W_OK) == -1)
+		ft_printf_fd(2, MINISHELL "%s: " PERM_DENIED, file);
 	else
 		ft_printf_fd(2, MINISHELL "%s: " FILE_NFOUND, file);
+	free(path);
 }
 
 int	open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd)

@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:37:06 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/30 10:14:48 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:16:29 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	display_error(char *cmd)
 	else
 	{
 		perror(cmd);
-		ret_code = 1;
+		ret_code = 2;
 	}
 	return (ret_code);
 }
