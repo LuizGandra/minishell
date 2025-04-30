@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:02:15 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 19:09:04 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/30 08:29:18 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ static t_token_list	*ft_nodecpy(t_token_list *lst)
 
 	node = ft_gc_malloc(sizeof(t_token_list));
 	ft_memmove(&node->token, &lst->token, sizeof(t_token));
+	if (lst->file)
+	{
+		node->file = ft_gc_malloc(sizeof(t_token_list));
+		ft_memmove(node->file, lst->file, sizeof(t_token_list));
+	}
 	if (lst->token.full_content)
 		node->token.full_content = ft_strdup(lst->token.full_content);
 	ft_gc_add(node->token.full_content);
@@ -49,7 +54,6 @@ t_token_list	*ft_sublist(t_token_list *lst, t_token_list *start,
 		node = ft_nodecpy(lst);
 		if (!node)
 			return (NULL);
-		// ft_memmove(&node->file, &lst->file, sizeof(t_token_list)); // CORRIGIR SEGFAULT NO GC_MALLOC
 		if (!sublist)
 			sublist = node;
 		else

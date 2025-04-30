@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:30:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 18:49:35 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/30 08:32:06 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ int	exec_redirect(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfrk)
 
 	redir_fds[READ_FD] = fds[READ_FD];
 	redir_fds[WRITE_FD] = fds[WRITE_FD];
-	// LIDAR COM HEREDOC SEPARADAMENTE
-	if (!expand_file(tree))
-		return (1);
-	path = tree->file->token.full_content;
+	path = NULL;
+	if (tree->type != TREE_REDIR_HDOC)
+	{
+		if (!expand_file(tree))
+			return (1);
+		path = tree->file->token.full_content;
+	}
 	if (open_file(path, redir_fds, tree->type, tree->here_doc_fd))
 		return (1);
 	result = exec(tree->left, redir_fds, list, bfrk);
