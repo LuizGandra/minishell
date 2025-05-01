@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:30:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 16:54:40 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/30 08:32:06 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,18 @@
 int	exec_redirect(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfrk)
 {
 	int		redir_fds[2];
-	char	*old_path;
 	int		result;
 	char	*path;
 
 	redir_fds[READ_FD] = fds[READ_FD];
 	redir_fds[WRITE_FD] = fds[WRITE_FD];
-	// LIDAR COM HEREDOC SEPARADAMENTE
-	old_path = ft_strdup(tree->file->token.file->full_content);
-	expand(&tree->file, TRUE);
-	if (tree->file->next)
+	path = NULL;
+	if (tree->type != TREE_REDIR_HDOC)
 	{
-		ft_printf_fd(2, MINISHELL "%s: " AMBIG_REDIR, old_path);
-		free(old_path);
-		return (1);
+		if (!expand_file(tree))
+			return (1);
+		path = tree->file->token.full_content;
 	}
-	free(old_path);
-	path = tree->file->token.file->full_content;
 	if (open_file(path, redir_fds, tree->type, tree->here_doc_fd))
 		return (1);
 	result = exec(tree->left, redir_fds, list, bfrk);
@@ -50,7 +45,7 @@ int	exec_command(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 	dup2(fds[READ_FD], STDIN_FILENO);
 	dup2(fds[WRITE_FD], STDOUT_FILENO);
 	signal(SIGINT, SIG_IGN);
-	expand(&tree->command, FALSE);
+	expand(&tree->command);
 	ret_code = run(tree->command, list, bfork, fds);
 	dup2(get_minishell()->default_fds[READ_FD], STDIN_FILENO);
 	dup2(get_minishell()->default_fds[WRITE_FD], STDOUT_FILENO);

@@ -152,7 +152,7 @@ GC_OBJECTS = $(addprefix $(GC_BIN_PATH), $(GC_SOURCES:%.c=%.o))
 # ===========================================================================
 
 NAME := libft.a
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g3
 
 all: $(LIB_BIN_PATH) $(NAME)
 

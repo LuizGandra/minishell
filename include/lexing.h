@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:40:26 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/28 16:23:49 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:39:10 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef struct s_prop
 typedef struct s_token
 {
 	t_token_type		type;
-	struct s_token		*file;
 	char				*full_content;
 	t_prop				props;
 }						t_token;
@@ -86,13 +85,14 @@ typedef struct s_token
 typedef struct s_token_list
 {
 	t_token				token;
+	struct s_token_list	*file;
 	struct s_token_list	*prev;
 	struct s_token_list	*next;
 }						t_token_list;
 
 // =========================== EXTERN FUNCTIONS ===============================
 
-extern void				expand(t_token_list **token_list, t_bool file);
+extern void				expand(t_token_list **token_list);
 
 // =========================== TOKENIZATION PART ==============================
 t_token_list			*get_token_list(char *input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 09:39:20 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:42:54 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "parser.h"
 # include <sys/wait.h>
 
-# define MINISHELL "\033[36mminishell: \033[0m"
 # define IS_A_DIR "\033[31mIs a directory\n\033[0m"
+# define NOT_A_DIR "\033[31mNot a directory\n\033[0m"
 # define CMD_NFOUND "\033[31mcommand not found\n\033[0m"
 # define PERM_DENIED "\033[31mPermission denied\n\033[0m"
 # define AMBIG_REDIR "\033[31mambiguous redirect\n\033[0m"
@@ -63,6 +63,8 @@ int			run(t_token_list *cmd, t_pid_list *lst, t_bool b_fork, int fds[2]);
 
 char		*handle_path(char *cmd);
 int			display_error(char *cmd);
+int			is_directory(char *path);
+t_bool		expand_file(t_exec_tree *tree);
 char		**handle_argv(t_token_list *list);
 t_bool		is_builtin(t_token_list *command);
 int			open_file(char *file, int fds[2], t_tree_type type, int heredoc_fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:47:20 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 16:48:50 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:38:59 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,15 @@ static void	finish_wildcard(t_token *token)
 	}
 }
 
-void	expand(t_token_list **token_list, t_bool file)
+void	expand(t_token_list **token_list)
 {
-/*	t_token_list	*current;
+	t_token_list	*current;
 	t_token			*token;
 
 	current = *token_list;
 	while (current)
 	{
-		if (file)
-			token = current->token.file;
-		else
-			token = &current->token;
+		token = &current->token;
 		if (token->type == TOK_WORD)
 		{
 			current = expand_word(token, token_list);
@@ -73,5 +70,4 @@ void	expand(t_token_list **token_list, t_bool file)
 		}
 		current = current->next;
 	}
-*/
-	}
+}

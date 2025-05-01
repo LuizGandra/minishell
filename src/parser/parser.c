@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 15:52:25 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:55:54 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list)
 		temp = temp->next;
 	}
 	if (tree->type == TREE_REDIR_HDOC)
-		tree->here_doc_fd = here_doc(new_priority->token.file->full_content);
+		tree->here_doc_fd = here_doc(new_priority->file->token.full_content);
 	else
-		tree->file = ft_sublist(new_priority, new_priority, new_priority->next);
+		tree->file = new_priority->file;
 	return (get_token_tree(new_list, LEFT_CHILD));
 }
 

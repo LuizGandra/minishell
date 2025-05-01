@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:06:14 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 15:19:11 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:42:14 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	assign_redirects(t_token_list *list)
 		{
 			redirect = list;
 			file = redirect->next;
-			redirect->token.file = &file->token;
+			redirect->file = file;
 			redirect->next = file->next;
 			if (file->next)
 				file->next->prev = redirect;
