@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:51:27 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/22 10:54:29 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 00:22:13 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static char	*handle_word(t_token *node, char *input)
 	t_prop	*props;
 
 	props = &node->props;
-	input = handle_quote(props, input);
+	while (*input && (*input == '\'' || *input == '"'))
+		input = handle_quote(props, input);
 	while (*input && is_word(*input))
 	{
 		props->content = ft_recalloc(props->content, (props->size + 1)
@@ -55,7 +56,8 @@ static char	*handle_word(t_token *node, char *input)
 		ft_gc_add(props->content[props->size].str);
 		props->size++;
 		input += len;
-		input = handle_quote(props, input);
+		while (*input && (*input == '\'' || *input == '"'))
+			input = handle_quote(props, input);
 	}
 	ft_gc_add(props->content);
 	if (!props->error)

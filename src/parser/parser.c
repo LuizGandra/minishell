@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 18:55:54 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 00:58:59 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list)
 		tree->here_doc_fd = here_doc(new_priority->file->token.full_content);
 	else
 		tree->file = new_priority->file;
+	tree->type = get_tree_type(new_priority->token.type);
 	return (get_token_tree(new_list, LEFT_CHILD));
 }
 
