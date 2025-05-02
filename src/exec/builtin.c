@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 08:23:10 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 09:38:09 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:10:32 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_bool	is_builtin(t_token_list *command)
 		return (TRUE);
 	else if (ft_strcmp(command->token.full_content, "env") == 0)
 		return (TRUE);
+	else if (ft_strcmp(command->token.full_content, "unset") == 0)
+		return (TRUE);
 	return (FALSE);
 }
 
@@ -50,5 +52,7 @@ int	run_builtin(t_token_list *command)
 		return (build(&b_cd, command));
 	else if (ft_strcmp(command->token.full_content, "env") == 0)
 		return (build(&b_env, command));
+	else if (ft_strcmp(command->token.full_content, "unset") == 0)
+		return (build(&b_unset, command));
 	return (-1);
 }
