@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/30 14:44:54 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:06:08 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	init_exec(t_shell *shell)
 	t_pid_list	*pid_list;
 	t_int8		ret;
 
+	ret = 0;
+	pid_list = NULL;
 	pid_list = create_pid_list(shell->tree);
 	ret = exec(shell->tree, shell->default_fds, pid_list, FALSE);
 	if (ret == FORKED)

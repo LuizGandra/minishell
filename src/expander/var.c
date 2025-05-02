@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 13:26:05 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/30 09:45:02 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:42:14 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	expand_vars(t_content_part *part)
 	char	*str;
 	size_t	len;
 
-	if (!ft_strchr(part->str, '$'))
-		return ;
 	output = ft_strdup("");
 	str = part->str;
 	while (*str)

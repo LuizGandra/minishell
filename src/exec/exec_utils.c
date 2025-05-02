@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:30:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 01:23:15 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:08:38 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	exec_command(t_exec_tree *tree, int fds[2], t_pid_list *list, t_bool bfork)
 {
 	int	ret_code;
 
+	ret_code = 0;
 	dup2(fds[READ_FD], STDIN_FILENO);
 	dup2(fds[WRITE_FD], STDOUT_FILENO);
 	signal(SIGINT, SIG_IGN);

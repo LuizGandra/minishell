@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:46:18 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 18:39:06 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:33:54 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ void			expand(t_token_list **token_list);
 void			expand_vars(t_content_part *part);
 // Expands the wildcards in the token list.
 t_token_list	*expand_wildcards(t_token *token, t_token_list **list);
+// Transform wildcards in a special character to be used in the pattern matching. 
+void	prepare_wildcard(t_content_part	*part);
+// Transform the special character back to the wildcard.
+void	finish_wildcard(t_token *token);
 
 // ================================= UTILS ====================================
 
