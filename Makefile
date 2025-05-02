@@ -50,6 +50,7 @@ FILES = \
 	$(BUILTINS_PATH)exit.c \
 	$(BUILTINS_PATH)cd.c \
 	$(BUILTINS_PATH)env.c \
+	$(BUILTINS_PATH)unset.c \
 	$(LEXING_PATH)utils.c \
 	$(LEXING_PATH)lexer.c \
 	$(LEXING_PATH)state.c \
