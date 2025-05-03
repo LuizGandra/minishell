@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 08:41:28 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/30 15:59:19 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:10:22 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	b_env(char **args)
 		ft_printf_fd(2, MINISHELL "env: " C_RED "too many arguments\n" C_RST);
 		return (1);
 	}
-	temp = map_to_env(get_minishell()->env);
+	temp = map_to_env(get_shell()->env);
 	while (temp)
 	{
 		str = *temp;

@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/30 12:53:18 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:11:17 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ typedef struct s_shell
 	int						default_fds[2];
 	t_bool					exit;
 	struct termios			termios;
+	int 					heredoc_status;
 }							t_shell;
 
 // ============================== GLOBAL ======================================
 
-t_shell						*get_minishell(void);
+t_shell						*get_shell(void);
+int							*get_fd_to_close(void);
 
 // ============================== UTILS =======================================
 

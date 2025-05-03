@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/18 18:16:37 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:10:22 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	run_external(t_token_list *command, t_pid_list *list)
 		exit(ret_code);
 	}
 	argv = handle_argv(command);
-	envp = map_to_env(get_minishell()->env);
+	envp = map_to_env(get_shell()->env);
 	if (execve(path, argv, envp) == -1)
 	{
 		ret_code = display_error(path);

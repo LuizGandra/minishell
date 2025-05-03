@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 17:11:02 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:30:27 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define IS_A_DIR "\033[31mIs a directory\n\033[0m"
 # define NOT_A_DIR "\033[31mNot a directory\n\033[0m"
+# define EOF_ERR "(\033[31mrequired: \033[0m'%s')\n"
 # define CMD_NFOUND "\033[31mcommand not found\n\033[0m"
 # define PERM_DENIED "\033[31mPermission denied\n\033[0m"
 # define AMBIG_REDIR "\033[31mambiguous redirect\n\033[0m"

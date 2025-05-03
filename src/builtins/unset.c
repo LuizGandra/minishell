@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:33:40 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/02 17:58:21 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:10:22 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	b_unset(char **args)
 
 	if (!args || !args[1])
 		return (1);
-	env = get_minishell()->env;
+	env = get_shell()->env;
 	temp = &args[1];
 	while (*temp)
 	{
