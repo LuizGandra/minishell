@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 09:17:54 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 21:39:10 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/03 01:04:53 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static void	disable_echoctl(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-static void sigint_heredoc(int sig)
+static void	sigint_heredoc(int sig)
 {
-	(void) sig;
+	(void)sig;
 	ft_printf("^C\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -51,10 +51,11 @@ static void	run_here_doc(char *delimiter, int pipe_fd[2])
 		line = get_next_line(get_shell()->default_fds[READ_FD]);
 		if (!line)
 		{
-			ft_printf_fd(2, C_CYA "\nhere_doc: "C_RST EOF_ERR, delimiter);
+			ft_printf_fd(2, C_CYA "\nhere_doc: " C_RST EOF_ERR, delimiter);
 			break ;
 		}
-		if (!ft_strncmp(line, delimiter, ft_strlen(line) - 1))
+		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter))
+			&& line[ft_strlen(delimiter)] == '\n')
 		{
 			free(line);
 			break ;
