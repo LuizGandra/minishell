@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:21:48 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 15:09:31 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 11:16:24 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static t_bool	check_brackets(t_token_list *list)
 	if (open_brackets < 0)
 	{
 		ft_printf_fd(2, SYNTAX_ERROR, ")");
-		return (FALSE);
+		return (ft_setenv("?", ft_itoa(2), TRUE), FALSE);
 	}
 	if (open_brackets > 0)
 	{
 		ft_printf_fd(2, SYNTAX_ERROR, "(");
-		return (FALSE);
+		return (ft_setenv("?", ft_itoa(2), TRUE), FALSE);
 	}
 	return (TRUE);
 }
@@ -68,7 +68,7 @@ static t_bool	validate_brackets(t_token_list *current)
 		&& current->next->token.type == TOK_WORD)
 	{
 		ft_printf_fd(2, SYNTAX_ERROR, current->next->token.full_content);
-		return (FALSE);
+		return (ft_setenv("?", ft_itoa(2), TRUE), FALSE);
 	}
 	if (current->token.type == TOK_CLOSE_BRACKET && current->next
 		&& current->next->token.type == TOK_OPEN_BRACKET)
