@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/04 00:22:38 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:51:45 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_shell
 	int						default_fds[2];
 	t_bool					exit;
 	struct termios			termios;
-	int 					heredoc_status;
+	int						heredoc_status;
 }							t_shell;
 
 // ============================== GLOBAL ======================================

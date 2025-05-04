@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:55:43 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 20:10:22 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:51:21 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_shell	*get_shell(void)
 	return (&shell);
 }
 
-int *get_fd_to_close(void)
+int	*get_fd_to_close(void)
 {
 	static int	fd;
 

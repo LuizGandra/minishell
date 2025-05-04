@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 19:53:21 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/04 00:25:59 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:47:50 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	b_export(char **args)
 
 	exit_code = 0;
 	if (!exported_vars)
-		exported_vars = init_exported_vars(map_to_env(get_minishell()->env));
+		exported_vars = init_exported_vars(map_to_env(get_shell()->env));
 	env = map_to_env(exported_vars);
 	sort_env(env);
 	if (!args[1])
