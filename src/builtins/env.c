@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 08:41:28 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/02 20:10:22 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:25:38 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	b_env(char **args)
 {
-	char	**temp;
+	char	**tmp;
+	char	**env;
 	char	*str;
 
 	if (args[1])
@@ -22,14 +23,16 @@ int	b_env(char **args)
 		ft_printf_fd(2, MINISHELL "env: " C_RED "too many arguments\n" C_RST);
 		return (1);
 	}
-	temp = map_to_env(get_shell()->env);
-	while (temp)
+	env = map_to_env(get_shell()->env);
+	tmp = env;
+	while (tmp)
 	{
-		str = *temp;
+		str = *tmp;
 		if (!str)
 			break ;
 		ft_printf("%s\n", str);
-		temp++;
+		tmp++;
 	}
+	ft_free_matrix((void **)env, free);
 	return (0);
 }

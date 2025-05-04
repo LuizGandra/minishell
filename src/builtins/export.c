@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 19:53:21 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/04 12:46:09 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:05:16 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,24 @@ char			**get_key_and_value(char *arg);
 
 int	b_export(char **args)
 {
-	int					exit_code;
-	char				**env;
-	static t_hash_table	*exported_vars;
+	int				exit_code;
+	char			**env;
+	t_hash_table	*exported_vars;
 
 	exit_code = 0;
-	if (!exported_vars)
-		exported_vars = env_to_map(map_to_env(get_shell()->env));
-	env = map_to_env(exported_vars);
-	sort_env(env);
+	exported_vars = *get_exported_vars();
 	if (!args[1])
+	{
+		env = map_to_env(exported_vars);
+		sort_env(env);
 		export_print(env);
+		ft_free_matrix((void **)env, free);
+	}
 	else
 	{
 		while (*(++args))
-		{
 			exit_code |= export_var(exported_vars, get_key_and_value(*args),
 					ft_strchr(*args, '='));
-		}
 	}
 	return (exit_code);
 }
@@ -56,6 +56,7 @@ static void	export_print(char **env)
 			var = get_key_and_value(*env);
 			if (!ft_strcmp(var[0], "_"))
 			{
+				ft_free_matrix((void **)var, free);
 				env++;
 				continue ;
 			}
@@ -63,6 +64,7 @@ static void	export_print(char **env)
 				ft_printf("declare -x %s\n", var[0]);
 			else
 				ft_printf("declare -x %s=\"%s\"\n", var[0], var[1]);
+			ft_free_matrix((void **)var, free);
 			env++;
 		}
 	}
@@ -87,7 +89,7 @@ static int	export_var(t_hash_table *exported_vars, char **var, char *attr_ptr)
 		ft_setenv(var[0], var[1], FALSE);
 		ft_map_insert(exported_vars, var[0], var[1]);
 	}
-	free(var);
+	ft_free_matrix((void **)var, free);
 	return (exit_code);
 }
 

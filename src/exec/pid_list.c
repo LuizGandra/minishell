@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:28:57 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/22 10:08:27 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:23:25 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_pid_list	*create_pid_list(t_exec_tree *tree)
 {
 	t_pid_list	*list;
 
-	list = ft_calloc(1, sizeof(t_pid_list));
-	list->pids = ft_calloc(count_cmds(tree), sizeof(pid_t));
+	list = ft_gc_malloc(sizeof(t_pid_list));
+	list->pids = ft_gc_malloc(count_cmds(tree) * sizeof(pid_t));
 	return (list);
 }
 
@@ -69,7 +69,7 @@ void	free_pid_list(t_pid_list *list)
 	if (list)
 	{
 		if (list->pids)
-			free(list->pids);
-		free(list);
+			ft_gc_free(list->pids);
+		ft_gc_free(list);
 	}
 }

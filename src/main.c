@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/04 10:47:46 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:59:53 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	init_exec(t_shell *shell)
 		ret = wait_pids(pid_list);
 	free_pid_list(pid_list);
 	ft_setenv("?", ft_itoa(ret), TRUE);
+	fd_list_close();
 }
 
 static void	ft_loop(void)
