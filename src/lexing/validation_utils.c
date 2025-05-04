@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 07:57:42 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/26 19:07:39 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 11:14:10 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ void	*print_token_error(t_token_list *node)
 		ft_printf_fd(2, SYNTAX_ERROR, ")");
 	else if (node->token.type == TOK_INVALID)
 		ft_printf_fd(2, SYNTAX_ERROR, "&");
+	ft_setenv("?", ft_itoa(2), TRUE);
 	return (NULL);
 }

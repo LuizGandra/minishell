@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/04 00:51:45 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 11:37:00 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,5 @@ char						*ft_getenv(char *key);
 t_int8						ft_setenv(char *key, char *value, t_bool free_val);
 t_hash_table				*env_to_map(char **env);
 char						**map_to_env(t_hash_table *map);
-
-t_hash_table				*init_exported_vars(char **env);
-t_int8						ft_add_exported_var(t_hash_table *map, char *key,
-								char *value, t_bool free_value);
-char						*ft_get_exported_var(t_hash_table *map, char *key);
-void						sort_env(char **map);
-char						**get_key_and_value(char *arg);
 
 #endif

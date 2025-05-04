@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:45:52 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/03 19:44:02 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 10:47:30 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern char		**environ;
 
 void	init_env(void)
 {
 	t_shell	*shell;
 
 	shell = get_shell();
-	shell->env = env_to_map(__environ);
+	shell->env = env_to_map(environ);
 	ft_setenv("?", "0", FALSE);
 	ft_setenv("$", ft_getpid(), TRUE);
 }

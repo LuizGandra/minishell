@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:46:01 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/03 00:56:50 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 13:01:19 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,7 @@ char	*ft_readline(void)
 	else
 		arrow = C_GRN "❯ " C_RST;
 	minishell = ft_strjoin_with_free(minishell, arrow);
-	ft_printf("\r\033[s");
 	line = readline(minishell);
 	free(minishell);
-	ft_printf("\033[u\033[J");
-	ft_printf(arrow);
-	ft_printf(line);
-	ft_printf("\n");
 	return (line);
 }

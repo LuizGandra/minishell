@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 20:13:55 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 10:47:46 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(void)
 static void	init_exec(t_shell *shell)
 {
 	t_pid_list	*pid_list;
-	t_int8		ret;
+	int			ret;
 
 	ret = 0;
 	pid_list = NULL;
