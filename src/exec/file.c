@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:31:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 01:22:30 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:32:01 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	print_file_error(char *file)
 		ft_printf_fd(2, MINISHELL "%s: " FILE_NFOUND, file);
 	else if (is_directory(file))
 		ft_printf_fd(2, MINISHELL "%s: " IS_A_DIR, file);
-	else 
+	else
 		ft_printf_fd(2, MINISHELL "%s: " PERM_DENIED, file);
 }
 

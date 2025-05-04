@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 19:55:10 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:36:42 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 static t_token_list	*get_priority_token(t_token_list *token_list,
 						t_tree_hierarchy hierarchy);
 static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list);
+static t_token_list	*extract_first_redirector(t_token_list **list);
 t_tree_type			get_tree_type(t_token_type token_type);
 
 t_exec_tree	*get_token_tree(t_token_list *token_list,
@@ -51,31 +52,14 @@ t_exec_tree	*get_token_tree(t_token_list *token_list,
 static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list)
 {
 	t_token_list	*new_list;
-	t_token_list	*temp;
-	t_token_list	*prev;
 	t_token_list	*new_priority;
 
-	prev = NULL;
 	new_list = ft_sublist(list, list, NULL);
 	if (!new_list)
 		return (NULL);
-	temp = new_list;
-	while (temp)
-	{
-		if (is_redirector(temp->token))
-		{
-			if (prev)
-				prev->next = temp->next;
-			else
-				new_list = temp->next;
-			if (temp->next)
-				temp->next->prev = prev;
-			new_priority = temp;
-			break ;
-		}
-		prev = temp;
-		temp = temp->next;
-	}
+	new_priority = extract_first_redirector(&new_list);
+	if (!new_priority)
+		return (NULL);
 	if (tree->type == TREE_REDIR_HDOC)
 		tree->here_doc_fd = here_doc(new_priority->file->token.full_content);
 	else
@@ -115,6 +99,31 @@ static t_token_list	*get_priority_token(t_token_list *token_list,
 		list = get_next_token(list, hierarchy);
 	}
 	return (priority);
+}
+
+static t_token_list	*extract_first_redirector(t_token_list **list)
+{
+	t_token_list	*temp;
+	t_token_list	*prev;
+
+	temp = *list;
+	prev = NULL;
+	while (temp)
+	{
+		if (is_redirector(temp->token))
+		{
+			if (prev)
+				prev->next = temp->next;
+			else
+				*list = temp->next;
+			if (temp->next)
+				temp->next->prev = prev;
+			return (temp);
+		}
+		prev = temp;
+		temp = temp->next;
+	}
+	return (NULL);
 }
 
 t_tree_type	get_tree_type(t_token_type token_type)

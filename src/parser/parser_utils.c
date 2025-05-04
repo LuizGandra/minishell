@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 09:52:05 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/28 15:32:14 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:32:13 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token_list	*get_next_token(t_token_list *token_list,
 
 void	pass_brackets(t_token_list **token_list, t_tree_hierarchy hierarchy)
 {
-	int	brackets_count;
+	int				brackets_count;
 	t_token_type	open_bracket;
 	t_token_type	close_bracket;
 
@@ -76,7 +76,7 @@ void	pass_brackets(t_token_list **token_list, t_tree_hierarchy hierarchy)
 		else if ((*token_list)->token.type == close_bracket)
 			brackets_count--;
 		else if (brackets_count == 0)
-			break;
+			break ;
 		*token_list = get_next_token(*token_list, hierarchy);
 	}
 }
