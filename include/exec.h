@@ -105,5 +105,6 @@ int			b_exit(char **args);
 int			b_cd(char **args);
 int			b_env(char **args);
 int			b_unset(char **args);
+int			b_export(char **args);
 
 #endif

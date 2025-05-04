@@ -51,6 +51,8 @@ FILES = \
 	$(BUILTINS_PATH)cd.c \
 	$(BUILTINS_PATH)env.c \
 	$(BUILTINS_PATH)unset.c \
+	$(BUILTINS_PATH)export.c \
+	$(BUILTINS_PATH)export_utils.c \
 	$(LEXING_PATH)utils.c \
 	$(LEXING_PATH)lexer.c \
 	$(LEXING_PATH)state.c \
