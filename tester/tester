@@ -45,7 +45,7 @@ echo "                                                                          
 echo "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥";
 echo "                                                                                              ";
 
-PROMPT=$(echo -e "exit\n" | $MINISHELL_PATH | sed "s/\x1B\[[0-9;]\{1,\}[A-Za-z]//g" | grep -v '^exit$')
+PROMPT=$(echo -e "\nexit\n" | $MINISHELL_PATH | head -n 1 | sed "s/\x1B\[[0-9;]\{1,\}[A-Za-z]//g" )
 # Helper commands:
 REMOVE_COLORS="sed s/\x1B\[[0-9;]\{1,\}[A-Za-z]//g"
 REMOVE_EXIT="grep -v ^exit$"
@@ -60,10 +60,7 @@ for testfile in ${test_lists[*]}; do
 
 		rm -rf ./outfiles/*
 		rm -rf ./mini_outfiles/*
-		MINI_OUTPUT=$(echo -e "$teste" | $MINISHELL_PATH 2> /dev/null | $REMOVE_COLORS \
-			| grep -vFxf <(echo "$PROMPT") \
-			| grep -vE "^❯[[:space:]]*$teste$" \
-			| $REMOVE_EXIT)
+		MINI_OUTPUT=$(echo -e "$teste" | $MINISHELL_PATH 2> /dev/null | $REMOVE_COLORS | grep -vF "$PROMPT" | $REMOVE_EXIT )
 		MINI_OUTFILES=$(cp ./outfiles/* ./mini_outfiles &>/dev/null)
 		MINI_EXIT_CODE=$(echo -e "$MINISHELL_PATH\n$teste\necho \$?\nexit\n" | bash 2> /dev/null | $REMOVE_COLORS | grep -vF "$PROMPT" | $REMOVE_EXIT | tail -n 1)
 		MINI_ERROR_MSG=$(trap "" PIPE && echo "$teste" | $MINISHELL_PATH 2>&1 > /dev/null | grep -o '[^:]*$' )

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:07:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 00:58:59 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:55:10 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ t_exec_tree	*get_token_tree(t_token_list *token_list,
 	return (tree);
 }
 
-// ! "> b ↔️ ls ↔️ -a ↔️ < a"
-// TODO create a function to put the priority token in the left child
-// TODO recursively, until all redirects are finished
-// TODO remove the priority redirect from the list
 static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list)
 {
 	t_token_list	*new_list;
@@ -64,7 +60,6 @@ static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list)
 	if (!new_list)
 		return (NULL);
 	temp = new_list;
-	// TODO o new list precisa ser alterado pro início da lista se o token prioritário for o primeiro da lista
 	while (temp)
 	{
 		if (is_redirector(temp->token))
