@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 22:12:21 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/04 12:35:35 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:32:56 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**get_key_and_value(char *arg)
 	char	*ptr;
 	char	**var;
 
-	var = ft_calloc(2, sizeof(char *));
+	var = ft_calloc(3, sizeof(char *));
 	if (!var)
 		return (NULL);
 	ptr = ft_strchr(arg, '=');

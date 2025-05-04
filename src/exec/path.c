@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:02:30 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/04 13:53:21 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:44:30 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ char	*handle_path(char *cmd)
 		else
 			new_cmd = ft_strdup(cmd);
 	}
+	ft_gc_add(new_cmd);
 	return (new_cmd);
 }

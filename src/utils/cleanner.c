@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 07:56:56 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 21:28:52 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:28:10 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	clean_all(void)
 	ret_code = (int)ft_atoui8(ft_getenv("?"));
 	close(get_shell()->default_fds[0]);
 	close(get_shell()->default_fds[1]);
+	ft_map_destroy(*get_exported_vars());
 	ft_map_destroy(get_shell()->env);
 	ft_gc_exit();
 	return (ret_code);

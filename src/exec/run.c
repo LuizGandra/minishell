@@ -6,13 +6,29 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:06:59 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 20:10:22 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:46:35 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "minishell.h"
 #include "signals.h"
+
+static void	ft_execve(char *path, char **argv, char **envp, t_pid_list *list)
+{
+	int	ret_code;
+
+	ret_code = 0;
+	if (execve(path, argv, envp) == -1)
+	{
+		ret_code = display_error(path);
+		ft_free_matrix((void **)envp, free);
+		ft_free_matrix((void **)argv, free);
+		free_pid_list(list);
+		clean_all();
+		exit(ret_code);
+	}
+}
 
 void	run_external(t_token_list *command, t_pid_list *list)
 {
@@ -34,13 +50,7 @@ void	run_external(t_token_list *command, t_pid_list *list)
 	}
 	argv = handle_argv(command);
 	envp = map_to_env(get_shell()->env);
-	if (execve(path, argv, envp) == -1)
-	{
-		ret_code = display_error(path);
-		free_pid_list(list);
-		clean_all();
-		exit(ret_code);
-	}
+	ft_execve(path, argv, envp, list);
 }
 
 static pid_t	ft_fork(t_pid_list *list, int fds[2])

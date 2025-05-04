@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/04 11:37:00 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:03:05 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_shell
 
 t_shell						*get_shell(void);
 int							*get_fd_to_close(void);
+t_hash_table				**get_exported_vars(void);
 
 // ============================== UTILS =======================================
 
