@@ -44,11 +44,13 @@ typedef struct s_shell
 	int						default_fds[2];
 	t_bool					exit;
 	struct termios			termios;
+	int 					heredoc_status;
 }							t_shell;
 
 // ============================== GLOBAL ======================================
 
-t_shell						*get_minishell(void);
+t_shell						*get_shell(void);
+int							*get_fd_to_close(void);
 
 // ============================== UTILS =======================================
 

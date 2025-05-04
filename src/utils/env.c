@@ -16,7 +16,7 @@ void	init_env(void)
 {
 	t_shell	*shell;
 
-	shell = get_minishell();
+	shell = get_shell();
 	shell->env = env_to_map(__environ);
 	ft_setenv("?", "0", FALSE);
 	ft_setenv("$", ft_getpid(), TRUE);
@@ -77,7 +77,7 @@ t_int8	ft_setenv(char *key, char *value, t_bool free_value)
 	t_shell	*shell;
 	t_int8	ret;
 
-	shell = get_minishell();
+	shell = get_shell();
 	if (!key || !value)
 		return (0);
 	ft_map_insert(shell->env, key, value);
@@ -91,7 +91,7 @@ char	*ft_getenv(char *key)
 {
 	t_shell	*shell;
 
-	shell = get_minishell();
+	shell = get_shell();
 	if (!key)
 		return (NULL);
 	return (ft_map_search(shell->env, key));

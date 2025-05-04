@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 12:15:08 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 09:15:16 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:10:22 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	b_exit(char **args)
 {
 	t_shell	*shell;
 
-	shell = get_minishell();
+	shell = get_shell();
 	if (args[1] == NULL)
 	{
 		shell->exit = TRUE;

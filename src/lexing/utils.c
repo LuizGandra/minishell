@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:06:14 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 18:42:14 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:26:06 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	fill_full_content(t_token *node)
 
 	i = 0;
 	props = &node->props;
+	if (node->full_content)
+		ft_gc_free(node->full_content);
 	node->full_content = ft_strdup("");
 	while (i < props->size)
 	{

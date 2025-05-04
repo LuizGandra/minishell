@@ -6,52 +6,51 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:47:20 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 18:38:59 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:03:53 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static t_token_list	*expand_word(t_token *token, t_token_list **list)
+static void remove_token(t_token_list **list, t_token_list	*current)
 {
-	size_t			i;
-	char			*str;
-	t_content_part	*part;
-
-	i = 0;
-	while (i < token->props.size)
+	if (!current->prev)
 	{
-		part = &token->props.content[i];
-		if (part->quote != '\'')
-			expand_vars(part);
-		if (part->quote == '\0')
-		{
-			str = part->str;
-			while (*str)
-			{
-				if (*str == '*')
-					*str = '\x11';
-				str++;
-			}
-		}
-		i++;
+		if (current->next)
+			current->next->prev = NULL;
+		*list = current->next;
 	}
-	ft_gc_free(token->full_content);
-	fill_full_content(token);
-	return (expand_wildcards(token, list));
+	else
+	{
+		current->prev->next = current->next;
+		if (current->next)
+			current->next->prev = current->prev;
+	}
 }
 
-static void	finish_wildcard(t_token *token)
+static t_token_list	*expand_word(t_token *token, t_token_list **list)
 {
-	char	*str;
+	int				i;
+	t_content_part	*part;
+	t_token_list	*current;
 
-	str = token->full_content;
-	while (*str)
+	i = -1;
+	while (++i < (int)token->props.size)
 	{
-		if (*str == '\x11')
-			*str = '*';
-		str++;
+		part = &token->props.content[i];
+		if (part->quote != '\'' && ft_strchr(part->str, '$'))
+			expand_vars(part);
+		if (part->quote == '\0')
+			prepare_wildcard(part);
 	}
+	fill_full_content(token);
+	if (token->full_content[0] == '\0')
+	{
+		current = get_current_token(*list, token);
+		remove_token(list, current);
+		return (current);
+	}
+	return (expand_wildcards(token, list));
 }
 
 void	expand(t_token_list **token_list)

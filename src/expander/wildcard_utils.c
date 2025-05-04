@@ -6,11 +6,37 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 08:04:12 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/29 18:29:05 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:36:08 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
+
+void	prepare_wildcard(t_content_part	*part)
+{
+	char	*str;
+
+	str = part->str;
+	while (*str)
+	{
+		if (*str == '*')
+			*str = '\x11';
+		str++;
+	}
+}
+
+void	finish_wildcard(t_token *token)
+{
+	char	*str;
+
+	str = token->full_content;
+	while (*str)
+	{
+		if (*str == '\x11')
+			*str = '*';
+		str++;
+	}
+}
 
 t_bool	match_wildcard(const char *pattern, const char *filename)
 {

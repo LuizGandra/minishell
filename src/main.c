@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:15:36 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/30 14:44:54 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:13:55 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	init_exec(t_shell *shell)
 	t_pid_list	*pid_list;
 	t_int8		ret;
 
+	ret = 0;
+	pid_list = NULL;
 	pid_list = create_pid_list(shell->tree);
 	ret = exec(shell->tree, shell->default_fds, pid_list, FALSE);
 	if (ret == FORKED)
@@ -45,7 +47,7 @@ static void	ft_loop(void)
 {
 	t_shell	*shell;
 
-	shell = get_minishell();
+	shell = get_shell();
 	while (!shell->exit)
 	{
 		reset_terminal();
@@ -60,7 +62,7 @@ static void	ft_loop(void)
 		add_history(shell->user_input);
 		shell->tokens = get_token_list(shell->user_input);
 		shell->tree = get_token_tree(shell->tokens, ROOT);
-		if (!shell->tree)
+		if (!shell->tree || shell->heredoc_status == -1)
 		{
 			ft_gc_exit();
 			continue ;

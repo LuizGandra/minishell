@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 10:28:40 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/02/06 12:31:46 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/02 21:43:58 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,21 @@ char	*get_next_line(int fd)
 
 static char	*ft_read(int fd, char *buffer)
 {
-	char	*temp_buffer;
+	char	temp_buffer[BUFFER_SIZE + 1];
 	ssize_t	bytes_read;
 
-	temp_buffer = malloc(BUFFER_SIZE + 1);
-	if (temp_buffer == NULL)
-		return (NULL);
 	bytes_read = 1;
 	while (!(get_nl_address(buffer)) && (bytes_read != 0))
 	{
 		bytes_read = read(fd, temp_buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
 		{
-			free(temp_buffer);
 			free(buffer);
 			return (NULL);
 		}
 		temp_buffer[bytes_read] = '\0';
 		buffer = ft_strjoin_with_free(buffer, temp_buffer);
 	}
-	free(temp_buffer);
 	return (buffer);
 }
 

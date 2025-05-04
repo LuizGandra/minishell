@@ -65,6 +65,11 @@ static t_exec_tree	*handle_redirect(t_exec_tree *tree, t_token_list *list)
 	else
 		tree->file = new_priority->file;
 	tree->type = get_tree_type(new_priority->token.type);
+	if (tree->here_doc_fd == -1)
+	{
+		get_shell()->heredoc_status = -1;
+		return (NULL);
+	}
 	return (get_token_tree(new_list, LEFT_CHILD));
 }
 

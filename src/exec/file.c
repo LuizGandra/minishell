@@ -18,7 +18,7 @@ t_bool	expand_file(t_exec_tree *tree)
 
 	old_path = ft_strdup(tree->file->token.full_content);
 	expand(&tree->file);
-	if (tree->file->next)
+	if (!tree->file || tree->file->next)
 	{
 		ft_printf_fd(2, MINISHELL "%s: " AMBIG_REDIR, old_path);
 		free(old_path);
