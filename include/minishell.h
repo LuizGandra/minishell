@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/03 22:45:39 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:22:38 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ t_hash_table				*init_exported_vars(char **env);
 t_int8						ft_add_exported_var(t_hash_table *map, char *key,
 								char *value, t_bool free_value);
 char						*ft_get_exported_var(t_hash_table *map, char *key);
+void						sort_env(char **map);
+char						**get_key_and_value(char *arg);
 
 #endif
