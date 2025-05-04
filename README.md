@@ -24,8 +24,8 @@
 	- [x] `echo` com a flag `-n`.
 	- [x] `cd` com apenas um caminho relativo ou absoluto.
 	- [x] `pwd` sem nenhuma flag.
-	- [ ] `export` sem nenhuma flag.
-	- [ ] `unset` sem nenhuma flag.
+	- [x] `export` sem nenhuma flag.
+	- [x] `unset` sem nenhuma flag.
 	- [x] `env` sem nenhuma opção ou argumento.
 	- [x] `exit` sem nenhuma opção.
 

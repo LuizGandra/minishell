@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 20:17:56 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/04/30 12:53:18 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:22:38 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void						reset_terminal(void);
 typedef struct s_shell
 {
 	t_hash_table			*env;
+	t_hash_table			*exported_vars;
 	t_exec_tree				*tree;
 	char					*user_input;
 	t_token_list			*tokens;
@@ -62,5 +63,12 @@ char						*ft_getenv(char *key);
 t_int8						ft_setenv(char *key, char *value, t_bool free_val);
 t_hash_table				*env_to_map(char **env);
 char						**map_to_env(t_hash_table *map);
+
+t_hash_table				*init_exported_vars(char **env);
+t_int8						ft_add_exported_var(t_hash_table *map, char *key,
+								char *value, t_bool free_value);
+char						*ft_get_exported_var(t_hash_table *map, char *key);
+void						sort_env(char **map);
+char						**get_key_and_value(char *arg);
 
 #endif

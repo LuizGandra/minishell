@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 07:44:55 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/05/02 17:11:02 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:52:42 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ int			b_exit(char **args);
 int			b_cd(char **args);
 int			b_env(char **args);
 int			b_unset(char **args);
+int			b_export(char **args);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lcosta-g <lcosta-g@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 16:33:40 by lcosta-g          #+#    #+#             */
-/*   Updated: 2025/05/02 17:58:21 by lcosta-g         ###   ########.fr       */
+/*   Updated: 2025/05/04 00:28:44 by lcosta-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	b_unset(char **args)
 {
-	t_hash_table *env;
-	char **temp;
-	char *str;
+	t_hash_table	*env;
+	char			**temp;
+	char			*str;
 
 	if (!args || !args[1])
-		return (1);
+		return (0);
 	env = get_minishell()->env;
 	temp = &args[1];
 	while (*temp)
