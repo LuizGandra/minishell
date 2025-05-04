@@ -6,7 +6,7 @@
 /*   By: lhenriqu <lhenriqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:49:11 by lhenriqu          #+#    #+#             */
-/*   Updated: 2025/04/18 18:38:12 by lhenriqu         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:46:50 by lhenriqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	fd_list_add(int fd)
 	while (list->next)
 		list = list->next;
 	list->fd = fd;
-	list->next = ft_calloc(1, sizeof(t_fd_list));
+	list->next = ft_gc_malloc(sizeof(t_fd_list));
 }
 
 void	fd_list_close(void)
@@ -43,7 +43,7 @@ void	fd_list_close(void)
 		tmp = list->next;
 		list->fd = tmp->fd;
 		list->next = tmp->next;
-		free(tmp);
+		ft_gc_free(tmp);
 	}
 	get_fd_list()->fd = 0;
 	get_fd_list()->next = NULL;
