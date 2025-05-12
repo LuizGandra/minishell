@@ -5,6 +5,7 @@ Minishell is a simplified shell implementation developed as a project for the [4
 **Credits:**
 - [Luiz Gandra](https://github.com/LuizGandra)
 - [Luiz Henrique](https://github.com/lhenriqu42)
+
 *This project was a collaborative effort for the 42 São Paulo curriculum.*
 
 ![42 São Paulo](https://img.shields.io/badge/42-São_Paulo-black?style=flat-square&logo=42)
