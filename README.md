@@ -2,6 +2,8 @@
 
 Minishell is a simplified shell implementation developed as a project for the [42 São Paulo](https://www.42sp.org.br/) Common Core curriculum. It replicates basic functionalities of a Unix shell, such as executing commands, handling pipes, redirections, and managing signals, while providing an interactive command-line interface. Built in C, Minishell aims to mimic the behavior of Bash, focusing on process management, input parsing, and environment variable handling.
 
+![image](https://github.com/user-attachments/assets/928a50f8-f3b7-4534-91ff-6f469deb36b9)
+
 **Credits:**
 - [Luiz Gandra](https://github.com/LuizGandra)
 - [Luiz Henrique](https://github.com/lhenriqu42)
